@@ -34,14 +34,14 @@ public:
 	int getExp() const;
 
 	// Setter 함수 (name만 제외)
-	int setLevel(int lv);
-	int setMaxHp(int mhp);
-	int setCurHp(int chp);
-	int setAttackPoint(int ap);
-	int setExp(int exp);
+	void setLevel(int lv);
+	void setMaxHp(int mhp);
+	void setCurHp(int chp);
+	void setAttackPoint(int ap);
+	void setExp(int exp);
 
 	
 
-	// 캐릭터의 상태를 확인할 수 있도록 만들기
+	// 캐릭터의 상태를 확인할 수 있도록 만들기 (테스트용)
 	void display() const;
 };

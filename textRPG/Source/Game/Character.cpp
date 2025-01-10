@@ -8,7 +8,7 @@ Character::Character() : level{ 1 }, max_hp{ 200 }, cur_hp(200), attack_point{ 3
 	{
 		
 		std::cout << "생성할 캐릭터의 이름을 입력해주세요: ";
-		std:getline(std::cin, name); // 공백 포함 문자열 입력 받기위해 getline 사용
+		std::getline(std::cin, name); // 공백 포함 문자열 입력 받기위해 getline 사용
 
 		if (name == "")
 		{
@@ -39,24 +39,25 @@ int Character::getAttackPoint() const { return attack_point; }
 int Character::getExp() const { return ex_point; }
 
 // Setter 함수 정의
-int Character::setLevel(int lv)
+void Character::setLevel(int lv)
 {
 	// Level은 1이상 10이하로 설정
 	level = std::max(1, std::min(lv, 10));
+	
 }
-int Character::setMaxHp(int mhp)
+void Character::setMaxHp(int mhp)
 {
 	max_hp = mhp;
 }
-int Character::setCurHp(int chp)
+void Character::setCurHp(int chp)
 {
 	cur_hp = std::max(0, std::min(chp, max_hp));
 }
-int Character::setAttackPoint(int ap)
+void Character::setAttackPoint(int ap)
 {
 	attack_point = ap;
 }
-int Character::setExp(int exp)
+void Character::setExp(int exp)
 {
 	ex_point = exp;
 }
