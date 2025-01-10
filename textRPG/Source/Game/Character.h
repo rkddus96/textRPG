@@ -6,12 +6,12 @@ class Character
 {
 private:
 	
-	std::string name;
-	int level;
-	int max_hp;
-	int cur_hp;
-	int attack_point;
-	int ex_point;
+	std::string Name;
+	int Level;
+	int MaxHp;
+	int CurHp;
+	int AttackPoint;
+	int ExPoint;
 
 	Character();
 	
@@ -23,22 +23,22 @@ public:
 	Character(Character&&) = delete;
 	Character& operator=(Character&&) = delete;
 
-	static Character& getinstance();
+	static Character& GetInstance();
 
 	// Getter 함수
-	std::string getName() const;
-	int getLevel() const;
-	int getMaxHp() const;
-	int getCurHp() const;
-	int getAttackPoint() const;
-	int getExp() const;
+	std::string GetName() const;
+	int GetLevel() const;
+	int GetMaxHp() const;
+	int GetCurHp() const;
+	int GetAttackPoint() const;
+	int GetExp() const;
 
 	// Setter 함수
-	void setLevel(int lv);
-	void setMaxHp(int mhp);
-	void setCurHp(int chp);
-	void setAttackPoint(int ap);
-	void setExp(int exp);
+	void SetLevel(int lv);
+	void SetMaxHp(int mhp);
+	void SetCurHp(int chp);
+	void SetAttackPoint(int ap);
+	void SetExp(int exp);
 
 	
 

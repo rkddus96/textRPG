@@ -2,15 +2,15 @@
 #include <iostream>
 #include <algorithm>
 
-Character::Character() : level{ 1 }, max_hp{ 200 }, cur_hp(200), attack_point{ 30 }, ex_point{ 0 }
+Character::Character() : Level{ 1 }, MaxHp{ 200 }, CurHp(200), AttackPoint{ 30 }, ExPoint{ 0 }
 {
 	while (true)
 	{
 		
 		std::cout << "생성할 캐릭터의 이름을 입력해주세요: ";
-		std::getline(std::cin, name); // 공백 포함 문자열 입력 받기위해 getline 사용
+		std::getline(std::cin, Name); // 공백 포함 문자열 입력 받기위해 getline 사용
 
-		if (name == "")
+		if (Name == "")
 		{
 			std::cout << "이름을 입력하지 않았습니다. 다시 입력해주세요" << std::endl;
 			
@@ -23,7 +23,7 @@ Character::Character() : level{ 1 }, max_hp{ 200 }, cur_hp(200), attack_point{ 3
 	
 }
 
-Character& Character::getinstance() 
+Character& Character::GetInstance() 
 {
 	static Character instance;
 	
@@ -31,50 +31,50 @@ Character& Character::getinstance()
 }
 
 // Getter 함수
-std::string Character::getName() const { return name; }
-int Character::getLevel() const { return level; }
-int Character::getMaxHp() const { return max_hp; }
-int Character::getCurHp() const { return cur_hp; }
-int Character::getAttackPoint() const { return attack_point; }
-int Character::getExp() const { return ex_point; }
+std::string Character::GetName() const { return Name; }
+int Character::GetLevel() const { return Level; }
+int Character::GetMaxHp() const { return MaxHp; }
+int Character::GetCurHp() const { return CurHp; }
+int Character::GetAttackPoint() const { return AttackPoint; }
+int Character::GetExp() const { return ExPoint; }
 
 // Setter 함수
-void Character::setLevel(int lv)
+void Character::SetLevel(int lv)
 {
 	// Level최소 1, 최대 10
-	level = std::max(1, std::min(lv, 10));
+	Level = std::max(1, std::min(lv, 10));
 	
 }
-void Character::setMaxHp(int mhp)
+void Character::SetMaxHp(int mhp)
 {
-	max_hp = mhp;
+	MaxHp = mhp;
 }
-void Character::setCurHp(int chp)
+void Character::SetCurHp(int chp)
 {
-	cur_hp = std::max(0, std::min(chp, max_hp));
+	CurHp = std::max(0, std::min(chp, MaxHp));
 }
-void Character::setAttackPoint(int ap)
+void Character::SetAttackPoint(int ap)
 {
-	attack_point = ap;
+	AttackPoint = ap;
 }
-void Character::setExp(int exp)
+void Character::SetExp(int exp)
 {
-	ex_point = exp;
+	ExPoint = exp;
 }
 
 
 
 
 
-
+// Test용
 void Character::display() const
 {
 	std::cout << "-------------------------------------------------" << std::endl;
 	std::cout << "                  PLAYER STATUS                  " << std::endl;
 	std::cout << "-------------------------------------------------" << std::endl;
-	std::cout << "이  름 : " << name << std::endl;
-	std::cout << "레  벨 : " << level << std::endl;
-	std::cout << "경험치 : " << ex_point << "/" << "100" << std::endl;
-	std::cout << "체  력 : " << cur_hp << "/" << max_hp << std::endl;
-	std::cout << "공격력 : " << attack_point << std::endl;
+	std::cout << "이  름 : " << Name << std::endl;
+	std::cout << "레  벨 : " << Level << std::endl;
+	std::cout << "경험치 : " << ExPoint << "/" << "100" << std::endl;
+	std::cout << "체  력 : " << CurHp << "/" << MaxHp << std::endl;
+	std::cout << "공격력 : " << AttackPoint << std::endl;
 }
