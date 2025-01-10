@@ -13,12 +13,13 @@ public:
 	RenderingLayer(int InLayerOrder, char InMask = ' ');
 	RenderingLayer(int InLayerOrder, wchar_t InMask);
 
-	void GetConsoleSize(int& OutWidth, int& OutHeight);
-
+	// 레이어를 공백상태로 비움. 
 	void RefreshLayer();
 
+	// 레이어 출력하기
 	void PrintCurrentLayer();
 
+	// 사각형 그려줌
 	void DrawRectanlge(int PositionX, int PositionY, int Width, int Height);
 
 	/// <summary>

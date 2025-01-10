@@ -76,7 +76,7 @@ void RenderingHandler::CombineLayers()
 
     int CombinedLayerSize = (int)CombinedLayer.size();
 
-    wchar_t EmptyChar = Char::EmptyChar;
+    wchar_t EmptyChar = Char::EMPTY_CHAR;
 
     //for (int i = 1; i < LayerCount; ++i)
     //{
@@ -97,7 +97,7 @@ void RenderingHandler::CombineLayers()
     //            continue;
     //        }
 
-    //        if (NewCell == EmptyChar)
+    //        if (NewCell == EMPTY_CHAR)
     //        {
     //            continue;
     //        }
@@ -111,14 +111,14 @@ void RenderingHandler::CombineLayers()
     //            {
     //                PrevCell = Space;
     //                OldCell = NewCell;
-    //                NextCell = EmptyChar;
+    //                NextCell = EMPTY_CHAR;
     //                NextNextCell = Space;
     //            }
     //            else // if(GetCharSpace(NextCell) == ECharSpace::OneSpace)
     //            {
     //                PrevCell = Space;
     //                OldCell = NewCell;
-    //                NextCell = EmptyChar;
+    //                NextCell = EMPTY_CHAR;
     //            }
     //        }
     //        else if (OldCellSpace == ECharSpace::TwoSpace && NewCellSpace == ECharSpace::OneSpace)
@@ -136,13 +136,13 @@ void RenderingHandler::CombineLayers()
     //            if (GetCharSpace(NextCell) == ECharSpace::TwoSpace)
     //            {
     //                OldCell = NewCell;
-    //                NextCell = EmptyChar;
+    //                NextCell = EMPTY_CHAR;
     //                NextNextCell = Space;
     //            }
     //            else // if(GetCharSpace(NextCell) == ECharSpace::OneSpace)
     //            {
     //                OldCell = NewCell;
-    //                NextCell = EmptyChar;
+    //                NextCell = EMPTY_CHAR;
     //            }
     //        }
     //    }

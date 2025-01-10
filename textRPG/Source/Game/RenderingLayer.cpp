@@ -1,6 +1,7 @@
 #include "RenderingLayer.h"
 #include <Windows.h>
 #include "LogicHelper.h"
+#include "ConstantContainer.h"
 
 std::unordered_set<int> RenderingLayer::LayerIdSet;
 
@@ -18,34 +19,12 @@ RenderingLayer::RenderingLayer(int InLayerOrder, wchar_t InMask) :
     InitLayer();
 }
 
-void RenderingLayer::GetConsoleSize(int& OutWidth, int& OutHeight)
-{
-    CONSOLE_SCREEN_BUFFER_INFO CSBI;
-
-    // 콘솔 핸들 가져오기
-    HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    if (GetConsoleScreenBufferInfo(ConsoleHandle, &CSBI))
-    {
-        // 콘솔 창의 크기 계산
-        OutWidth = CSBI.srWindow.Right - CSBI.srWindow.Left + 1;
-        OutHeight = CSBI.srWindow.Bottom - CSBI.srWindow.Top + 1;
-    }
-    else
-    {
-        // 오류 발생 시 기본값 설정
-        OutWidth = 0;
-        OutHeight = 0;
-        std::cerr << "Failed to get console size." << std::endl;
-    }
-}
-
 void RenderingLayer::RefreshLayer()
 {
     int ConsoleWidth = 0;
     int ConsoleHeight = 0;
 
-    GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
 
     Layer.reserve(ConsoleWidth * ConsoleHeight);
     FreeViewLayer.reserve(ConsoleWidth * ConsoleHeight);
@@ -81,10 +60,7 @@ void RenderingLayer::PrintCurrentLayer()
 
     CombineUiLines();
 
-    HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE); // 콘솔 핸들 얻기
-
-    DWORD Written;
-    WriteConsoleW(ConsoleHandle, FreeViewLayer.c_str(), (DWORD)FreeViewLayer.size(), &Written, nullptr); // 빠르게 콘솔에 출력
+    LogicHelper::PrintWStringFast(FreeViewLayer);
 }
 
 void RenderingLayer::DrawRectanlge(int PositionX, int PositionY, int Width, int Height)
@@ -92,7 +68,7 @@ void RenderingLayer::DrawRectanlge(int PositionX, int PositionY, int Width, int 
     int ConsoleWidth = 0;
     int ConsoleHeight = 0;
 
-    GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
 
     int MaxX = PositionX + Height;
     int MaxY = PositionY + Width;
@@ -153,7 +129,7 @@ void RenderingLayer::DrawWCharacter(int PositionX, int PositionY, wchar_t WChar)
     int ConsoleWidth = 0;
     int ConsoleHeight = 0;
 
-    GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
 
     if (ConsoleWidth - 1 < PositionY || ConsoleHeight - 1 < PositionX)
     {
@@ -170,7 +146,7 @@ void RenderingLayer::DrawWCharacter(int PositionX, int PositionY, wchar_t WChar)
     }
 
     // 한글이나 한자 뒤에 삽입 용도
-    wchar_t VoidWChar = L'\u200B';
+    wchar_t VoidWChar = Char::EMPTY_CHAR;
 
     if (LogicHelper::IsHangul(WChar) || LogicHelper::IsHanja(WChar))
     {
@@ -208,7 +184,7 @@ void RenderingLayer::DrawString(int PositionX, int PositionY, const std::wstring
     int ConsoleWidth = 0;
     int ConsoleHeight = 0;
 
-    GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
 
     int Size = (int)NewWString.size();
 

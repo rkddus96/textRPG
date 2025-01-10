@@ -4,10 +4,10 @@
 
 namespace AudioPath
 {
-	extern const std::string Test1;
+	extern const std::string TEST1;
 }
 
 namespace Char
 {
-	extern const wchar_t EmptyChar;
+	extern const wchar_t EMPTY_CHAR;
 }
