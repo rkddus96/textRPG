@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-Character::Character() : Level{ 1 }, MaxHp{ 200 }, CurHp(200), AttackPoint{ 30 }, ExPoint{ 0 }
+Character::Character() : Level{ 1 }, MaxHp{ 200 }, CurHp(200), Power{ 30 }, Exp{ 0 }
 {
 	while (true)
 	{
@@ -35,8 +35,8 @@ std::string Character::GetName() const { return Name; }
 int Character::GetLevel() const { return Level; }
 int Character::GetMaxHp() const { return MaxHp; }
 int Character::GetCurHp() const { return CurHp; }
-int Character::GetAttackPoint() const { return AttackPoint; }
-int Character::GetExp() const { return ExPoint; }
+int Character::GetPower() const { return Power; }
+int Character::GetExp() const { return Exp; }
 
 // Setter 함수
 void Character::SetLevel(int lv)
@@ -53,13 +53,13 @@ void Character::SetCurHp(int chp)
 {
 	CurHp = std::max(0, std::min(chp, MaxHp));
 }
-void Character::SetAttackPoint(int ap)
+void Character::SetPower(int ap)
 {
-	AttackPoint = ap;
+	Power = ap;
 }
 void Character::SetExp(int exp)
 {
-	ExPoint = exp;
+	Exp = exp;
 }
 
 
@@ -74,7 +74,7 @@ void Character::display() const
 	std::cout << "-------------------------------------------------" << std::endl;
 	std::cout << "이  름 : " << Name << std::endl;
 	std::cout << "레  벨 : " << Level << std::endl;
-	std::cout << "경험치 : " << ExPoint << "/" << "100" << std::endl;
+	std::cout << "경험치 : " << Exp << "/" << "100" << std::endl;
 	std::cout << "체  력 : " << CurHp << "/" << MaxHp << std::endl;
-	std::cout << "공격력 : " << AttackPoint << std::endl;
+	std::cout << "공격력 : " << Power << std::endl;
 }
