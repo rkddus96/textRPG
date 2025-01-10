@@ -10,8 +10,8 @@ private:
 	int Level;
 	int MaxHp;
 	int CurHp;
-	int AttackPoint;
-	int ExPoint;
+	int Power;
+	int Exp;
 
 	Character();
 	
@@ -30,14 +30,14 @@ public:
 	int GetLevel() const;
 	int GetMaxHp() const;
 	int GetCurHp() const;
-	int GetAttackPoint() const;
+	int GetPower() const;
 	int GetExp() const;
 
 	// Setter 함수
 	void SetLevel(int lv);
 	void SetMaxHp(int mhp);
 	void SetCurHp(int chp);
-	void SetAttackPoint(int ap);
+	void SetPower(int ap);
 	void SetExp(int exp);
 
 	
