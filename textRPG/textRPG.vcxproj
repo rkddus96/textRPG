@@ -18,6 +18,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Game\AssetHandler.cpp" />
+    <ClCompile Include="Source\Game\AudioPlayer.cpp" />
+    <ClCompile Include="Source\Game\ConstantContainer.cpp" />
+    <ClCompile Include="Source\Game\InputReceiver.cpp" />
+    <ClCompile Include="Source\Game\LogicHelper.cpp" />
+    <ClCompile Include="Source\Game\RenderingHandler.cpp" />
+    <ClCompile Include="Source\Game\RenderingLayer.cpp" />
+    <ClCompile Include="Source\Game\textRPG.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Game\AssetHandler.h" />
+    <ClInclude Include="Source\Game\AudioPlayer.h" />
+    <ClInclude Include="Source\Game\ConstantContainer.h" />
+    <ClInclude Include="Source\Game\InputReceiver.h" />
+    <ClInclude Include="Source\Game\LogicHelper.h" />
+    <ClInclude Include="Source\Game\RenderingHandler.h" />
+    <ClInclude Include="Source\Game\RenderingLayer.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -104,6 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,9 +146,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="textRPG.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
