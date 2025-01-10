@@ -80,15 +80,11 @@ void RenderingLayer::PrintCurrentLayer()
     }
 
     CombineUiLines();
-    //ClearConsole();
 
     HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE); // 콘솔 핸들 얻기
-    //const char* RederingLayer = WStringToString(Layer).c_str();
 
     DWORD Written;
     WriteConsoleW(ConsoleHandle, FreeViewLayer.c_str(), (DWORD)FreeViewLayer.size(), &Written, nullptr); // 빠르게 콘솔에 출력
-
-    //std::cout << WStringToString(Layer);
 }
 
 void RenderingLayer::DrawRectanlge(int PositionX, int PositionY, int Width, int Height)
@@ -267,7 +263,6 @@ void RenderingLayer::CombineUiLines()
         Layer += UILines[i];
         for (int j = 0; j < UILines[i].size(); ++j)
         {
-            // += WCharToString(UILines[i][j]);
             if (UILines[i][j] == L'\u200B')
             {
                 continue;
@@ -301,76 +296,6 @@ void RenderingLayer::InitLayer()
 
     RefreshLayer();
 }
-
-//std::string RenderingLayer::WStringToString(const std::wstring& WStr)
-//{
-//    // UTF-8로 변환하기 위해 필요한 공간을 먼저 계산
-//    int Size = WideCharToMultiByte(CP_UTF8, 0, WStr.c_str(), -1, NULL, 0, NULL, NULL);
-//
-//    // 변환된 문자열을 담을 버퍼를 생성
-//    std::string NewString(Size, 0);
-//
-//    // 변환 수행
-//    WideCharToMultiByte(CP_UTF8, 0, WStr.c_str(), -1, &NewString[0], Size, NULL, NULL);
-//
-//    return NewString;
-//}
-//
-//std::string RenderingLayer::WCharToString(wchar_t WChar)
-//{
-//    // 필요한 버퍼 크기 계산
-//    int Size = WideCharToMultiByte(CP_UTF8, 0, &WChar, 1, NULL, 0, NULL, NULL);
-//
-//    // 변환된 문자열을 담을 버퍼를 생성
-//    std::string NewString(Size, 0);
-//
-//    // 변환 수행
-//    WideCharToMultiByte(CP_UTF8, 0, &WChar, 1, &NewString[0], Size, NULL, NULL);
-//
-//    return NewString;
-//}
-//
-//std::wstring RenderingLayer::StringToWString(const std::string& Str)
-//{
-//    // 필요한 wchar_t 배열 크기 계산
-//    int Size = MultiByteToWideChar(CP_UTF8, 0, Str.c_str(), -1, NULL, 0);
-//
-//    // 변환된 문자열을 담을 버퍼 생성
-//    std::wstring NewWString(Size, 0);
-//
-//    // 변환 수행
-//    MultiByteToWideChar(CP_UTF8, 0, Str.c_str(), -1, &NewWString[0], Size);
-//
-//    return NewWString;
-//}
-//
-//wchar_t RenderingLayer::CharToWChar(char Char)
-//{
-//    // 필요한 wchar_t 배열 크기 계산
-//    wchar_t NewWChar;
-//    MultiByteToWideChar(CP_UTF8, 0, &Char, 1, &NewWChar, 1);
-//    return NewWChar;
-//}
-
-//void RenderingLayer::ClearConsole()
-//{
-//    HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-//    CONSOLE_SCREEN_BUFFER_INFO CSBI;
-//    DWORD DWSize, DWWritten;
-//
-//    // 콘솔 버퍼 정보 얻기
-//    GetConsoleScreenBufferInfo(ConsoleHandle, &CSBI);
-//
-//    // 콘솔 크기 계산
-//    DWSize = CSBI.dwSize.X * CSBI.dwSize.Y;
-//
-//    // 화면 지우기
-//    FillConsoleOutputCharacter(ConsoleHandle, L' ', DWSize, { 0, 0 }, &DWWritten);
-//    FillConsoleOutputAttribute(ConsoleHandle, CSBI.wAttributes, DWSize, { 0, 0 }, &DWWritten);
-//
-//    // 커서를 맨 위로 이동
-//    SetConsoleCursorPosition(ConsoleHandle, { 0, 0 });
-//}
 
 RenderingLayer::~RenderingLayer()
 {

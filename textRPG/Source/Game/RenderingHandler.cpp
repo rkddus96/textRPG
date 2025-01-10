@@ -21,12 +21,10 @@ void RenderingHandler::PrintCurrentScreenUI()
     //ClearConsole();
 
     HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE); // 콘솔 핸들 얻기
-    //const char* RederingScreenUI = ScreenUI.c_str();
 
     DWORD Written;
     WriteConsoleW(ConsoleHandle, ScreenUI.c_str() , (DWORD)ScreenUI.size(), &Written, nullptr); // 빠르게 콘솔에 출력
 
-    //std::cout << Layer;
 }
 
 void RenderingHandler::AddLayer(std::shared_ptr<RenderingLayer> NewLayerMask)
@@ -183,9 +181,6 @@ void RenderingHandler::CombineLayers()
 
         ScreenUI += C;
     }
-
-    /*ScreenUI = CombinedLayer;*/
-    //ScreenUI = WStringToString(CombinedLayer);
 }
 
 RenderingHandler::~RenderingHandler()

@@ -91,26 +91,6 @@ private:
 
 	void InitLayer();
 
-	/*std::string WStringToString(const std::wstring& WStr);
-	std::string WCharToString(wchar_t WChar);
-	std::wstring StringToWString(const std::string& Str);
-	wchar_t CharToWChar(char Char);*/
-
-	//bool IsHangul(wchar_t WChar) const
-	//{
-	//	return (WChar >= 0xAC00 && WChar <= 0xD7A3) ||  // 한글 음절
-	//		(WChar >= 0x1100 && WChar <= 0x11FF) ||  // 현대 한글 자모
-	//		(WChar >= 0x3130 && WChar <= 0x318F);    // 호환용 한글 자모
-	//}
-
-	//bool IsHanja(wchar_t WChar) const
-	//{
-	//	return (WChar >= 0x4E00 && WChar <= 0x9FFF) ||  // CJK 통합 한자
-	//		(WChar >= 0x3400 && WChar <= 0x4DBF);    // CJK 확장 A
-	//}
-
-	//void ClearConsole();
-
 private:
 
 	std::vector<std::wstring> UILines;
