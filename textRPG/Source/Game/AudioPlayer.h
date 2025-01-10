@@ -81,7 +81,6 @@ private:
 
 	int AudioIndex = 0;
 	static std::unordered_set<std::string> AudioNameSet;
-	//std::list <std::pair<std::string, float>> AudioNameList;
 	static std::list<AudioInfo> AudioInfos;
 
 };

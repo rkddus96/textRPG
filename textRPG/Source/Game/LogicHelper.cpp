@@ -110,21 +110,20 @@ void LogicHelper::ClearConsole()
 
 void LogicHelper::SetFixedConsoleSize(int Width, int Height)
 {
-
-    HWND consoleWindow = GetConsoleWindow();  // 콘솔 창 핸들 가져오기
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    HWND ConsoleWindow = GetConsoleWindow();  // 콘솔 창 핸들 가져오기
+    HANDLE OutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
     // 콘솔 버퍼 크기 설정
-    COORD bufferSize = { static_cast<SHORT>(Width), static_cast<SHORT>(Height) };
-    SetConsoleScreenBufferSize(hOut, bufferSize);
+    COORD BufferSize = { static_cast<SHORT>(Width), static_cast<SHORT>(Height) };
+    SetConsoleScreenBufferSize(OutHandle, BufferSize);
 
     // 콘솔 창 크기 설정
-    SMALL_RECT rect = { 0, 0, static_cast<SHORT>(Width - 1), static_cast<SHORT>(Height - 1) };
-    SetConsoleWindowInfo(hOut, TRUE, &rect);
+    SMALL_RECT Rect = { 0, 0, static_cast<SHORT>(Width - 1), static_cast<SHORT>(Height - 1) };
+    SetConsoleWindowInfo(OutHandle, TRUE, &Rect);
 
     // 크기 조정 방지
-    LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
-    SetWindowLong(consoleWindow, GWL_STYLE, style & ~WS_SIZEBOX & ~WS_MAXIMIZEBOX);
+    LONG Style = GetWindowLong(ConsoleWindow, GWL_STYLE);
+    SetWindowLong(ConsoleWindow, GWL_STYLE, Style & ~WS_SIZEBOX & ~WS_MAXIMIZEBOX);
     
 }
 

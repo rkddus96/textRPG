@@ -43,8 +43,6 @@ private:
 
 	void ReadArt(const std::wstring& Filename);
 
-   //void GetConsoleSize(int& OutWidth, int& OutHeight);
-
 	int ConsoleWidth = 0;
 	int ConsoleHeight = 0;
 
