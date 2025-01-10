@@ -31,3 +31,6 @@
 *.out
 *.app
 .vs
+
+textRPG/textRPG/x64/
+textRPG/x64/
