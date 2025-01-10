@@ -9,7 +9,7 @@ enum class EArtList
 	Test2
 };
 
-struct ASKIIArtContainer
+struct FASKIIArtContainer
 {
 public:
 
@@ -34,7 +34,7 @@ public:
 
 	~AssetHandler();
 
-	const ASKIIArtContainer& GetASKIIArtContainer(EArtList ArtList) const
+	const FASKIIArtContainer& GetASKIIArtContainer(EArtList ArtList) const
 	{
 		return ArtContainers[(int)ArtList];
 	}
@@ -46,6 +46,6 @@ private:
 	int ConsoleWidth = 0;
 	int ConsoleHeight = 0;
 
-	std::vector<ASKIIArtContainer> ArtContainers;
+	std::vector<FASKIIArtContainer> ArtContainers;
 
 };

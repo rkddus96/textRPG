@@ -35,7 +35,7 @@ void AssetHandler::ReadArt(const std::wstring& Filename)
 
     int Width = 0;
 
-    ASKIIArtContainer ArtContainer;
+    FASKIIArtContainer ArtContainer;
 
     while (std::getline(WIF, Line)) 
     {
