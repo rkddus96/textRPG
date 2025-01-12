@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
+
 Character::Character() : Level{ 1 }, MaxHp{ 200 }, CurHp(200), Power{ 30 }, Exp{ 0 }
 {
 	while (true)

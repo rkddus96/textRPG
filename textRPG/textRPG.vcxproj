@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -30,6 +30,8 @@
     <ClCompile Include="Source\Game\textRPG.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Job.h" />
+    <ClInclude Include="Mage.h" />
     <ClInclude Include="Source\Game\AssetHandler.h" />
     <ClInclude Include="Source\Game\AudioPlayer.h" />
     <ClInclude Include="Source\Game\Character.h" />
@@ -38,6 +40,8 @@
     <ClInclude Include="Source\Game\LogicHelper.h" />
     <ClInclude Include="Source\Game\RenderingHandler.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
+    <ClInclude Include="Thief.h" />
+    <ClInclude Include="Warrior.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

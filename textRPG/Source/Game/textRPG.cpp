@@ -1,6 +1,8 @@
 ﻿#include <iostream>
+#include "LogicHelper.h"
+#include "Character.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Hello world" << std::endl;
 }
