@@ -35,8 +35,8 @@ float Status::StatToDamage(float powerWeight, float defenseWeight, float luckWei
 	float defense = static_cast<float>(GetStat(EStat::Defense)) * defenseWeight;
 	float luck = static_cast<float>(GetStat(EStat::Luck)) * luckWeight;
 
-	// Damage 계산 로직 => (power + luck ) - defense
-	float damage = std::max((power + luck) - defense, 0.0f);
+	// Damage 계산 로직 => (power + luck ) + defense
+	float damage = std::max(power + luck + defense, 0.0f);
 
 	return damage;
 	
