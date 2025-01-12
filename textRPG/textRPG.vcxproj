@@ -30,18 +30,18 @@
     <ClCompile Include="Source\Game\textRPG.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Job.h" />
-    <ClInclude Include="Mage.h" />
     <ClInclude Include="Source\Game\AssetHandler.h" />
     <ClInclude Include="Source\Game\AudioPlayer.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
+    <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />
+    <ClInclude Include="Source\Game\Mage.h" />
     <ClInclude Include="Source\Game\RenderingHandler.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
-    <ClInclude Include="Thief.h" />
-    <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Source\Game\Thief.h" />
+    <ClInclude Include="Source\Game\Warrior.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
