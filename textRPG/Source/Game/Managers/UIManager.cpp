@@ -6,7 +6,7 @@
 #include "GameManager.h"
 #include "TimerManager.h"
 #include <functional>
-
+#include "../Character.h"
 UIManager::UIManager()
 {
 	
@@ -36,12 +36,35 @@ void UIManager::PrintUI(ERenderingCanvas CanvasType)
 	Canvas->PrintCurrentScreenUI();
 }
 
+void UIManager::OnStatChanged(EStat StatType, int Amount)
+{
+	std::wstring Text = L"";
+	switch (StatType)
+	{
+	case EStat::MaxHp:
+		Text += L"MaxHp Changed to : " + std::to_wstring(Amount);
+		break;
+	case EStat::CurHp:
+		Text += L"CurHp Changed to : " + std::to_wstring(Amount);
+		break;
+	case EStat::Power:
+		Text += L"Power Changed to : " + std::to_wstring(Amount);
+		break;
+	case EStat::Luck:
+		Text += L"Luck Changed to : " + std::to_wstring(Amount);
+		break;
+	case EStat::Defense:
+		Text += L"Defense Changed to : " + std::to_wstring(Amount);
+		break;
+	default:
+		break;
+	}
+
+	LogicHelper::PrintWStringFast(Text);
+}
+
 void UIManager::Init()
 {
-	TimerManager::GetInstance().OnTickForUIDelegate = [this](double Delta) 
-		{
-			this->Tick(Delta);
-		};
 	MakeEmtpyCanvasUI();
 	MakeOpningSceneUI();
 
@@ -314,6 +337,24 @@ void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer 
 {
 }
 
+void UIManager::BindAllDelegate()
+{
+	Character::GetInstance().OnCharacterChanged = [this](ECharacterEvent CharacterEvent, int Amount)
+		{
+			OnCharacterChanged(CharacterEvent, Amount);
+		};
+
+	Character::GetInstance().GetStatus().OnStatChanged = [this](EStat StatType, int Amount)
+		{
+			OnStatChanged(StatType, Amount);
+		};
+
+	TimerManager::GetInstance().OnTickForUIDelegate = [this](double Delta)
+		{
+			Tick(Delta);
+		};
+}
+
 void UIManager::SetMinimapUIContents()
 {
 	// TODO : 맵 타일 내용 받아서 그리기
@@ -415,6 +456,22 @@ void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTi
 
 	MinimapBorderLayer->DrawRectanlge(UI::MIMIMAP_BORDER_UI_FIRST_POSITION_X, UI::MIMIMAP_BORDER_UI_FIRST_POSITION_Y, MapSizeY + 3, MapSizeX + 2);
 	MinimapBorderLayer->CombineUiLines();
+}
+
+void UIManager::OnCharacterChanged(ECharacterEvent CharacterEvent, int Amount)
+{
+	if (CharacterEvent == ECharacterEvent::Exp)
+	{
+		std::wstring test = L"Exp : " + std::to_wstring(Amount);
+
+		LogicHelper::PrintWStringFast(test);
+	}
+	else if (CharacterEvent == ECharacterEvent::Level)
+	{
+		std::wstring test = L"Level : " + std::to_wstring(Amount);
+
+		LogicHelper::PrintWStringFast(test);
+	}
 }
 
 UIManager::~UIManager()

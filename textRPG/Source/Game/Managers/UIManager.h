@@ -89,9 +89,12 @@ public:
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface);
 	void SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType);
 
+	void BindAllDelegate();
 
 	// 임시 테스트용으로 퍼블릭 상태
 	void OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTileType>>& TileTypeInfos);
+
+	
 private:
 
 	void Init();
@@ -103,6 +106,10 @@ private:
 	void SetMinimapUIContents(/*std::vector<std::vector<Tile>> TileInfos*/);
 
 	void Tick(double DeltaTime);
+
+	void OnCharacterChanged(enum class ECharacterEvent CharacterEvent, int Amount);
+	//std::function<void(EStat, int)> OnStatChanged;
+	void OnStatChanged(enum class EStat StatType, int Amount);
 
 private:
 

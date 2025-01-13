@@ -28,6 +28,8 @@
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
     <ClCompile Include="Source\Game\Managers\TimerManager.cpp" />
     <ClCompile Include="Source\Game\Managers\UIManager.cpp" />
+    <ClCompile Include="Source\Game\MyTestScene.cpp" />
+    <ClCompile Include="Source\Game\MyTestScene.h" />
     <ClCompile Include="Source\Game\RenderingCanvas.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
