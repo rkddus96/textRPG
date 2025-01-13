@@ -99,7 +99,7 @@ void Character::AddItem(std::shared_ptr<Item> item)
 	Inventory.push_back(item);
 
 	// 장비 아이템이면 바로 효과 적용
-	if (item->IsConsumable() == true)
+	if (item->IsConsumable() == false)
 	{
 		item->Use(this);
 	}
@@ -125,7 +125,7 @@ void Character::UsePotion(int index)
 	std::shared_ptr<Item> item = Inventory[index];
 
 	// 만약 무기라면
-	if (item->IsConsumable())
+	if (item->IsConsumable() == false)
 	{
 		std::cout << "The item at index " << index << " is not a Potion." << std::endl;
 		return;
