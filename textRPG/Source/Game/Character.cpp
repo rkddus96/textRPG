@@ -5,6 +5,7 @@
 #include "Warrior.h"
 #include "Mage.h"
 #include "Thief.h"
+#include "Item.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
@@ -22,7 +23,7 @@ Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
 	};
 */
 
-//	Inventory.clear(); //Item 추가 시 추가
+	Inventory.clear(); //Item 추가 시 추가
 	
 }
 
@@ -57,8 +58,24 @@ bool Character::IsDead()
 	{
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 }
 
+// Add Item
+void Character::AddItem(std::shared_ptr<Item> item)
+{
+	Inventory.push_back(item);
+
+	// 장비 아이템이면 바로 효과 적용
+	if (item->GetState() == true)
+	{
+		item->Use(this);
+	}
+	
+}
 
 
 

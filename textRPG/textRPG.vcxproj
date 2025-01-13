@@ -33,6 +33,7 @@
     <ClCompile Include="Source\Game\Creatures\Orc.cpp" />
     <ClCompile Include="Source\Game\Creatures\Slime.cpp" />
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
+    <ClCompile Include="Source\Game\Equipment.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
     <ClCompile Include="Source\Game\LogicHelper.cpp" />
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="Source\Game\Creatures\Orc.h" />
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
+    <ClInclude Include="Source\Game\Equipment.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
     <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />

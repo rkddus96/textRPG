@@ -83,6 +83,8 @@
     <ClCompile Include="Source\Game\Creatures\Witch.cpp">
       <Filter>Source\Game\Creatures</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Equipment.cpp">
+      <Filter>Source\Game</Filter>
     <ClCompile Include="Source\Game\Battle\ABattle.cpp">
       <Filter>Source\Game\Battle</Filter>
     </ClCompile>
@@ -158,6 +160,8 @@
     <ClInclude Include="Source\Game\Creatures\Witch.h">
       <Filter>Source\Game\Creatures</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Equipment.h">
+      <Filter>Source</Filter>
     <ClInclude Include="Source\Game\Battle\ABattle.h">
       <Filter>Source\Game\Battle</Filter>
     </ClInclude>
