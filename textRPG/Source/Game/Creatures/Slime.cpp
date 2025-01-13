@@ -1,9 +1,10 @@
 #include "Slime.h"
+#include "../Managers/GameManager.h"
 
 Slime::Slime()
 {
     //초기화
-
+    //MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer()
 
 }
 
