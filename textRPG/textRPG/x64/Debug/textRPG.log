@@ -1,0 +1,77 @@
+﻿  MonstserFactoryManager.cpp
+  AssetHandler.cpp
+D:\TextRPG\textRPG\Source\Game\AssetHandler.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\TextRPG\textRPG\Source\Game\AssetHandler.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/AssetHandler.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\LogicHelper.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/AssetHandler.cpp'을(를) 컴파일하는 중)
+  
+  Character.cpp
+D:\TextRPG\textRPG\Source\Game\Character.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\TextRPG\textRPG\Source\Game\Character.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/Character.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\Status.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/Character.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\Job.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/Character.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\Warrior.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/Character.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\Character.cpp(158,16): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\Character.cpp(159,8): error C2143: 구문 오류: ';'이(가) 'std::cin' 앞에 없습니다.
+  ConstantContainer.cpp
+D:\TextRPG\textRPG\Source\Game\ConstantContainer.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\TextRPG\textRPG\Source\Game\ConstantContainer.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/ConstantContainer.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\ConstantContainer.cpp(17,31): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\ConstantContainer.cpp(17,31): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\ConstantContainer.cpp(19,2): error C2143: 구문 오류: ';'이(가) 'const' 앞에 없습니다.
+  Goblin.cpp
+  RenderingLayer.cpp
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/RenderingLayer.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\ConstantContainer.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/RenderingLayer.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\LogicHelper.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/RenderingLayer.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(91,42): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(91,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(92,17): error C2143: 구문 오류: ')'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(92,17): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(95,42): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(95,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(96,17): error C2143: 구문 오류: ')'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(96,17): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(99,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(106,42): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(106,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(107,17): error C2143: 구문 오류: ')'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(107,17): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(110,42): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(110,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(111,17): error C2143: 구문 오류: ')'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(111,17): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(114,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(121,42): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(121,42): warning C4066: 와이드 문자 상수에서 첫 문자 뒤의 문자는 무시됩니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(122,17): error C2143: 구문 오류: ')'이(가) '}' 앞에 없습니다.
+D:\TextRPG\textRPG\Source\Game\RenderingLayer.cpp(122,17): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
+  Slime.cpp
+  TileMap.cpp
+D:\TextRPG\textRPG\Source\Game\TileMap.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\TextRPG\textRPG\Source\Game\TileMap.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/TileMap.cpp'을(를) 컴파일하는 중)
+  
+D:\TextRPG\textRPG\Source\Game\LogicHelper.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Source/Game/TileMap.cpp'을(를) 컴파일하는 중)
+  
+  코드를 생성하고 있습니다...
