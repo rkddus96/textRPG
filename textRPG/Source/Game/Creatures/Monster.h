@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include "../AssetHandler.h"
 
 using namespace std;
 
@@ -38,6 +39,6 @@ protected:
     string name;
     int MaxHp, CurHp, Power, Defense, Exp, Money;
     
-
+    const FASKIIArtContainer MonsterImage;
 };
 
