@@ -3,7 +3,7 @@
 #include "LogicHelper.h"
 
 TileMap::TileMap(int Width, int Height)
-	:MapData(Height, std::vector(Width, ETile::Blank)), Width(Width), Height(Height)
+	:TileGrid(Height, std::vector(Width, ETile::Blank)), Width(Width), Height(Height)
 {
 	GenerateTestMap();
 }
@@ -15,7 +15,7 @@ std::pair<int, int> TileMap::GetCurrentPosition() const
 
 EArtList TileMap::GetCurrentTileArt() const
 {
-	return TileArtData[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
+	return TileArtGrid[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
 }
 
 void TileMap::Move(int NextX, int NextY)
@@ -51,12 +51,12 @@ FAvailableDirection TileMap::GetAvailableDirection()
 
 bool TileMap::CanTraverse(int X, int Y) const
 {
-	return (X >= 0 && X < Width && Y >= 0 && Y < Height) && MapData[X][Y] != ETile::Block;
+	return (X >= 0 && X < Width && Y >= 0 && Y < Height) && TileGrid[X][Y] != ETile::Block;
 }
 
 std::vector<std::vector<ETile>> TileMap::GetCurretnMapData()
 {
-	std::vector<std::vector<ETile>> CurrentMap = MapData;
+	std::vector<std::vector<ETile>> CurrentMap = TileGrid;
 	CurrentMap[CurrentPlayerPosition.first][CurrentPlayerPosition.second] = ETile::Character;
 
 	return CurrentMap;
@@ -68,7 +68,7 @@ void TileMap::GenerateRandomMap()
 
 	for (int row = 0; row < Height; row++) {
 		for(int col = 0; col < Width; col++) {
-			MapData[row][col] = static_cast<ETile>(LogicHelper::GetRandomNumber(0, maxTileType));
+			TileGrid[row][col] = static_cast<ETile>(LogicHelper::GetRandomNumber(0, maxTileType));
 		}
 	}
 }
@@ -80,7 +80,7 @@ void TileMap::GenerateTestMap()
 	}
 
 	// 좌상단이 마을, 우상단이 마을2, 우하단이 마왕성
-	MapData[0][0] = ETile::Village1;
-	MapData[Width - 1][0] = ETile::Village2;
-	MapData[Width - 1][Height - 1] = ETile::DemonLordCastle;
+	TileGrid[0][0] = ETile::Village1;
+	TileGrid[Width - 1][0] = ETile::Village2;
+	TileGrid[Width - 1][Height - 1] = ETile::DemonLordCastle;
 }
