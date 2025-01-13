@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
     <ClCompile Include="Source\Game\Managers\TimerManager.cpp" />
     <ClCompile Include="Source\Game\Managers\UIManager.cpp" />
+    <ClCompile Include="Source\Game\MyTestScene.cpp" />
     <ClCompile Include="Source\Game\RenderingCanvas.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Source\Game\Managers\GameManager.h" />
     <ClInclude Include="Source\Game\Managers\TimerManager.h" />
     <ClInclude Include="Source\Game\Managers\UIManager.h" />
+    <ClInclude Include="Source\Game\MyTestScene.h" />
     <ClInclude Include="Source\Game\RenderingCanvas.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
     <ClInclude Include="Source\Game\TileMap.h" />
