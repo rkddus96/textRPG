@@ -20,7 +20,7 @@ EArtList TileMap::GetCurrentTileArt() const
 
 void TileMap::Move(int NextX, int NextY)
 {
-	if (!CanTraverse(NextY, NextY))
+	if (!CanTraverse(NextX, NextY))
 	{
 		// 필요할 경우 로깅 혹은 exeception 발생
 		return;
