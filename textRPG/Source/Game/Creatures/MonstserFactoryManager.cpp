@@ -17,3 +17,14 @@ unique_ptr<Monster> MonstserFactoryManager::createMonster(const string& type) co
 
     throw std::runtime_error("Monster type not found: " + type);
 }
+
+unique_ptr<Monster> MonstserFactoryManager::createMonster(const string& type, int level) const
+{
+    auto it = Factories.find(type);
+    if (it != Factories.end()) {
+
+        return it->second->Create(level);
+    }
+
+    throw std::runtime_error("Monster type not found: " + type);
+}

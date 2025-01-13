@@ -2,7 +2,7 @@
 
 Monster::Monster(const string& name, int baseHp, int basePower, int baseDefense, int exp, int money, int level)
     : name(name), BaseHp(baseHp), BasePower(basePower), BaseDefense(baseDefense), Exp(exp), Money(money), Level(level) {
-    CalculateStats(); // 레벨에 따른 능력치 계산
+     
 }
 
 void Monster::CalculateStats(int hpModifier, int powerModifier, int defenseModifier)

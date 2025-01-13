@@ -32,6 +32,7 @@ public:
     void RegisterFactory(const string& type, unique_ptr<MonsterFactory> factory);
 
     unique_ptr<Monster> createMonster(const string& type) const;
+    unique_ptr<Monster> createMonster(const string& type, int level) const;
 
 };
 
