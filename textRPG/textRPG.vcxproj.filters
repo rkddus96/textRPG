@@ -17,6 +17,9 @@
     <Filter Include="Source\Game\Creatures">
       <UniqueIdentifier>{a01168b2-4fbb-473d-8b90-e597ea793635}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game\Battle">
+      <UniqueIdentifier>{d0887c83-a7f9-426e-a55b-d01a19b49d49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\AssetHandler.cpp">
@@ -79,6 +82,15 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Creatures\Witch.cpp">
       <Filter>Source\Game\Creatures</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Battle\ABattle.cpp">
+      <Filter>Source\Game\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Battle\AutoBattle.cpp">
+      <Filter>Source\Game\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Battle\HandBattle.cpp">
+      <Filter>Source\Game\Battle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +157,15 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Creatures\Witch.h">
       <Filter>Source\Game\Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Battle\ABattle.h">
+      <Filter>Source\Game\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Battle\AutoBattle.h">
+      <Filter>Source\Game\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Battle\HandBattle.h">
+      <Filter>Source\Game\Battle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
