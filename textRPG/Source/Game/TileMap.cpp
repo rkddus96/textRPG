@@ -23,7 +23,10 @@ void TileMap::Move(int NextX, int NextY)
 	CurrentPlayerPosition = {NextX, NextY};
 
 	// 맵이 변경된 것을 알림
-	OnMapChanged(GetCurretnMapData());
+	if (OnMapChanged)
+	{
+		OnMapChanged(GetCurretnMapData());
+	}
 }
 
 FAvailableDirection TileMap::GetAvailableDirection()
