@@ -3,9 +3,11 @@
 #include <memory>
 #include <vector>
 #include <functional> // 콜백함수를 위해 추가
-// #include "Item.h" // Item 구현 시 추가
+
 #include "Status.h"
 #include "Job.h"
+
+class Item;// Item 구현 시 추가
 
 enum class ECharacterEvent
 {
@@ -29,8 +31,7 @@ private:
 
 	Status Stats;
 	std::shared_ptr<Job> Jobs;
-
-//	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
+	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
 
 	
 
@@ -75,7 +76,8 @@ public:
 	// 캐릭터 생존 여부
 	bool IsDead();
 	
-	
+	// 인벤토리 추가
+	void AddItem(std::shared_ptr<Item> item);
 
 	
 	void Display() const;
