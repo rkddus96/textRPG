@@ -13,6 +13,11 @@ std::pair<int, int> TileMap::GetCurrentPosition() const
 	return CurrentPlayerPosition;
 }
 
+EArtList TileMap::GetCurrentTileArt() const
+{
+	return TileArtData[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
+}
+
 void TileMap::Move(int NextX, int NextY)
 {
 	if (!CanTraverse(NextY, NextY))

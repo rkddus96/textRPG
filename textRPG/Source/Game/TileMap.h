@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <functional>
+#include "AssetHandler.h"
 
 enum class ETile
 {
@@ -36,6 +37,12 @@ public:
 	/// </summary>
 	/// <returns>[x, y], x : [0, width - 1], y : [0, height - 1]</returns>
 	std::pair<int, int> GetCurrentPosition() const;
+
+	/// <summary>
+	/// 현재 타일의 아스키 아트를 반환한다.
+	/// </summary>
+	/// <returns>EArtList 타입</returns>
+	EArtList GetCurrentTileArt() const;
 
 	/// <summary>
 	/// 현재 캐릭터의 위치를 이동한다. 이동할 수 없는 값이 주어질 경우 현재 위치를 유지한다.
@@ -76,7 +83,8 @@ protected:
 	/// </summary>
 	void GenerateTestMap();
 private:
-	std::vector<std::vector<ETile>> MapData;
+	std::vector<std::vector<ETile>> TileGrid;
+	std::vector<std::vector<EArtList>> TileArtGrid;
 	int Width;
 	int Height;
 	std::pair<int, int> CurrentPlayerPosition;
