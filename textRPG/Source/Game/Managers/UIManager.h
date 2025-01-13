@@ -84,6 +84,7 @@ public:
 	void AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage);
 	void ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount);
 	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface);
+	void ChangeBasicCanvasArtImage(const struct FASKIIArtContainer& ArtContainer);
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType);
 
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface);
