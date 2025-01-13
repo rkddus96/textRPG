@@ -3,6 +3,7 @@
 Witch::Witch()
 {
     //초기화
+    //MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArt::Slime);
 }
 
 void Witch::DisplayIntroduction()

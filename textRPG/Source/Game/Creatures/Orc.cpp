@@ -2,6 +2,7 @@
 
 Orc::Orc()
 {
+    //MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArt::Slime);
 }
 
 void Orc::DisplayIntroduction()
