@@ -8,9 +8,9 @@ enum class ETile
 	Block, // 장애물
 	Blank, // 공터
 	DemonLordCastle, // 마왕성
-	Villalge1, // 마을1
+	Village1, // 마을1
 	Village2, // 마을2
-	Vilalge2_Disable, // 사용불가 마을2
+	Village2_Disabled, // 사용불가 마을2
  	Character, // 캐릭터
 	Count,
 };

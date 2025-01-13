@@ -72,7 +72,7 @@ void TileMap::GenerateTestMap()
 	}
 
 	// 좌상단이 마을, 우상단이 마을2, 우하단이 마왕성
-	MapData[0][0] = ETile::Villalge1;
+	MapData[0][0] = ETile::Village1;
 	MapData[Width - 1][0] = ETile::Village2;
 	MapData[Width - 1][Height - 1] = ETile::DemonLordCastle;
 }
