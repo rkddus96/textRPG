@@ -5,21 +5,22 @@
 
 std::unordered_set<int> RenderingLayer::LayerIdSet;
 
-RenderingLayer::RenderingLayer(int InLayerOrder, char InMask) :
-	LayerOrder(InLayerOrder),
-    Mask(LogicHelper::CharToWChar(InMask))
-{
-    InitLayer();
-}
+//RenderingLayer::RenderingLayer(int InLayerOrder, char InMask) :
+//	LayerOrder(InLayerOrder),
+//    Mask(LogicHelper::CharToWChar(InMask))
+//{
+//    InitLayer();
+//}
 
 RenderingLayer::RenderingLayer(int InLayerOrder, wchar_t InMask) :
     LayerOrder(InLayerOrder),
-    Mask(InMask)
+    Mask(InMask),
+    bIsHiding(false)
 {
     InitLayer();
 }
 
-void RenderingLayer::RefreshLayer()
+void RenderingLayer::ClearLayerFor(wchar_t CellWChar)
 {
     int ConsoleWidth = 0;
     int ConsoleHeight = 0;
@@ -38,7 +39,7 @@ void RenderingLayer::RefreshLayer()
         {
             if (j < ConsoleWidth - 1)
             {
-                UILines[i].push_back(' ');
+                UILines[i].push_back(CellWChar);
             }
             else
             {
@@ -146,13 +147,13 @@ void RenderingLayer::DrawWCharacter(int PositionX, int PositionY, wchar_t WChar)
     }
 
     // 한글이나 한자 뒤에 삽입 용도
-    wchar_t VoidWChar = Char::EMPTY_CHAR;
+    wchar_t VoidWChar = UI::EMPTY_CHAR;
 
     if (LogicHelper::IsHangul(WChar) || LogicHelper::IsHanja(WChar))
     {
         // 줄의 마지막 문자는 \n이 들어있어서 건들면 안 됨..
         // 그리고 한글과 한자는 두 칸이기 때문에 맨 마지막 자리에는 삽입 불가
-        if (PositionY >= LineSize - 2 || CurrentWChar == VoidWChar)
+        if (PositionY >= LineSize - 2 /*|| CurrentWChar == VoidWChar*/)
         {
             std::cout << "There is no Space for Hangle or Hanja " << std::endl;
             return;
@@ -160,7 +161,7 @@ void RenderingLayer::DrawWCharacter(int PositionX, int PositionY, wchar_t WChar)
         
         UILines[PositionX][PositionY + 1] = VoidWChar;
     }
-    else if (CurrentWChar == VoidWChar)
+    else if (CurrentWChar == VoidWChar && PositionY > 1)
     {
         wchar_t& PrevWChar = UILines[PositionX][PositionY - 1];
 
@@ -216,7 +217,7 @@ void RenderingLayer::DrawString(int PositionX, int PositionY, const std::wstring
         if (LogicHelper::IsHangul(WChar) || LogicHelper::IsHanja(WChar))
         {
             j++;
-            DrawWCharacter(PositionX, PositionY + i + j, L'\u200B');
+            DrawWCharacter(PositionX, PositionY + i + j, UI::EMPTY_CHAR);
         }
     }
 }
@@ -239,7 +240,7 @@ void RenderingLayer::CombineUiLines()
         Layer += UILines[i];
         for (int j = 0; j < UILines[i].size(); ++j)
         {
-            if (UILines[i][j] == L'\u200B')
+            if (UILines[i][j] == UI::EMPTY_CHAR)
             {
                 continue;
             }
@@ -257,7 +258,7 @@ void RenderingLayer::InitLayer()
     {
         LayerId = LogicHelper::GetRandomNumberMaxRange();
 
-        if (LayerIdSet.find(LayerId) != LayerIdSet.end())
+        if (LayerIdSet.find(LayerId) == LayerIdSet.end())
         {
             LayerIdSet.insert(LayerId);
             break;
@@ -265,12 +266,12 @@ void RenderingLayer::InitLayer()
 
         if (i == tryingCount - 1)
         {
-            LogicHelper::PrintWStringFast(L"Fail to generate id of LanderingLayer..");
+            std::cout << "Fail to generate id of LanderingLayer, LayerId : " << LayerId << std::endl;
             return;
         }
     }
 
-    RefreshLayer();
+    ClearLayerFor(UI::EMPTY_CHAR);
 }
 
 RenderingLayer::~RenderingLayer()
