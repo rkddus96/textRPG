@@ -32,12 +32,15 @@ private:
 
 //	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
 
-	std::function<void(ECharacterEvent, int)> OnCharacterChanged;
+	
 
 	Character();
 	
 
 public:
+
+	std::function<void(ECharacterEvent, int)> OnCharacterChanged;
+
 	// 복사, 이동 제거
 	Character(const Character& other) = delete;
 	Character& operator= (const Character&) = delete;
@@ -68,6 +71,10 @@ public:
 
 	// 레벨업 함수
 	void LevelUp();
+
+	// 캐릭터 생존 여부
+	bool IsDead();
+
 	
 
 	
