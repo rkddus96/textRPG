@@ -51,7 +51,7 @@ std::vector<std::vector<ETile>> TileMap::GetCurretnMapData()
 	std::vector<std::vector<ETile>> CurrentMap = MapData;
 	CurrentMap[CurrentPlayerPosition.first][CurrentPlayerPosition.second] = ETile::Character;
 
-	return MapData;
+	return CurrentMap;
 }
 
 void TileMap::GenerateRandomMap()

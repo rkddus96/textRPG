@@ -50,7 +50,7 @@ public:
 	/// <returns>이동 가능 방향을 나타내는 FAvailableDirection을 반환</returns>
 	FAvailableDirection GetAvailableDirection();
 
-	std::function< void(std::vector<std::vector<ETile>>) > OnMapChanged;
+	std::function< void(const std::vector<std::vector<ETile>>&) > OnMapChanged;
 	/// <summary>
 	/// x, y 좌표로 이동 가능한지를 반환
 	/// </summary>
