@@ -132,7 +132,8 @@ void Character::RandomizeStats()
 		std::cout << "                  PLAYER STATUS                  " << std::endl;
 		std::cout << "-------------------------------------------------" << std::endl;
 		std::cout << "이  름 : " << Name << std::endl;
-		std::cout << "직  업 : " << Jobs->GetJobName() << std::endl;
+		
+		std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
 		std::cout << "레  벨 : " << Level << std::endl;
 		std::cout << "경험치 : " << Exp << "/" << MaxExp << std::endl;
 		std::cout << "체  력 : " << maxHp << "/" << maxHp << std::endl;
@@ -247,7 +248,7 @@ void Character::Display() const
 	std::cout << "                  PLAYER STATUS                  " << std::endl;
 	std::cout << "-------------------------------------------------" << std::endl;
 	std::cout << "이  름 : " << Name << std::endl;
-	std::cout << "직  업 : " << Jobs->GetJobName() << std::endl;
+	std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
 	std::cout << "레  벨 : " << Level << std::endl;
 	std::cout << "경험치 : " << Exp << "/" << MaxExp << std::endl;
 	std::cout << "체  력 : " << maxHp << "/" << maxHp << std::endl;
