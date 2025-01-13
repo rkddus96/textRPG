@@ -2,13 +2,14 @@
 
 Witch::Witch()
 {
+    //ì´ˆê¸°í™”
 }
 
 void Witch::DisplayIntroduction()
 {
-    //¾ÆÆ® Ãâ·Â
-    
-    //Á¤º¸ 
+    //ì•„íŠ¸
+
+    //ì •ë³´ ì¶œë ¥
     cout << "Name : " << name << endl;
     cout << "Hp : " << CurHp << endl;
     cout << "Power : " << Power << endl;

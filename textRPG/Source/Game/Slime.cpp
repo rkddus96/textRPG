@@ -2,16 +2,16 @@
 
 Slime::Slime()
 {
-    //ÃÊ±âÈ­
+    //ì´ˆê¸°í™”
 
 
 }
 
 void Slime::DisplayIntroduction()
 {
-    //¾ÆÆ® Ãâ·Â
+    //ì•„íŠ¸
 
-    //Á¤º¸ Ãâ·Â
+    //ì •ë³´ ì¶œë ¥
     cout << "Name : " << name << endl;
     cout << "Hp : " << CurHp << endl;
     cout << "Power : " << Power << endl;

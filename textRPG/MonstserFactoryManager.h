@@ -28,10 +28,9 @@ public:
 
 
 public:
-    // 팩토리를 등록하는 함수
+
     void RegisterFactory(const string& type, unique_ptr<MonsterFactory> factory);
 
-    // 등록된 팩토리로부터 몬스터를 생성하는 함수
     unique_ptr<Monster> createMonster(const string& type) const;
 
 };

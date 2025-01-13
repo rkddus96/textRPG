@@ -2,14 +2,14 @@
 
 Goblin::Goblin()
 {
-    //½ºÅÈ ÃÊ±âÈ­
+    //ì´ˆê¸°í™”
 }
 
 void Goblin::DisplayIntroduction()
 {
-    //¾ÆÆ® Ãâ·Â
+    //ì•„íŠ¸
 
-    //Á¤º¸ 
+    //ì •ë³´ ì¶œë ¥
     cout << "Name : " << name << endl;
     cout << "Hp : " << CurHp << endl;
     cout << "Power : " << Power << endl;

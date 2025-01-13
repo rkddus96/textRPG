@@ -11,9 +11,9 @@ unique_ptr<Monster> MonstserFactoryManager::createMonster(const string& type) co
 {
     auto it = Factories.find(type);
     if (it != Factories.end()) {
-        // 팩토리를 통해 몬스터 생성
+
         return it->second->Create();
     }
-    // 타입이 등록되지 않은 경우 예외를 던짐
+
     throw std::runtime_error("Monster type not found: " + type);
 }
