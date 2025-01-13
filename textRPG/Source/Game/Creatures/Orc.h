@@ -6,7 +6,7 @@
 class Orc : public Monster
 {
 public:
-    Orc();
+    Orc(int level);
     void DisplayIntroduction() override;
 };
 
