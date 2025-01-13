@@ -44,6 +44,9 @@
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h" />
     <ClInclude Include="Source\Game\AudioPlayer.h" />
+    <ClInclude Include="Source\Game\Battle\ABattle.h" />
+    <ClInclude Include="Source\Game\Battle\AutoBattle.h" />
+    <ClInclude Include="Source\Game\Battle\HandBattle.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />
     <ClInclude Include="Source\Game\Creatures\Goblin.h" />
