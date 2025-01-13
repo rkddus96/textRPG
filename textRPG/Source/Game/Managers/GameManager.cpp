@@ -3,6 +3,7 @@
 GameManager::GameManager() :
 	bIsClearGame(false)
 {
+
 }
 
 GameManager::~GameManager()

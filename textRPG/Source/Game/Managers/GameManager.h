@@ -3,6 +3,7 @@
 #include <memory>
 #include "UIManager.h"
 #include "../AssetHandler.h"
+#include "../TileMap.h"
 
 //class Monster;
 //class BossMonster;
@@ -55,6 +56,11 @@ public:
 		return AssetHandlerInstance;
 	}
 
+	std::unique_ptr<TileMap>& GetTileMap()
+	{
+		return TileMapIsntance;
+	}
+
 private:
 
 	GameManager();
@@ -72,4 +78,6 @@ private:
 	std::unique_ptr<UIManager> UIManagerInstance;
 
 	std::unique_ptr<AssetHandler> AssetHandlerInstance;
+
+	std::unique_ptr<TileMap> TileMapIsntance;
 };
