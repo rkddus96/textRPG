@@ -2,15 +2,16 @@
 
 #include <vector>
 #include <functional>
+#include "AssetHandler.h"
 
 enum class ETile
 {
 	Block, // 장애물
 	Blank, // 공터
 	DemonLordCastle, // 마왕성
-	Villalge1, // 마을1
+	Village1, // 마을1
 	Village2, // 마을2
-	Vilalge2_Disable, // 사용불가 마을2
+	Village2_Disabled, // 사용불가 마을2
  	Character, // 캐릭터
 	Count,
 };
@@ -38,6 +39,12 @@ public:
 	std::pair<int, int> GetCurrentPosition() const;
 
 	/// <summary>
+	/// 현재 타일의 아스키 아트를 반환한다.
+	/// </summary>
+	/// <returns>EArtList 타입</returns>
+	EArtList GetCurrentTileArt() const;
+
+	/// <summary>
 	/// 현재 캐릭터의 위치를 이동한다. 이동할 수 없는 값이 주어질 경우 현재 위치를 유지한다.
 	/// </summary>
 	/// <param name="nextX">이동할 X 좌표</param>
@@ -50,7 +57,7 @@ public:
 	/// <returns>이동 가능 방향을 나타내는 FAvailableDirection을 반환</returns>
 	FAvailableDirection GetAvailableDirection();
 
-	std::function< void(std::vector<std::vector<ETile>>) > OnMapChanged;
+	std::function< void(const std::vector<std::vector<ETile>>&) > OnMapChanged;
 	/// <summary>
 	/// x, y 좌표로 이동 가능한지를 반환
 	/// </summary>
@@ -76,7 +83,8 @@ protected:
 	/// </summary>
 	void GenerateTestMap();
 private:
-	std::vector<std::vector<ETile>> MapData;
+	std::vector<std::vector<ETile>> TileGrid;
+	std::vector<std::vector<EArtList>> TileArtGrid;
 	int Width;
 	int Height;
 	std::pair<int, int> CurrentPlayerPosition;
