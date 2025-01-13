@@ -1,6 +1,13 @@
 #include "MonstserFactoryManager.h"
 
 
+MonstserFactoryManager::MonstserFactoryManager()
+{
+    RegisterFactory("Slime", make_unique<SlimeFactory>());
+    RegisterFactory("Orc", make_unique<OrcFactory>());
+    RegisterFactory("Witch", make_unique<WitchFactory>());
+    RegisterFactory("Goblin", make_unique<GoblinFactory>());
+}
 
 void MonstserFactoryManager::RegisterFactory(const string& type, unique_ptr<MonsterFactory> factory)
 {
