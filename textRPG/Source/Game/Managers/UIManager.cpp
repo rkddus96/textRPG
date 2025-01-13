@@ -408,6 +408,11 @@ void UIManager::BindAllDelegate()
 		{
 			Tick(Delta);
 		};
+
+	GameManager::GetInstance().GetTileMap()->OnMapChanged = [this](const std::vector<std::vector<ETile>>& TileTypeInfos)
+		{
+			OnMinimapUIContentsChanged(TileTypeInfos);
+		};
 }
 
 void UIManager::SetMinimapUIContents()
@@ -420,7 +425,7 @@ void UIManager::Tick(double DeltaTime)
 
 }
 
-void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTileType>>& TileTypeInfos)
+void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETile>>& TileTypeInfos)
 {
 	int MapSizeX = (int)TileTypeInfos.size();
 
@@ -460,25 +465,25 @@ void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTi
 		{
 			wchar_t TileImage;
 
-			if (TileTypeInfos[i][j] == ETempTileType::Block)
+			if (TileTypeInfos[i][j] == ETile::Block)
 			{
 				TileImage = L' ';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::Blank)
+			else if (TileTypeInfos[i][j] == ETile::Blank)
 			{
 				TileImage = L'O';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::Character)
+			else if (TileTypeInfos[i][j] == ETile::Character)
 			{
 				TileImage = L'X';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::DemonLordCastle)
+			else if (TileTypeInfos[i][j] == ETile::DemonLordCastle)
 			{
 				TileImage = L'?';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::Village1 ||
-				TileTypeInfos[i][j] == ETempTileType::Village2 ||
-				TileTypeInfos[i][j] == ETempTileType::Village2_Disabled)
+			else if (TileTypeInfos[i][j] == ETile::Village1 ||
+				TileTypeInfos[i][j] == ETile::Village2 ||
+				TileTypeInfos[i][j] == ETile::Village2_Disabled)
 			{
 				TileImage = L'V';
 			}

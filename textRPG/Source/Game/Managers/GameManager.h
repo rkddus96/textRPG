@@ -28,6 +28,10 @@ public:
 			Instance.UIManagerInstance->Init();
 		}
 
+		if (Instance.TileMapIsntance == nullptr)
+		{
+			Instance.TileMapIsntance = std::make_unique<TileMap>(5, 5);
+		}
 
 		return Instance;
 	}
