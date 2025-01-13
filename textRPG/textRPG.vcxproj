@@ -33,6 +33,8 @@
     <ClCompile Include="Source\Game\Monster.cpp" />
     <ClCompile Include="Source\Game\MonsterFactory.cpp" />
     <ClCompile Include="Source\Game\Orc.cpp" />
+    <ClCompile Include="Source\Game\MyTestScene.cpp" />
+    <ClCompile Include="Source\Game\MyTestScene.h" />
     <ClCompile Include="Source\Game\RenderingCanvas.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
     <ClCompile Include="Source\Game\Slime.cpp" />
