@@ -1,7 +1,7 @@
 #pragma once
-#include "Job.h"
+#include "IJob.h"
 
-class Thief : public Job
+class Thief : public IJob
 {
 public:
 	float GetPowerWeight() const override { return 1.0f; }

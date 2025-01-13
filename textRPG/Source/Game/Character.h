@@ -5,9 +5,9 @@
 #include <functional> // 콜백함수를 위해 추가
 
 #include "Status.h"
-#include "Job.h"
+#include "IJob.h"
 
-class Item;// Item 구현 시 추가
+class IItem;// Item 구현 시 추가
 
 enum class ECharacterEvent
 {
@@ -33,8 +33,8 @@ private:
 	int Damage;
 
 	Status Stats;
-	std::shared_ptr<Job> Jobs;
-	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
+	std::shared_ptr<IJob> Jobs;
+	std::vector<std::shared_ptr<IItem>> Inventory; // Item 구현 시 추가
 
 	
 
@@ -45,7 +45,7 @@ public:
 
 	std::function<void(ECharacterEvent, int)> OnCharacterChanged;
 	// 아이템 설명 생겼을 때 추가
-	std::function<void(const std::vector<std::shared_ptr<Item>>&)> OnItemChanged;
+	std::function<void(const std::vector<std::shared_ptr<IItem>>&)> OnItemChanged;
 
 
 	// 복사, 이동 제거
@@ -65,7 +65,7 @@ public:
 	int GetMaxExp() const { return MaxExp; }
 	int GetGold() const { return Gold; }
 	Status& GetStatus() { return Stats; }
-	std::shared_ptr<Job> GetJob() const { return Jobs; }
+	std::shared_ptr<IJob> GetJob() const { return Jobs; }
 
 	// Setter 함수
 	void SetExp(int exp);
@@ -92,7 +92,7 @@ public:
 	int TakeDamage(int damage);
 	
 	// 인벤토리 추가
-	void AddItem(std::shared_ptr<Item> item);
+	void AddItem(std::shared_ptr<IItem> item);
 
 	// 아이템 사용
 	void UsePotion(int index);

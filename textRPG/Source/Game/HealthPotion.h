@@ -1,8 +1,8 @@
 #pragma once
-#include "Item.h"
+#include "IItem.h"
 
 
-class HealthPotion : public Item
+class HealthPotion : public IItem
 {
 private:
 	std::string Name;

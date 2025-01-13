@@ -2,10 +2,10 @@
 
 #include <string>
 
-class Job
+class IJob
 {
 public:
-	virtual ~Job() = default;
+	virtual ~IJob() = default;
 
 	// 순수 가상함수
 	virtual float GetPowerWeight() const = 0;
