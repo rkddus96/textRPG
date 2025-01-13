@@ -50,16 +50,37 @@ void Character::SetLevel(int level)
 	}
 }
 
+void Character::SetGold(int gold)
+{
+	Gold = gold;
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Gold, Gold);
+	}
+}
+
+
 // 생존 여부 반환 함수
-bool Character::IsDead()
+bool Character::IsDead() const
 {
 	if (Stats.GetStat(EStat::CurHp) <= 0)
 	{
 		return true;
 	}
+	else
+	{
+		return false;
+	}
 }
 
+int Character::TakeDamage(int damage) const
+{
+	int Defense = Stats.GetStat(EStat::Defense);
+	int GetDamage = damage - Defense;
 
+	return GetDamage;
+	
+}
 
 
 // 캐릭터 생성 함수
