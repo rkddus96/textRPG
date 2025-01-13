@@ -1,7 +1,7 @@
 #pragma once
-#include "Item.h"
+#include "IItem.h"
 
-class Equipment : public Item
+class Equipment : public IItem
 {
 private:
 	std::string Name; // 이름

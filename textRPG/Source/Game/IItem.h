@@ -5,10 +5,10 @@
 
 
 
-class Item
+class IItem
 {
 public:
-	virtual ~Item() = default;
+	virtual ~IItem() = default;
 
 	virtual std::string GetName() const = 0;
 
