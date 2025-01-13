@@ -5,13 +5,11 @@
 #include "Warrior.h"
 #include "Mage.h"
 #include "Thief.h"
-#include "./Managers/GameManager.h"
+#include "Item.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
 {
-	CharacterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::MainCharacter);
-
 	InitCharacter();
 	RandomizeStats();
 
@@ -25,7 +23,7 @@ Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
 	};
 */
 
-//	Inventory.clear(); //Item 추가 시 추가
+	Inventory.clear(); //Item 추가 시 추가
 	
 }
 
@@ -53,18 +51,8 @@ void Character::SetLevel(int level)
 	}
 }
 
-void Character::SetGold(int gold)
-{
-	Gold = gold;
-	if (OnCharacterChanged)
-	{
-		OnCharacterChanged(ECharacterEvent::Gold, Gold);
-	}
-}
-
-
 // 생존 여부 반환 함수
-bool Character::IsDead() const
+bool Character::IsDead()
 {
 	if (Stats.GetStat(EStat::CurHp) <= 0)
 	{
@@ -76,16 +64,18 @@ bool Character::IsDead() const
 	}
 }
 
-int Character::TakeDamage(int damage) const
+// Add Item
+void Character::AddItem(std::shared_ptr<Item> item)
 {
-	int Defense = Stats.GetStat(EStat::Defense);
-	int GetDamage = damage - Defense;
+	Inventory.push_back(item);
 
-	return GetDamage;
+	// 장비 아이템이면 바로 효과 적용
+	if (item->GetState() == true)
+	{
+		item->Use(this);
+	}
 	
 }
-
-// 이미지 생성 함수
 
 
 

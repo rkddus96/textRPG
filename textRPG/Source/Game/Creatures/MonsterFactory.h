@@ -20,30 +20,38 @@ class MonsterFactory
 public:
     virtual ~MonsterFactory() = default;
     virtual unique_ptr<Monster> Create() const = 0;
+    virtual unique_ptr<Monster> Create(int level) const = 0;
 };
 
 class SlimeFactory : public MonsterFactory
 {
 public:
     unique_ptr<Monster> Create() const override;
+
+    unique_ptr<Monster> Create(int level) const override;
 };
 
 class OrcFactory : public MonsterFactory
 {
 public:
     unique_ptr<Monster> Create() const override;
+
+    unique_ptr<Monster> Create(int level) const override;
 };
 
 class WitchFactory : public MonsterFactory
 {
 public:
     unique_ptr<Monster> Create() const override;
+
+    unique_ptr<Monster> Create(int level) const override;
 };
 
 class GoblinFactory : public MonsterFactory
 {
 public:
     unique_ptr<Monster> Create() const override;
-};
 
+    unique_ptr<Monster> Create(int level) const override;
+};
 #endif

@@ -6,7 +6,7 @@
 class Witch : public Monster
 {
 public:
-    Witch();
+    Witch(int level);
     void DisplayIntroduction() override;
 };
 

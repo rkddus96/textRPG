@@ -7,6 +7,7 @@
 #include "TimerManager.h"
 #include <functional>
 #include "../Character.h"
+
 UIManager::UIManager()
 {
 	
@@ -102,7 +103,8 @@ void UIManager::MakeBasicUI()
 	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::BackgroundBorder);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
 
-	BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
+	//BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
+	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
 	BackgroundBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> MinimapBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::MinimapBorder);
@@ -111,7 +113,8 @@ void UIManager::MakeBasicUI()
 	std::shared_ptr<RenderingLayer> EventInfoUIBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::EventInfoUIBorder);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::EventInfoUIBorder] = EventInfoUIBorderLayer->GetLayerId();
 
-	EventInfoUIBorderLayer->DrawRectanlge(51, 2, 214, 6);
+	//EventInfoUIBorderLayer->DrawRectanlge(51, 2, 214, 6);
+	EventInfoUIBorderLayer->DrawRectanlge(UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X, UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_Y, UI::EVENT_INFO_UI_BORDER_WIDTH, UI::EVENT_INFO_UI_BORDER_HEIGHT);
 	EventInfoUIBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> EventInfoUIContentsLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::EventInfoUIContents, UI::USELESS_CHAR);
@@ -150,15 +153,15 @@ void UIManager::MakeOpningSceneUI()
 
 	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::BackgroundBorder);
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
-
-	BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
+	
+	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
 	BackgroundBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> PressEnterKeyToStartLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::PressEnterKeyToStart, UI::USELESS_CHAR);
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PressEnterKeyToStart] = PressEnterKeyToStartLayer->GetLayerId();
 
 	PressEnterKeyToStartLayer->ClearLayerFor(UI::USELESS_CHAR);
-	PressEnterKeyToStartLayer->DrawString(40, 84, L"Press Enter Key To Start Game");
+	PressEnterKeyToStartLayer->DrawString(UI::PRESS_ENTER_KEY_TO_START_UI_POSITION_X, UI::PRESS_ENTER_KEY_TO_START_UI_POSITION_Y, L"Press Enter Key To Start Game");
 	PressEnterKeyToStartLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingCanvas> OpeningCanvas = std::make_shared<RenderingCanvas>();
@@ -222,6 +225,8 @@ void UIManager::AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessag
 	}
 
 	EventInfoUIContentsLayer->CombineUiLines();
+	
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount)
@@ -283,6 +288,8 @@ void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount)
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface)
@@ -297,9 +304,41 @@ void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surfa
 	}
 
 	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
-	ArtLayer->DrawSurface(10, 15, Surface);
+	ArtLayer->DrawSurface(3, 20, Surface);
 
 	ArtLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Basic);
+}
+
+void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer)
+{
+	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
+	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
+
+	if (ArtLayer == nullptr)
+	{
+		std::cout << "UIManager, ChangeBasicCanvasArtImage : Fail to get Layer" << std::endl;
+		return;
+	}
+	
+	const std::vector<std::wstring>& Surface = ArtContainer.ArtLines;
+
+	int CenterCoordX = (UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X - UI::BACKGRUOND_BORDER_FIRST_POSITION_X) / 2;
+	int CenterCoordY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+	
+	int DrawCoordX = CenterCoordX - ArtHeight / 2;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2;
+
+	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
+	ArtLayer->DrawSurface(DrawCoordX, DrawCoordY, Surface);
+
+	ArtLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType)
@@ -314,6 +353,8 @@ void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer Laye
 	}
 
 	Layer->SetIsHiding(bShouldHide);
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface)
@@ -331,10 +372,24 @@ void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std
 	TitleLayer->DrawSurface(PositionX, PositionY, Surface);
 
 	TitleLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Opening);
 }
 
 void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType)
 {
+	int LayerId = OpeningCanvasLayerIdMap[LayerType];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetOpeningCanvasLayerHide : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	Layer->SetIsHiding(bShouldHide);
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::BindAllDelegate()
@@ -353,6 +408,11 @@ void UIManager::BindAllDelegate()
 		{
 			Tick(Delta);
 		};
+
+	GameManager::GetInstance().GetTileMap()->OnMapChanged = [this](const std::vector<std::vector<ETile>>& TileTypeInfos)
+		{
+			OnMinimapUIContentsChanged(TileTypeInfos);
+		};
 }
 
 void UIManager::SetMinimapUIContents()
@@ -365,7 +425,7 @@ void UIManager::Tick(double DeltaTime)
 
 }
 
-void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTileType>>& TileTypeInfos)
+void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETile>>& TileTypeInfos)
 {
 	int MapSizeX = (int)TileTypeInfos.size();
 
@@ -405,25 +465,25 @@ void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTi
 		{
 			wchar_t TileImage;
 
-			if (TileTypeInfos[i][j] == ETempTileType::Block)
+			if (TileTypeInfos[i][j] == ETile::Block)
 			{
 				TileImage = L' ';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::Blank)
+			else if (TileTypeInfos[i][j] == ETile::Blank)
 			{
 				TileImage = L'O';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::Character)
+			else if (TileTypeInfos[i][j] == ETile::Character)
 			{
 				TileImage = L'X';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::DemonLordCastle)
+			else if (TileTypeInfos[i][j] == ETile::DemonLordCastle)
 			{
 				TileImage = L'?';
 			}
-			else if (TileTypeInfos[i][j] == ETempTileType::Village1 ||
-				TileTypeInfos[i][j] == ETempTileType::Village2 ||
-				TileTypeInfos[i][j] == ETempTileType::Village2_Disabled)
+			else if (TileTypeInfos[i][j] == ETile::Village1 ||
+				TileTypeInfos[i][j] == ETile::Village2 ||
+				TileTypeInfos[i][j] == ETile::Village2_Disabled)
 			{
 				TileImage = L'V';
 			}

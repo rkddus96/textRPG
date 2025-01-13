@@ -15,6 +15,7 @@ enum class EArtList
 	Castle1,
 	Castle2,
 	FakeBoss,
+	Goblin,
 	Helmet,
 	Heroine,
 	MainCharacter,

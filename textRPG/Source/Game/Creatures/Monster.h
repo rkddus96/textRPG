@@ -37,8 +37,14 @@ public:
 
 
 protected:
+    Monster(const string& name, int baseHp, int basePower, int baseDefense, int exp, int money, int level);
+
+    void CalculateStats(int hpModifier, int powerModifier, int defenseModifier);
+
     string name;
-    int MaxHp, CurHp, Power, Defense, Exp, Money;
+    int BaseHp, BasePower, BaseDefense; // 기본 능력치
+    int MaxHp, CurHp, Power, Defense;   // 레벨 기반 능력치
+    int Exp, Money, Level;
     
     FASKIIArtContainer MonsterImage;
 };

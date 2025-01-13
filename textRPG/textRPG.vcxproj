@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Game\AssetHandler.cpp" />
     <ClCompile Include="Source\Game\AudioPlayer.cpp" />
+    <ClCompile Include="Source\Game\Battle\ABattle.cpp" />
+    <ClCompile Include="Source\Game\Battle\AutoBattle.cpp" />
+    <ClCompile Include="Source\Game\Battle\HandBattle.cpp" />
     <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
     <ClCompile Include="Source\Game\Creatures\Goblin.cpp" />
@@ -30,6 +33,7 @@
     <ClCompile Include="Source\Game\Creatures\Orc.cpp" />
     <ClCompile Include="Source\Game\Creatures\Slime.cpp" />
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
+    <ClCompile Include="Source\Game\Equipment.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
     <ClCompile Include="Source\Game\LogicHelper.cpp" />
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
@@ -44,6 +48,9 @@
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h" />
     <ClInclude Include="Source\Game\AudioPlayer.h" />
+    <ClInclude Include="Source\Game\Battle\ABattle.h" />
+    <ClInclude Include="Source\Game\Battle\AutoBattle.h" />
+    <ClInclude Include="Source\Game\Battle\HandBattle.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />
     <ClInclude Include="Source\Game\Creatures\Goblin.h" />
@@ -53,6 +60,7 @@
     <ClInclude Include="Source\Game\Creatures\Orc.h" />
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
+    <ClInclude Include="Source\Game\Equipment.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
     <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />

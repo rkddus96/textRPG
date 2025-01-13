@@ -3,16 +3,16 @@
 #include <memory>
 #include <vector>
 #include <functional> // 콜백함수를 위해 추가
-// #include "Item.h" // Item 구현 시 추가
+
 #include "Status.h"
 #include "Job.h"
-#include "./AssetHandler.h"
+
+class Item;// Item 구현 시 추가
 
 enum class ECharacterEvent
 {
 	Level,
 	Exp,
-	Gold,
 	Inventory,
 	Stat,
 	Job
@@ -28,12 +28,10 @@ private:
 	int MaxExp;
 	int Exp;
 	int Damage;
-	int Gold;
 
 	Status Stats;
 	std::shared_ptr<Job> Jobs;
-
-//	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
+	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
 
 	
 
@@ -59,7 +57,6 @@ public:
 	int GetExp() const { return Exp; }
 	int GetDamage() const { return Damage; }
 	int GetMaxExp() const { return MaxExp; }
-	int GetGold() const { return Gold; }
 	Status& GetStatus() { return Stats; }
 	std::shared_ptr<Job> GetJob() const { return Jobs; }
 
@@ -67,7 +64,6 @@ public:
 	void SetExp(int exp);
 	void SetDamage(int damage) { Damage = damage; }
 	void SetLevel(int level);
-	void SetGold(int gold);
 	
 	
 	// 캐릭터 생성 함수
@@ -78,13 +74,10 @@ public:
 	void LevelUp();
 
 	// 캐릭터 생존 여부
-	bool IsDead() const;
-
-	// 받는 데미지 반환 함수
-	int TakeDamage(int damage) const;
+	bool IsDead();
 	
-	// 이미지 생성
-	FASKIIArtContainer CharacterImage;
+	// 인벤토리 추가
+	void AddItem(std::shared_ptr<Item> item);
 
 	
 	void Display() const;

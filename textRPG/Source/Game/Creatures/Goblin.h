@@ -6,7 +6,7 @@
 class Goblin : public Monster
 {
 public:
-    Goblin();
+    Goblin(int level);
     void DisplayIntroduction() override;
 };
 
