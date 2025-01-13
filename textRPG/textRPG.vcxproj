@@ -28,6 +28,7 @@
     <ClCompile Include="Source\Game\RenderingHandler.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
     <ClCompile Include="Source\Game\textRPG.cpp" />
+    <ClCompile Include="Source\Game\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Source\Game\LogicHelper.h" />
     <ClInclude Include="Source\Game\RenderingHandler.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
+    <ClInclude Include="Source\Game\TileMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
