@@ -29,7 +29,7 @@ struct FAvailableDirection
 class TileMap
 {
 public:
-	TileMap(int width, int height);
+	TileMap(int Width, int Height);
 
 	/// <summary>
 	/// 현재 캐릭터의 위치를 반환한다.
@@ -42,7 +42,7 @@ public:
 	/// </summary>
 	/// <param name="nextX">이동할 X 좌표</param>
 	/// <param name="nextY">이동할 Y 좌표</param>
-	void Move(int nextX, int nextY);
+	void Move(int NextX, int NextY);
 
 	/// <summary>
 	/// 현재 위치에서 이동 가능한 방향을 반환한다.
@@ -57,7 +57,7 @@ public:
 	/// <param name="x">확인할 X 좌표</param>
 	/// <param name="y">확인할 Y 좌표</param>
 	/// <returns></returns>
-	bool CanTraverse(int x, int y) const;
+	bool CanTraverse(int X, int Y) const;
 
 	/// <summary>
 	/// 현재 맵의 상태를 반환한다. 캐릭터가 마을, 마왕성과 겹쳐져 있을 경우 캐릭터가 우선시 된다.

@@ -2,8 +2,8 @@
 
 #include "LogicHelper.h"
 
-TileMap::TileMap(int width, int height)
-	:MapData(height, std::vector(width, ETile::Blank)), Width(width), Height(height)
+TileMap::TileMap(int Width, int Height)
+	:MapData(Height, std::vector(Width, ETile::Blank)), Width(Width), Height(Height)
 {
 	GenerateTestMap();
 }
@@ -13,14 +13,14 @@ std::pair<int, int> TileMap::GetCurrentPosition() const
 	return CurrentPlayerPosition;
 }
 
-void TileMap::Move(int nextX, int nextY)
+void TileMap::Move(int NextX, int NextY)
 {
-	if (!CanTraverse(nextY, nextY))
+	if (!CanTraverse(NextY, NextY))
 	{
 		// 필요할 경우 로깅 혹은 exeception 발생
 		return;
 	}
-	CurrentPlayerPosition = {nextX, nextY};
+	CurrentPlayerPosition = {NextX, NextY};
 
 	// 맵이 변경된 것을 알림
 	OnMapChanged(GetCurretnMapData());
@@ -28,28 +28,28 @@ void TileMap::Move(int nextX, int nextY)
 
 FAvailableDirection TileMap::GetAvailableDirection()
 {
-	FAvailableDirection direction;
+	FAvailableDirection Direction;
 
-	int x = CurrentPlayerPosition.first;
-	int y = CurrentPlayerPosition.second;
+	int X = CurrentPlayerPosition.first;
+	int Y = CurrentPlayerPosition.second;
 
-	direction.bLeft = CanTraverse(x - 1, y);
-	direction.bUp = CanTraverse(x, y - 1);
-	direction.bRight = CanTraverse(x + 1, y);
-	direction.bDown = CanTraverse(x, y + 1);
+	Direction.bLeft = CanTraverse(X - 1, Y);
+	Direction.bUp = CanTraverse(X, Y - 1);
+	Direction.bRight = CanTraverse(X + 1, Y);
+	Direction.bDown = CanTraverse(X, Y + 1);
 
-	return direction;
+	return Direction;
 }
 
-bool TileMap::CanTraverse(int x, int y) const
+bool TileMap::CanTraverse(int X, int Y) const
 {
-	return (x >= 0 && x < Width && y >= 0 && y < Height) && MapData[x][y] != ETile::Block;
+	return (X >= 0 && X < Width && Y >= 0 && Y < Height) && MapData[X][Y] != ETile::Block;
 }
 
 std::vector<std::vector<ETile>> TileMap::GetCurretnMapData()
 {
-	std::vector<std::vector<ETile>> curMap = MapData;
-	curMap[CurrentPlayerPosition.first][CurrentPlayerPosition.second] = ETile::Character;
+	std::vector<std::vector<ETile>> CurrentMap = MapData;
+	CurrentMap[CurrentPlayerPosition.first][CurrentPlayerPosition.second] = ETile::Character;
 
 	return MapData;
 }
