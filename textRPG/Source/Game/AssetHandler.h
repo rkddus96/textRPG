@@ -6,11 +6,33 @@
 // 알파벳 순으로 정렬 필수
 enum class EArtList
 {
+	Armor,
+	Axe,
+	Axe2,
+	Axe3,
+	Boss,
+	Boss2,
 	Castle1,
 	Castle2,
+	FakeBoss,
+	Goblin,
+	Helmet,
+	Heroine,
+	MainCharacter,
+	Necklace,
+	Orc,
+	Potion,
+	ShortSword,
+	Slime,
+	Store,
+	Sword,
+	Sword2,
 	Test,
 	Test2,
 	Title,
+	Wand,
+	Witch
+
 };
 
 struct FASKIIArtContainer
