@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <string>
 #include <memory>
-#include "./Source/Game/MonsterFactory.h"
+#include "MonsterFactory.h"
 
 class Monster;
 class Slime;
