@@ -102,7 +102,8 @@ void UIManager::MakeBasicUI()
 	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::BackgroundBorder);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
 
-	BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
+	//BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
+	BackgroundBorderLayer->DrawRectanlge(1, 0, 148, 49);
 	BackgroundBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> MinimapBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::MinimapBorder);
@@ -111,7 +112,8 @@ void UIManager::MakeBasicUI()
 	std::shared_ptr<RenderingLayer> EventInfoUIBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::EventInfoUIBorder);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::EventInfoUIBorder] = EventInfoUIBorderLayer->GetLayerId();
 
-	EventInfoUIBorderLayer->DrawRectanlge(51, 2, 214, 6);
+	//EventInfoUIBorderLayer->DrawRectanlge(51, 2, 214, 6);
+	EventInfoUIBorderLayer->DrawRectanlge(UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X, UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_Y, UI::EVENT_INFO_UI_BORDER_WIDTH, UI::EVENT_INFO_UI_BORDER_HEIGHT);
 	EventInfoUIBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> EventInfoUIContentsLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::EventInfoUIContents, UI::USELESS_CHAR);
@@ -150,15 +152,15 @@ void UIManager::MakeOpningSceneUI()
 
 	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::BackgroundBorder);
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
-
-	BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
+	
+	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
 	BackgroundBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> PressEnterKeyToStartLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::PressEnterKeyToStart, UI::USELESS_CHAR);
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PressEnterKeyToStart] = PressEnterKeyToStartLayer->GetLayerId();
 
 	PressEnterKeyToStartLayer->ClearLayerFor(UI::USELESS_CHAR);
-	PressEnterKeyToStartLayer->DrawString(40, 84, L"Press Enter Key To Start Game");
+	PressEnterKeyToStartLayer->DrawString(40, 45, L"Press Enter Key To Start Game");
 	PressEnterKeyToStartLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingCanvas> OpeningCanvas = std::make_shared<RenderingCanvas>();
@@ -297,7 +299,7 @@ void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surfa
 	}
 
 	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
-	ArtLayer->DrawSurface(10, 15, Surface);
+	ArtLayer->DrawSurface(3, 20, Surface);
 
 	ArtLayer->CombineUiLines();
 }
