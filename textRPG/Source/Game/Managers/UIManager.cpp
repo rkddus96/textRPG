@@ -7,6 +7,7 @@
 #include "TimerManager.h"
 #include <functional>
 #include "../Character.h"
+
 UIManager::UIManager()
 {
 	
@@ -103,7 +104,7 @@ void UIManager::MakeBasicUI()
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
 
 	//BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
-	BackgroundBorderLayer->DrawRectanlge(1, 0, 148, 49);
+	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
 	BackgroundBorderLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingLayer> MinimapBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::MinimapBorder);
@@ -160,7 +161,7 @@ void UIManager::MakeOpningSceneUI()
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PressEnterKeyToStart] = PressEnterKeyToStartLayer->GetLayerId();
 
 	PressEnterKeyToStartLayer->ClearLayerFor(UI::USELESS_CHAR);
-	PressEnterKeyToStartLayer->DrawString(40, 45, L"Press Enter Key To Start Game");
+	PressEnterKeyToStartLayer->DrawString(UI::PRESS_ENTER_KEY_TO_START_UI_POSITION_X, UI::PRESS_ENTER_KEY_TO_START_UI_POSITION_Y, L"Press Enter Key To Start Game");
 	PressEnterKeyToStartLayer->CombineUiLines();
 
 	std::shared_ptr<RenderingCanvas> OpeningCanvas = std::make_shared<RenderingCanvas>();
@@ -300,6 +301,34 @@ void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surfa
 
 	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
 	ArtLayer->DrawSurface(3, 20, Surface);
+
+	ArtLayer->CombineUiLines();
+}
+
+void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer)
+{
+	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
+	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
+
+	if (ArtLayer == nullptr)
+	{
+		std::cout << "UIManager, ChangeBasicCanvasArtImage : Fail to get Layer" << std::endl;
+		return;
+	}
+	
+	const std::vector<std::wstring>& Surface = ArtContainer.ArtLines;
+
+	int CenterCoordX = (UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X - UI::BACKGRUOND_BORDER_FIRST_POSITION_X) / 2;
+	int CenterCoordY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+	
+	int DrawCoordX = CenterCoordX - ArtHeight / 2;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2;
+
+	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
+	ArtLayer->DrawSurface(DrawCoordX, DrawCoordY, Surface);
 
 	ArtLayer->CombineUiLines();
 }
