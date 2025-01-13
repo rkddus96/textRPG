@@ -2,9 +2,19 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <functional> // 콜백함수를 위해 추가
 // #include "Item.h" // Item 구현 시 추가
 #include "Status.h"
 #include "Job.h"
+
+enum class ECharacterEvent
+{
+	Level,
+	Exp,
+	Inventory,
+	Stat,
+	Job
+};
 
 
 class Character
@@ -21,6 +31,8 @@ private:
 	std::shared_ptr<Job> Jobs;
 
 //	std::vector<std::shared_ptr<Item>> Inventory; // Item 구현 시 추가
+
+	std::function<void(ECharacterEvent, int)> OnCharacterChanged;
 
 	Character();
 	

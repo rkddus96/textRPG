@@ -1,6 +1,6 @@
 #pragma once
 #include <unordered_map>
-
+#include <functional>
 
 enum class EStat
 {
@@ -20,6 +20,8 @@ private:
 
 public:
 	Status();
+
+	std::function<void(EStat, int)> OnStatChanged;
 
 	// 특정 스탯 Getter, Setter
 	int GetStat(EStat statType) const;

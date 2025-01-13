@@ -12,6 +12,16 @@ Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
 	InitCharacter();
 	RandomizeStats();
 
+/*	Stats.OnStatChanged = [this](EStat statType, int newValue)
+	{
+			if (OnCharacterChanged)
+			{
+				OnCharacterChanged(ECharacterEvent::Stat, static_cast<int>(statType));
+			}
+
+	};
+*/
+
 //	Inventory.clear(); //Item 추가 시 추가
 	
 }
@@ -26,11 +36,18 @@ Character& Character::GetInstance()
 void Character::SetExp(int exp)
 {
 	Exp = std::max(0, exp);
-
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Exp, Exp);
+	}
 }
 void Character::SetLevel(int level)
 {
 	Level = std::max(1, std::min(level, 10));
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Level, Level);
+	}
 }
 
 // 캐릭터 생성 함수
@@ -75,6 +92,11 @@ void Character::InitCharacter()
 		
 		default:
 			std::cout << "잘못된 입력입니다. 다시 시도해주세요." << std::endl;
+		}
+
+		if (OnCharacterChanged)
+		{
+			OnCharacterChanged(ECharacterEvent::Job, JobChoice);
 		}
 
 		if (JobChoice == 1 || JobChoice == 2 || JobChoice == 3)
@@ -170,6 +192,7 @@ void Character::RandomizeStats()
 void Character::LevelUp()
 {
 	Level++;
+	SetLevel(Level + 1);
 
 	// 100이 넘어갔을 경우 초과치를 다음 경험치에 추가합니다.
 	Exp = Exp % 100;

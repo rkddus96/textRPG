@@ -26,6 +26,12 @@ int Status::GetStat(EStat statType) const
 void Status::SetStat(EStat statType, int value)
 {
 	stats[statType] = value;
+
+	// 스탯 변경 시 콜백 호출
+	if (OnStatChanged)
+	{
+		OnStatChanged(statType, value);
+	}
 }
 
 float Status::StatToDamage(float powerWeight, float defenseWeight, float luckWeight)
