@@ -6,6 +6,7 @@
 // #include "Item.h" // Item 구현 시 추가
 #include "Status.h"
 #include "Job.h"
+#include "./AssetHandler.h"
 
 enum class ECharacterEvent
 {
@@ -82,7 +83,8 @@ public:
 	// 받는 데미지 반환 함수
 	int TakeDamage(int damage) const;
 	
-	
+	// 이미지 생성
+	FASKIIArtContainer CharacterImage;
 
 	
 	void Display() const;

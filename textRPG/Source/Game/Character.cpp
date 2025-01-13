@@ -5,10 +5,13 @@
 #include "Warrior.h"
 #include "Mage.h"
 #include "Thief.h"
+#include "./Managers/GameManager.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
 {
+	CharacterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::MainCharacter);
+
 	InitCharacter();
 	RandomizeStats();
 
@@ -81,6 +84,9 @@ int Character::TakeDamage(int damage) const
 	return GetDamage;
 	
 }
+
+// 이미지 생성 함수
+
 
 
 // 캐릭터 생성 함수
