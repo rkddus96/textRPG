@@ -14,7 +14,7 @@ public:
 
 	virtual void Use(Character* character) = 0;
 
-	virtual bool GetState() const = 0;
+	virtual bool IsConsumable() const = 0;
 
 };
 

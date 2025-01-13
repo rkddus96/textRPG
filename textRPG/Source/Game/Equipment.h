@@ -16,6 +16,6 @@ public:
 
 	void Use(Character* character) override;
 
-	bool GetState() const override { return IsEquipment;  }
+	bool IsConsumable() const override { return IsEquipment;  }
 
 };
