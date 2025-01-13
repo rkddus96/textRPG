@@ -1,9 +1,9 @@
 #include "Goblin.h"
 
-Goblin::Goblin()
+Goblin::Goblin() 
 {
     //초기화
-    //MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArt::Slime);
+    //MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Castle1);
 }
 
 void Goblin::DisplayIntroduction()
