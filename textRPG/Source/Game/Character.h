@@ -15,7 +15,9 @@ enum class ECharacterEvent
 	Exp,
 	Inventory,
 	Stat,
-	Job
+	Job,
+	Gold,
+	Item // 아이템 이름, 인덱스 이름, (아이템 설명)
 };
 
 
@@ -27,6 +29,7 @@ private:
 	int Level;
 	int MaxExp;
 	int Exp;
+	int Gold;
 	int Damage;
 
 	Status Stats;
@@ -41,6 +44,9 @@ private:
 public:
 
 	std::function<void(ECharacterEvent, int)> OnCharacterChanged;
+	// 아이템 설명 생겼을 때 추가
+	std::function<void(const std::vector<std::shared_ptr<Item>>&)> OnItemChanged;
+
 
 	// 복사, 이동 제거
 	Character(const Character& other) = delete;
@@ -57,6 +63,7 @@ public:
 	int GetExp() const { return Exp; }
 	int GetDamage() const { return Damage; }
 	int GetMaxExp() const { return MaxExp; }
+	int GetGold() const { return Gold; }
 	Status& GetStatus() { return Stats; }
 	std::shared_ptr<Job> GetJob() const { return Jobs; }
 
@@ -64,6 +71,11 @@ public:
 	void SetExp(int exp);
 	void SetDamage(int damage) { Damage = damage; }
 	void SetLevel(int level);
+	void SetGold(int gold);
+
+	// Raise 함수 : 기존에 매개변수로 받은 것 추가
+	void RaiseGold(int gold);
+	void RaiseExp(int exp);
 	
 	
 	// 캐릭터 생성 함수
@@ -75,9 +87,15 @@ public:
 
 	// 캐릭터 생존 여부
 	bool IsDead();
+
+	// 데미집 입는 함수
+	int TakeDamage(int damage);
 	
 	// 인벤토리 추가
 	void AddItem(std::shared_ptr<Item> item);
+
+	// 아이템 사용
+	void UsePotion(int index);
 
 	
 	void Display() const;
