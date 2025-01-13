@@ -53,16 +53,7 @@ enum class ETempStatType
 	Luck
 };
 
-enum class ETempTileType
-{
-	Block,
-	Blank,
-	DemonLordCastle,
-	Village1,
-	Village2,
-	Village2_Disabled,
-	Character
-};
+enum class ETile;
 
 class UIManager
 {
@@ -91,10 +82,6 @@ public:
 
 	void BindAllDelegate();
 
-	// 임시 테스트용으로 퍼블릭 상태
-	void OnMinimapUIContentsChanged(const std::vector<std::vector<ETempTileType>>& TileTypeInfos);
-
-	
 private:
 
 	void Init();
@@ -110,6 +97,7 @@ private:
 	void OnCharacterChanged(enum class ECharacterEvent CharacterEvent, int Amount);
 	//std::function<void(EStat, int)> OnStatChanged;
 	void OnStatChanged(enum class EStat StatType, int Amount);
+	void OnMinimapUIContentsChanged(const std::vector<std::vector<ETile>>& TileTypeInfos);
 
 private:
 
