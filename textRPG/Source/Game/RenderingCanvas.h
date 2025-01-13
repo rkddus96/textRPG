@@ -4,10 +4,11 @@
 #include <vector>
 #include <memory>
 #include "LogicHelper.h"
+#include "ConstantContainer.h"
 
 class RenderingLayer;
 
-class RenderingHandler
+class RenderingCanvas
 {
 private:
 
@@ -20,15 +21,18 @@ private:
 
 public:
 
-	RenderingHandler();
+	RenderingCanvas();
+
+	//RenderingCanvas(const RenderingCanvas& Other);
 
 	void PrintCurrentScreenUI();
 	void AddLayer(std::shared_ptr<RenderingLayer> NewLayerMask);
 	void RemoveLayer(int LayerId);
+	std::shared_ptr<RenderingLayer> GetRenderingLayer(int LayerId);
 
 	void Clear();
 
-	~RenderingHandler();
+	~RenderingCanvas();
 
 private:
 
@@ -42,7 +46,7 @@ private:
 
 	ECharSpace GetCharSpace(wchar_t WChar) const
 	{
-		if (WChar == L'\u200B')
+		if (WChar == UI::EMPTY_CHAR)
 		{
 			return ECharSpace::Empty;
 		}

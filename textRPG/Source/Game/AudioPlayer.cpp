@@ -9,15 +9,12 @@
 std::unordered_set<std::string> AudioPlayer::AudioNameSet;
 std::list<AudioInfo> AudioPlayer::AudioInfos;
 
-AudioPlayer::AudioPlayer()
-{
-}
 
-std::string AudioPlayer::Play(const std::string& FilePath, int Volume)
+std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
 {
     for (int i = 0; i < 100; ++i)
     {
-        AudioIndex = LogicHelper::GetRandomNumberMaxRange();
+        int AudioIndex = LogicHelper::GetRandomNumberMaxRange();
 
         std::string AudioName = "Audio" + std::to_string(AudioIndex);
 
@@ -32,12 +29,18 @@ std::string AudioPlayer::Play(const std::string& FilePath, int Volume)
         return AudioName;
     }
 
-    std::cout << "Fail to play Audio : " << FilePath << std::endl;
+    std::cout << "AudioPlayer, Play, Fail to play Audio : " << FilePath << std::endl;
     return "";
 }
 
-void AudioPlayer::Play(const std::string& FilePath, const std::string& AudioName, int Volume)
+void AudioPlayer::Play(const std::string& FilePath, const std::string& AudioName, float Volume)
 {
+    if (AudioNameSet.find(AudioName) != AudioNameSet.end() || IsPlaying(AudioName))
+    {
+        std::cout << "AudioPlayer, Play Fail to play Audio : " << FilePath << std::endl;
+        return;
+    }
+
     PlayInternal(FilePath, AudioName, Volume);
 }
 
@@ -70,11 +73,11 @@ void AudioPlayer::StopAll()
     }
 }
 
-void AudioPlayer::SetVolume(const std::string& AudioName, int Volume)
+void AudioPlayer::SetVolume(const std::string& AudioName, float Volume)
 {
-    Volume = std::clamp(Volume, 0, 1000);
-
-    const std::string Command = "setaudio " + AudioName + " volume to " + std::to_string(Volume);
+    int ActualVolume = (int)std::clamp<float>(Volume * 1000, 0, 1000);
+    
+    const std::string Command = "setaudio " + AudioName + " volume to " + std::to_string(ActualVolume);
 
     if (mciSendStringA(Command.c_str(), NULL, 0, NULL) != 0)
     {
@@ -125,7 +128,7 @@ void AudioPlayer::ClearRetiredAudios()
     }
 }
 
-void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& AudioName, int Volume)
+void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume)
 {
     // 미디어 파일 열기
     std::string Command = "open \"" + FilePath + "\" type mpegvideo alias " + AudioName;
@@ -143,7 +146,7 @@ void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& A
 
     // 길이를 정수로 변환
     int lengthInMilliseconds = std::stoi(Buffer);
-    std::cout << "Audio length: " << lengthInMilliseconds << " milliseconds." << std::endl;
+    //std::cout << "Audio length: " << lengthInMilliseconds << " milliseconds." << std::endl;
 
     Command = "play " + AudioName;
     // 미디어 파일 재생
@@ -158,9 +161,9 @@ void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& A
     AudioInfos.push_back(AudioInfo(AudioName, lengthInMilliseconds / 1000.0f));
 }
 
-AudioPlayer::~AudioPlayer()
-{
-    StopAll();
-    std::cout << "Audio Destroyed" << std::endl;
-}
+//AudioPlayer::~AudioPlayer()
+//{
+//    StopAll();
+//    std::cout << "Audio Destroyed" << std::endl;
+//}
 

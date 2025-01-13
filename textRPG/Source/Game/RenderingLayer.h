@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_set>
+#include "ConstantContainer.h"
 
 // 한글이나 한자처럼 두 자리 차지하는 문자는 가장 위쪽에 그려야 한다. 즉 LayerOrder가 가장 높아야 한다..
 // 그리고 RenderingHanlder에서 가강 처음으로 그려지는 Layer는 숨기기 불가
@@ -10,15 +11,16 @@ class RenderingLayer
 {
 public:
 
-	RenderingLayer(int InLayerOrder, char InMask = ' ');
-	RenderingLayer(int InLayerOrder, wchar_t InMask);
+	//RenderingLayer(int InLayerOrder, char InMask = ' ');
+	RenderingLayer(int InLayerOrder, wchar_t InMask = UI::EMPTY_CHAR);
 
-	void GetConsoleSize(int& OutWidth, int& OutHeight);
+	// 레이어를 공백상태로 비움. 무슨 문자로 채울 지 결정 가능
+	void ClearLayerFor(wchar_t CellWChar);
 
-	void RefreshLayer();
-
+	// 레이어 출력하기
 	void PrintCurrentLayer();
 
+	// 사각형 그려줌
 	void DrawRectanlge(int PositionX, int PositionY, int Width, int Height);
 
 	/// <summary>
@@ -63,7 +65,7 @@ public:
 		Mask = NewMask;
 	}
 
-	~RenderingLayer();
+	
 
 	bool operator == (const RenderingLayer& Other) const
 	{
@@ -82,10 +84,12 @@ public:
 		return bIsHiding;
 	}
 
-	void SetIsHiding(bool ShouldHide)
+	void SetIsHiding(bool bShouldHide)
 	{
-		bIsHiding = ShouldHide;
+		bIsHiding = bShouldHide;
 	}
+
+	~RenderingLayer();
 
 private:
 
