@@ -182,6 +182,11 @@ void RenderingLayer::DrawString(int PositionX, int PositionY, const std::string&
 
 void RenderingLayer::DrawString(int PositionX, int PositionY, const std::wstring& NewWString, wchar_t MaskWChar)
 {
+    if (NewWString == L"")
+    {
+        return;
+    }
+
     int ConsoleWidth = 0;
     int ConsoleHeight = 0;
 
