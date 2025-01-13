@@ -11,6 +11,9 @@
     <Filter Include="Source\Game">
       <UniqueIdentifier>{92d0430a-0e6e-42d4-a76b-70129908b47f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game\Managers">
+      <UniqueIdentifier>{81681b46-e422-46bc-8100-b4e33bd51c1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\AssetHandler.cpp">
@@ -25,9 +28,6 @@
     <ClCompile Include="Source\Game\LogicHelper.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\RenderingHandler.cpp">
-      <Filter>Source\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\RenderingLayer.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
@@ -40,8 +40,17 @@
     <ClCompile Include="Source\Game\Character.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Status.cpp">
+    <ClCompile Include="Source\Game\Managers\GameManager.cpp">
+      <Filter>Source\Game\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Managers\UIManager.cpp">
+      <Filter>Source\Game\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\RenderingCanvas.cpp">
       <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Managers\TimerManager.cpp">
+      <Filter>Source\Game\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,9 +66,6 @@
     <ClInclude Include="Source\Game\LogicHelper.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\RenderingHandler.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\RenderingLayer.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
@@ -69,20 +75,17 @@
     <ClInclude Include="Source\Game\Character.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Job.h">
+    <ClInclude Include="Source\Game\Managers\UIManager.h">
+      <Filter>Source\Game\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Managers\GameManager.h">
+      <Filter>Source\Game\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\RenderingCanvas.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Mage.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Thief.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Warrior.h">
-      <Filter>Source\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Status.h">
-      <Filter>Source\Game</Filter>
+    <ClInclude Include="Source\Game\Managers\TimerManager.h">
+      <Filter>Source\Game\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

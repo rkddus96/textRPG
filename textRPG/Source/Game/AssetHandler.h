@@ -3,13 +3,17 @@
 #include <iostream>
 #include <vector>
 
+// 알파벳 순으로 정렬 필수
 enum class EArtList
 {
+	Castle1,
+	Castle2,
 	Test,
-	Test2
+	Test2,
+	Title,
 };
 
-struct ASKIIArtContainer
+struct FASKIIArtContainer
 {
 public:
 
@@ -23,6 +27,7 @@ public:
 		return (int)ArtLines.size();
 	}
 
+	std::wstring ArtName;
 	std::vector<std::wstring> ArtLines;
 };
 
@@ -32,20 +37,28 @@ public:
 
 	AssetHandler();
 
+	AssetHandler(const AssetHandler&) = delete;
+	AssetHandler& operator=(const AssetHandler&) = delete;
+	AssetHandler(AssetHandler&&) = delete;
+	AssetHandler& operator=(AssetHandler&&) = delete;
+
 	~AssetHandler();
 
-	const ASKIIArtContainer& GetASKIIArtContainer(EArtList ArtList) const
+	const FASKIIArtContainer& GetASKIIArtContainer(EArtList ArtList) const
 	{
 		return ArtContainers[(int)ArtList];
 	}
 
 private:
 
+	void ReadAllArts();
+
 	void ReadArt(const std::wstring& Filename);
 
 	int ConsoleWidth = 0;
 	int ConsoleHeight = 0;
 
-	std::vector<ASKIIArtContainer> ArtContainers;
+	std::vector<FASKIIArtContainer> ArtContainers;
 
+	friend class GameManager;
 };
