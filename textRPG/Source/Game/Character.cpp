@@ -50,6 +50,15 @@ void Character::SetLevel(int level)
 	}
 }
 
+bool Character::IsDead()
+{
+	if (Stats.GetStat(EStat::CurHp) <= 0)
+	{
+		return false;
+	}
+}
+
+
 // 캐릭터 생성 함수
 void Character::InitCharacter()
 {
@@ -192,7 +201,7 @@ void Character::RandomizeStats()
 // 레벨업 함수
 void Character::LevelUp()
 {
-	while (Exp <= 100)
+	while (Exp >= 100)
 	{
 		SetLevel(Level + 1);
 
@@ -226,8 +235,16 @@ void Character::LevelUp()
 	// 데미지 재계산
 	float damage = Stats.StatToDamage(pWeight, dWeight, lWeight);
 	SetDamage(static_cast<int>(damage));
+
 	
 }
+
+// 생존 여부
+bool IsDead()
+{
+
+}
+
 
 
 
