@@ -74,7 +74,7 @@ public:
 
 	// 캐릭터 생존 여부
 	bool IsDead();
-
+	
 	
 
 	
