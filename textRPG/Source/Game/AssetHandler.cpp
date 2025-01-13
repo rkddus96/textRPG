@@ -6,18 +6,75 @@
 #include <codecvt> // C++11 표준의 codecvt 사용
 #include "LogicHelper.h"
 #include <algorithm>
+#include <filesystem>
 
 AssetHandler::AssetHandler()
 {
     LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
-    ReadArt(L"Test");
-    ReadArt(L"Test2");
+    //ReadArt(L"Castle1");
+    //ReadArt(L"Castle2");
+    //ReadArt(L"Test");
+    //ReadArt(L"Test2");
+    //ReadArt(L"Title");
+  
+
+    ReadAllArts();
+}
+
+void AssetHandler::ReadAllArts()
+{
+    std::wstring FolderPath = L"Source\\Game\\Assets\\Art\\";
+
+    try 
+    {
+        for (const auto& Entry : std::filesystem::directory_iterator(FolderPath))
+        {
+            if (Entry.is_regular_file()) 
+            { 
+                // 일반 파일인지 확인
+                // 파일 이름 가져오기
+                std::wstring FileName = Entry.path().filename().wstring();
+                std::wcout << L"File Name: " << FileName << std::endl;
+
+                // 파일 내용 읽기
+                std::wifstream File(Entry.path());
+                if (!File.is_open()) 
+                {
+                    std::wcerr << L"Failed to open file: " << FileName << std::endl;
+                    continue;
+                }
+
+                FASKIIArtContainer ArtContainer;
+                ArtContainer.ArtName = FileName;
+
+                std::wstring Line;
+                while (std::getline(File, Line)) 
+                {
+                    ArtContainer.ArtLines.push_back(Line);
+                }
+
+                ArtContainers.push_back(ArtContainer);
+
+                File.close();
+                std::wcout << L"--------------------------------------" << std::endl;
+            }
+        }
+
+        std::sort(ArtContainers.begin(), ArtContainers.end(), [](const FASKIIArtContainer& ArtContainer1, const FASKIIArtContainer& ArtContainer2)->bool
+            {
+                return ArtContainer1.ArtName < ArtContainer2.ArtName;
+            });
+    }
+    catch (const std::exception& e) 
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
 }
 
 void AssetHandler::ReadArt(const std::wstring& Filename)
 {
     // 메모장 파일 경로
-     const std::wstring& FilePath = L"Assets\\Arts\\" + Filename + L".txt";
+     const std::wstring& FilePath = L"Source\\Game\\Assets\\Art\\" + Filename + L".txt";
 
     // wifstream 객체 생성
     std::wifstream WIF(FilePath);
@@ -34,7 +91,6 @@ void AssetHandler::ReadArt(const std::wstring& Filename)
     std::wstring Line;
 
     int Width = 0;
-
     FASKIIArtContainer ArtContainer;
 
     while (std::getline(WIF, Line)) 

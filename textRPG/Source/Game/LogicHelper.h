@@ -43,6 +43,9 @@ public: // 시간
 		return Milliseconds / 1000.0f;
 	}
 
+	// MiliSeconds 시간 동안 해당 쓰레드 정지
+	static void SleepFor(int MiliSeconds);
+
 public: // 랜덤
 
 	/// <summary>

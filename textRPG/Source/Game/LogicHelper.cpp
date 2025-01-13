@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <random>
+#include <thread>
 
 // 매크로 제거
 #undef min
@@ -63,7 +64,11 @@ void LogicHelper::PrintWStringFast(const std::wstring& WString)
     //const char* RederingScreenUI = ScreenUI.c_str();
 
     DWORD Written;
-    WriteConsoleW(ConsoleHandle, WString.c_str(), (DWORD)WString.size(), &Written, nullptr); // 빠르게 콘솔에 출력
+    //WriteConsoleW(ConsoleHandle, WString.c_str(), (DWORD)WString.size(), &Written, nullptr); // 빠르게 콘솔에 출력
+
+    std::string String = WStringToString(WString);
+
+    WriteConsoleA(ConsoleHandle, String.c_str(), (DWORD)String.size(), &Written, nullptr); // 빠르게 콘솔에 출력
 }
 
 void LogicHelper::GetConsoleSize(int& OutWidth, int& OutHeight)
@@ -125,6 +130,11 @@ void LogicHelper::SetFixedConsoleSize(int Width, int Height)
     LONG Style = GetWindowLong(ConsoleWindow, GWL_STYLE);
     SetWindowLong(ConsoleWindow, GWL_STYLE, Style & ~WS_SIZEBOX & ~WS_MAXIMIZEBOX);
     
+}
+
+void LogicHelper::SleepFor(int MiliSeconds)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(MiliSeconds));
 }
 
 double LogicHelper::GetRandomNumber(double Min, double Max)
