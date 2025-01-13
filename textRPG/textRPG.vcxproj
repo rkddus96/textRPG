@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Game\AssetHandler.cpp" />
     <ClCompile Include="Source\Game\AudioPlayer.cpp" />
+    <ClCompile Include="Source\Game\Battle\ABattle.cpp" />
+    <ClCompile Include="Source\Game\Battle\AutoBattle.cpp" />
+    <ClCompile Include="Source\Game\Battle\HandBattle.cpp" />
     <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
     <ClCompile Include="Source\Game\Creatures\Goblin.cpp" />

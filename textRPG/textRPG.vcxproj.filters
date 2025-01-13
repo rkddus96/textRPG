@@ -83,6 +83,15 @@
     <ClCompile Include="Source\Game\Creatures\Witch.cpp">
       <Filter>Source\Game\Creatures</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Battle\ABattle.cpp">
+      <Filter>Source\Game\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Battle\AutoBattle.cpp">
+      <Filter>Source\Game\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Battle\HandBattle.cpp">
+      <Filter>Source\Game\Battle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h">
