@@ -50,13 +50,16 @@ void Character::SetLevel(int level)
 	}
 }
 
+// 생존 여부 반환 함수
 bool Character::IsDead()
 {
 	if (Stats.GetStat(EStat::CurHp) <= 0)
 	{
-		return false;
+		return true;
 	}
 }
+
+
 
 
 // 캐릭터 생성 함수
@@ -237,12 +240,6 @@ void Character::LevelUp()
 	SetDamage(static_cast<int>(damage));
 
 	
-}
-
-// 생존 여부
-bool IsDead()
-{
-
 }
 
 
