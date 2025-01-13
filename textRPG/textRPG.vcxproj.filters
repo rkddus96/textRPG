@@ -52,6 +52,9 @@
     <ClCompile Include="Source\Game\Managers\TimerManager.cpp">
       <Filter>Source\Game\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\TileMap.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h">
@@ -86,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Managers\TimerManager.h">
       <Filter>Source\Game\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\TileMap.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
