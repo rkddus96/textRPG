@@ -29,11 +29,13 @@ void MyTestScene::TestMain()
     EKey KeyInput = InputReceiver::ChatchInput();
 
     const FASKIIArtContainer& TitleArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Title);
-    UIManagerInstance->SetOpeningCanvasTitleArt(20, 80, TitleArtContainer.ArtLines);
+    UIManagerInstance->SetOpeningCanvasTitleArt(10, 10, TitleArtContainer.ArtLines);
     UIManagerInstance->PrintUI(ERenderingCanvas::Opening);
 
     Character::GetInstance().SetExp(100);
     MyCharacter.LevelUp();
+
+    GameManager::GetInstance().GetTileMap()->Move(0, 0);
 
     for (int i = 0; i < 100; ++i)
     {
@@ -49,20 +51,7 @@ void MyTestScene::TestMain()
         UIManagerInstance->ChangeBasicCanvasStatInfoUI(ETempStatType::Hp, LogicHelper::GetRandomNumber(0, 999));
 
         const FASKIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer((EArtList)LogicHelper::GetRandomNumber(0, 3));
-        UIManagerInstance->ChangeBasicCanvasArtImage(ArtContainer.ArtLines);
-
-        UIManagerInstance->OnMinimapUIContentsChanged(
-            {
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),},
-                { (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), },
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),},
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),},
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),},
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),},
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),},
-                {(ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6), (ETempTileType)LogicHelper::GetRandomNumber(0, 6),}
-            }
-        );
+        UIManagerInstance->ChangeBasicCanvasArtImage(ArtContainer);
 
         UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
         AudioPlayer::Play(AudioPath::TEST1, 0.5f);

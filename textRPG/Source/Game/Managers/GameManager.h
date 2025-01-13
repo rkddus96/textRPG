@@ -28,6 +28,10 @@ public:
 			Instance.UIManagerInstance->Init();
 		}
 
+		if (Instance.TileMapIsntance == nullptr)
+		{
+			Instance.TileMapIsntance = std::make_unique<TileMap>(5, 5);
+		}
 
 		return Instance;
 	}
@@ -46,7 +50,7 @@ public:
 		return bIsClearGame;
 	}
 
-	std::unique_ptr<UIManager>& GetUIManager()
+	std::shared_ptr<UIManager>& GetUIManager()
 	{
 		return UIManagerInstance;
 	}
@@ -75,7 +79,7 @@ private:
 	
 	bool bIsClearGame;
 
-	std::unique_ptr<UIManager> UIManagerInstance;
+	std::shared_ptr<UIManager> UIManagerInstance;
 
 	std::unique_ptr<AssetHandler> AssetHandlerInstance;
 

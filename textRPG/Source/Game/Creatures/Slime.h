@@ -6,7 +6,7 @@
 class Slime : public Monster
 {
 public:
-    Slime();
+    Slime(int level);
     void DisplayIntroduction() override;
 };
 

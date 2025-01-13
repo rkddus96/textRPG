@@ -1,17 +1,20 @@
 #include "Slime.h"
-#include "../Managers/GameManager.h"
 
-Slime::Slime()
+
+Slime::Slime(int level)
+    : Monster("Slime", 100, 20, 5, 20, 100, level)
 {
-    //초기화
-    //MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer()
+   
+    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Slime);
+    CalculateStats(50, 10, 2);
+    DisplayIntroduction();
 
 }
 
 void Slime::DisplayIntroduction()
 {
     //아트
-
+    GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
     //정보 출력
     cout << "Name : " << name << endl;
     cout << "Hp : " << CurHp << endl;
