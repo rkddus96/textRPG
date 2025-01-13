@@ -8,5 +8,5 @@ public:
 	float GetDefenseWeight() const override { return 0.8f; }
 	float GetLuckWeight() const override { return 1.2f; }
 
-	const char* GetJobName() const override { return "Thief"; }
+	std::wstring GetJobName() const override { return L"Thief"; }
 };

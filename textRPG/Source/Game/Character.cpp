@@ -191,12 +191,15 @@ void Character::RandomizeStats()
 // 레벨업 함수
 void Character::LevelUp()
 {
-	Level++;
-	SetLevel(Level + 1);
+	while (Exp <= 100)
+	{
+		SetLevel(Level + 1);
 
-	// 100이 넘어갔을 경우 초과치를 다음 경험치에 추가합니다.
-	Exp = Exp % 100;
+		// 100이 넘어갔을 경우 초과치를 다음 경험치에 추가합니다.
+		Exp = Exp - 100;
 
+		
+	}
 	int maxHp = Stats.GetStat(EStat::MaxHp);
 	int power = Stats.GetStat(EStat::Power);
 	int defense = Stats.GetStat(EStat::Defense);
@@ -206,7 +209,7 @@ void Character::LevelUp()
 	float dWeight = Jobs->GetDefenseWeight();
 	float lWeight = Jobs->GetLuckWeight();
 
-	maxHp += Level* 20;
+	maxHp += Level * 20;
 	power += static_cast<int>(3 * Level * pWeight);
 	defense += static_cast<int>(3 * Level * dWeight);
 	luck += static_cast<int>(3 * Level * lWeight);
@@ -222,6 +225,7 @@ void Character::LevelUp()
 	// 데미지 재계산
 	float damage = Stats.StatToDamage(pWeight, dWeight, lWeight);
 	SetDamage(static_cast<int>(damage));
+	
 }
 
 

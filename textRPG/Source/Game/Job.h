@@ -1,4 +1,7 @@
 #pragma once
+
+#include <string>
+
 class Job
 {
 public:
@@ -8,5 +11,5 @@ public:
 	virtual float GetPowerWeight() const = 0;
 	virtual float GetDefenseWeight() const = 0;
 	virtual float GetLuckWeight() const = 0;
-	virtual const char* GetJobName() const = 0;
+	virtual std::wstring GetJobName() const = 0;
 };
