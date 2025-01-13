@@ -225,6 +225,8 @@ void UIManager::AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessag
 	}
 
 	EventInfoUIContentsLayer->CombineUiLines();
+	
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount)
@@ -286,6 +288,8 @@ void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount)
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface)
@@ -303,6 +307,8 @@ void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surfa
 	ArtLayer->DrawSurface(3, 20, Surface);
 
 	ArtLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer)
@@ -331,6 +337,8 @@ void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer
 	ArtLayer->DrawSurface(DrawCoordX, DrawCoordY, Surface);
 
 	ArtLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType)
@@ -345,6 +353,8 @@ void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer Laye
 	}
 
 	Layer->SetIsHiding(bShouldHide);
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface)
@@ -362,10 +372,24 @@ void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std
 	TitleLayer->DrawSurface(PositionX, PositionY, Surface);
 
 	TitleLayer->CombineUiLines();
+
+	PrintUI(ERenderingCanvas::Opening);
 }
 
 void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType)
 {
+	int LayerId = OpeningCanvasLayerIdMap[LayerType];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetOpeningCanvasLayerHide : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	Layer->SetIsHiding(bShouldHide);
+
+	PrintUI(ERenderingCanvas::Basic);
 }
 
 void UIManager::BindAllDelegate()
