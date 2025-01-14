@@ -70,6 +70,7 @@ enum class ETempStatType
 enum class ETile;
 struct FASKIIArtContainer;
 class Item;
+enum class EStat;
 
 class UIManager
 {
@@ -91,7 +92,12 @@ public:
 	void AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage, bool bShouldUpdateUI = true);
 	void ClearMessageToBasicCanvasEventInfoUI(bool bShouldUpdateUI = true);
 
-	void ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
+
+	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
