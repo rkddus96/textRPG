@@ -33,13 +33,13 @@ Shop::Shop()
 
 void Shop::BuyItem(Character& character, int index)
 {
-	std::vector<std::shared_ptr<IItem>> Inventory = character.GetInventory();
+	std::vector<std::shared_ptr<IItem>>& Inventory = character.GetInventory();
 	int Gold = character.GetGold();
 	int Price = ItemsForSale[index]->GetPrice();
 
 	if (Gold < Price)
 	{
-		std::cout << "돈이 부족합니다." << std::endl;
+		std::cout << "돈이 부족합니다." << std::endl; // => 바꿔야 함
 		return;
 	}
 	else
@@ -47,11 +47,9 @@ void Shop::BuyItem(Character& character, int index)
 		// 인벤토리에 상품 넣기, 골드 차감
 		Inventory.push_back(ItemsForSale[index]);
 		character.SetGold(Gold - Price );
+		
 
-		if (OnItemChanged)
-		{
-			OnItemChanged(Inventory);
-		}
+	
 
 
 		// 포션이 아닐 경우
@@ -61,10 +59,7 @@ void Shop::BuyItem(Character& character, int index)
 			ItemsForSale.erase(ItemsForSale.begin() + index);
 		}
 
-		if (OnItemChanged)
-		{
-			OnItemChanged(ItemsForSale);
-		}
+		
 	}
 
 	
@@ -75,7 +70,7 @@ void Shop::SellItem(Character& character, int index)
 {
 	std::vector<std::shared_ptr<IItem>> Inventory = character.GetInventory();
 	int Gold = character.GetGold();
-	int Price = ItemsForSale[index]->GetPrice();
+	int Price = Inventory[index]->GetPrice();
 
 	// 포션이 아닐 경우
 	if (index != 0)
@@ -83,23 +78,14 @@ void Shop::SellItem(Character& character, int index)
 		// 상점에 상품 넣기
 		ItemsForSale.push_back(Inventory[index]);
 		Inventory[index]->UnUse(character);
-
-
-		if (OnItemChanged)
-		{
-			OnItemChanged(ItemsForSale);
-		}
 		
 	}
 
 	// 인벤토리에서 상품 제거, 반값만큼 골드 증가
 	Inventory.erase(Inventory.begin() + index);
-	character.SetGold(Gold - (Price / 2));
+	character.SetGold(Gold + (Price / 2));
 	
-	if (OnItemChanged)
-	{
-		OnItemChanged(Inventory);
-	}
+
 }
 
 
@@ -134,30 +120,21 @@ void Shop::ManageShop(Character& character)
 
 	// 로그 초기화
 	WelcomeLog = "안녕하세요! 무엇을 도와드릴까요?";
-	FirstChoiceOptionsLog = 
-	 "(1) 구매한다.\n"
-	 "(2) 판매한다.\n"
-     "(3) 나간다.\n";
+	FirstChoiceOptionsLog = "(1) 구매한다. (2) 판매한다.  (3) 나간다.";
 
-	PurchaseLog = 
-	    "어떤 물품을 원하시나요? 원하는 번호를 입력해주세요. \n";
-		"0: 뒤로 가기";
+	PurchaseLog = "어떤 물품을 원하시나요? 원하는 번호를 입력해주세요.    0: 뒤로 가기";
+		
 
-	SellLog = 
-	    "어떤 물품을 파실건가요? 파실 물품의 번호를 입력해주세요.\n";
-		"0: 뒤로 가기";
+	SellLog = "어떤 물품을 파실건가요? 파실 물품의 번호를 입력해주세요.    0: 뒤로 가기";
+		
 
-	BackToFirstChoiceLog = 
-	   "첫 번째 선택으로 돌아갑니다.";
+	BackToFirstChoiceLog = "첫 번째 선택으로 돌아갑니다.";
 
-	GetOutShopLog =
-		"상점에서 나갑니다. 다음에 또 오세요!";
+	GetOutShopLog = "상점에서 나갑니다. 다음에 또 오세요!";
 
-	WrongChoiceLog =
-		"잘못된 선택입니다. 다시 입력해주세요.";
+	WrongChoiceLog = "잘못된 선택입니다. 다시 입력해주세요.";
 
-	RemainGoldLog =
-		"남은 골드: " + std::to_string(Gold);
+	RemainGoldLog = "남은 골드: " + std::to_string(Gold);
 
 
 	
@@ -199,7 +176,7 @@ void Shop::ManageShop(Character& character)
 					{
 						break;
 					}
-					if (ItemChoice > ItemsForSale.size())
+					if (ItemChoice > ItemsForSale.size() || ItemChoice < 0)
 					{
 						UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
 					}
@@ -218,7 +195,7 @@ void Shop::ManageShop(Character& character)
 				{
 					UI->AddMessageToBasicCanvasEventInfoUI(SellLogW);
 					Gold = character.GetGold();
-					Display();
+					character.DisplayInventory();
 					UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
 				
 					std::cin >> ItemChoice;
@@ -226,7 +203,7 @@ void Shop::ManageShop(Character& character)
 					{
 						break;
 					}
-					if (ItemChoice > ItemsForSale.size())
+					if (ItemChoice > character.GetInventory().size() || ItemChoice < 0)
 					{
 						UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
 					}
@@ -271,24 +248,23 @@ void Shop::Display()
 	std::wstring ItemPriceLogW;
 	std::wstring ItemExplanationLogW;
 
-	ItemNameLogW = LogicHelper::StringToWString(ItemNameLog);
-	ItemPriceLogW = LogicHelper::StringToWString(ItemPriceLog);
-	ItemExplanationLogW = LogicHelper::StringToWString(ItemExplanationLog);
+	
 
 
 	for (int i = 0; i < ItemsForSale.size(); i++)
 	{
-		ItemNameLog = std::to_string(i + 1) + ". Name: " + ItemsForSale[i]->GetName() +"\n";
-		ItemPriceLog = "  Price: " + std::to_string(ItemsForSale[i]->GetPrice()) + "\n";
-		ItemExplanationLog = "  Explanation: " + ItemsForSale[i]->GetExplanation() + "\n";
+		ItemNameLog = std::to_string(i + 1) + ". Name: " + ItemsForSale[i]->GetName();
+		ItemPriceLog = "  Price: " + std::to_string(ItemsForSale[i]->GetPrice());
+		ItemExplanationLog = "  Explanation: " + ItemsForSale[i]->GetExplanation();
+
+		ItemNameLogW = LogicHelper::StringToWString(ItemNameLog);
+		ItemPriceLogW = LogicHelper::StringToWString(ItemPriceLog);
+		ItemExplanationLogW = LogicHelper::StringToWString(ItemExplanationLog);
+
 		
 		UI->AddMessageToBasicCanvasEventInfoUI(ItemNameLogW);
 		UI->AddMessageToBasicCanvasEventInfoUI(ItemPriceLogW);
 		UI->AddMessageToBasicCanvasEventInfoUI(ItemExplanationLogW);
 		
-		std::cout << i+1 << ". Name: " << ItemsForSale[i]->GetName() << std::endl;
-		std::cout << "  Price: " << ItemsForSale[i]->GetPrice() << std::endl;
-		std::cout << "  Explanation: " << ItemsForSale[i]->GetExplanation() << std::endl;
-	}
-	
+	}	
 }
