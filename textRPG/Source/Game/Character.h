@@ -64,6 +64,7 @@ public:
 	int GetGold() const { return Gold; }
 	Status& GetStatus() { return Stats; }
 	std::shared_ptr<IJob> GetJob() const { return Jobs; }
+	std::vector<std::shared_ptr<IItem>> GetInventory() const { return Inventory; }
 
 	// Setter 함수
 	void SetExp(int exp);
@@ -86,7 +87,7 @@ public:
 	bool IsDead();
 
 	// 데미집 입는 함수
-	void TakeDamage(int rawdamage);
+	int TakeDamage(int rawdamage);
 	
 	// 인벤토리 추가
 	void AddItem(std::shared_ptr<IItem> item);

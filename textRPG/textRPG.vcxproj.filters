@@ -104,6 +104,12 @@
     <ClCompile Include="Source\Game\TileMapScene.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Shop.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\HealthPotion.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h">
@@ -190,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="Source\Game\TileMapScene.h">
       <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Shop.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\HealthPotion.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
