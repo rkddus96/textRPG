@@ -5,6 +5,7 @@
 #include "LogicHelper.h"
 
 TileMapScene::TileMapScene()
+	:CurrentFieldArt(EArtList::Test)
 {
 }
 
@@ -17,8 +18,10 @@ void TileMapScene::PlayScene()
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	UIManagerInstance->BindAllDelegate();
 
-	GameManager::GetInstance().GetTileMap()->Move(0, 0);
-	CurrentFieldArt = GameManager::GetInstance().GetTileMap()->GetCurrentTileArt();
+	// 초기 상태 초기화 후 첫 화면 그리기
+	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
+	TileMapInstance->Move(0, 0);
+	CurrentFieldArt = TileMapInstance->GetCurrentTileArt();
 
 	DrawField();
 	while (true)
@@ -27,26 +30,29 @@ void TileMapScene::PlayScene()
 
 		if (IsMoveInput(KeyInput))
 		{
-			std::pair<int, int> CurrentPosition = GameManager::GetInstance().GetTileMap()->GetCurrentPosition();
+			std::pair<int, int> CurrentPosition = TileMapInstance->GetCurrentPosition();
 			std::pair<int, int> NextPosition = CalculateNextPosition(CurrentPosition, KeyInput);
 
-			if (GameManager::GetInstance().GetTileMap()->CanTraverse(NextPosition.first, NextPosition.second))
+			if (TileMapInstance->CanTraverse(NextPosition.first, NextPosition.second))
 			{
 				// Move Code
 
-				GameManager::GetInstance().GetTileMap()->Move(NextPosition.first, NextPosition.second);
-				CurrentFieldArt = GameManager::GetInstance().GetTileMap()->GetCurrentTileArt();
+				TileMapInstance->Move(NextPosition.first, NextPosition.second);
+				CurrentFieldArt = TileMapInstance->GetCurrentTileArt();
 				// Play Move Sound
 
 				// Battle? Reward?
 			}
 			else
 			{
-				// 다음 입력 시도, 변경이 없으므로 새로 UI를 그리지 않는다.
+				// 이동 불가능 방향
+				// 다음 입력을 시도하고, 변경이 없으므로 새로 UI를 그리지 않는다.
 				continue;
 			}
 		}
-
+		// 현재 화면에 변화가 있을 경우에만 그려져야 한다.
+		// i.e. move를 호출한다거나
+		// 아니면 캐릭터의 스탯이 변화한다거나
 		DrawField();
 	}
 }
