@@ -18,19 +18,19 @@ public:
 
 		if (Instance.AssetHandlerInstance == nullptr)
 		{
-			Instance.AssetHandlerInstance = std::make_unique<AssetHandler>();
+			Instance.AssetHandlerInstance = std::make_shared<AssetHandler>();
 		}
 
 		if (Instance.UIManagerInstance == nullptr)
 		{
 			
-			Instance.UIManagerInstance = std::make_unique<UIManager>();
+			Instance.UIManagerInstance = std::make_shared<UIManager>();
 			Instance.UIManagerInstance->Init();
 		}
 
 		if (Instance.TileMapIsntance == nullptr)
 		{
-			Instance.TileMapIsntance = std::make_unique<TileMap>(16, 8);
+			Instance.TileMapIsntance = std::make_shared<TileMap>(16, 8);
 		}
 
 		return Instance;
@@ -45,7 +45,7 @@ public:
 		bIsClearGame = true;
 	}
 
-	bool GetIsClearGame() const
+	bool IsClearGame() const
 	{
 		return bIsClearGame;
 	}
@@ -55,12 +55,12 @@ public:
 		return UIManagerInstance;
 	}
 
-	std::unique_ptr<AssetHandler>& GetAssetHandler()
+	std::shared_ptr<AssetHandler>& GetAssetHandler()
 	{
 		return AssetHandlerInstance;
 	}
 
-	std::unique_ptr<TileMap>& GetTileMap()
+	std::shared_ptr<TileMap>& GetTileMap()
 	{
 		return TileMapIsntance;
 	}
@@ -81,7 +81,7 @@ private:
 
 	std::shared_ptr<UIManager> UIManagerInstance;
 
-	std::unique_ptr<AssetHandler> AssetHandlerInstance;
+	std::shared_ptr<AssetHandler> AssetHandlerInstance;
 
-	std::unique_ptr<TileMap> TileMapIsntance;
+	std::shared_ptr<TileMap> TileMapIsntance;
 };
