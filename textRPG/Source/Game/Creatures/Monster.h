@@ -5,6 +5,7 @@
 #include <string>
 #include "../AssetHandler.h"
 #include "../Managers/GameManager.h"
+#include "../LogicHelper.h"
 
 using namespace std;
 
