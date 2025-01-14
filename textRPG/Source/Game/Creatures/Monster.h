@@ -13,7 +13,7 @@ class Monster
 public:
     virtual ~Monster() = default;
     virtual void DisplayIntroduction() = 0;
-    void TakeDamage(int power);
+    int TakeDamage(int rawDamage);
     bool IsDead();
 
     // Getters

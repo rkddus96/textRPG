@@ -84,7 +84,7 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 	// 장비 아이템이면 바로 효과 적용
 	if (item->IsConsumable() == false)
 	{
-		item->Use(this);
+		item->Use(*this);
 	}
 	
 	if (OnItemChanged)
@@ -102,8 +102,12 @@ void Character::UsePotion()
 	{
 		if (Inventory[index]->IsConsumable())
 		{
-			Inventory[index]->Use(this);
+			Inventory[index]->Use(*this);
 			Inventory.erase(Inventory.begin() + index);
+			if (OnItemChanged)
+			{
+				OnItemChanged(Inventory);
+			}
 			break;
 		}
 	}
@@ -143,16 +147,17 @@ void Character::UsePotion()
 	*/
 }
 
-void Character::TakeDamage(int rawdamage)
+int Character::TakeDamage(int rawdamage)
 {
-	Status Stats = this->GetStatus();
+	Status& Stats = this->GetStatus();
 	int Defense =Stats.GetStat(EStat::Defense);
 
 	int damage = std::max((rawdamage - Defense), 0);
 	int Hp = Stats.GetStat(EStat::CurHp) - damage;
 	Stats.SetStat(EStat::CurHp, Hp);
 
-	return ;
+	
+	return damage;
 }
 
 // 캐릭터 생성 함수
