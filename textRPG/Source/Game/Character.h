@@ -92,7 +92,7 @@ public:
 	void AddItem(std::shared_ptr<IItem> item);
 
 	// 아이템 사용
-	void UsePotion(int index);
+	void UsePotion();
 
 	
 	void Display() const;

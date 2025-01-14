@@ -30,7 +30,7 @@ public:
 
 		if (Instance.TileMapIsntance == nullptr)
 		{
-			Instance.TileMapIsntance = std::make_unique<TileMap>(5, 5);
+			Instance.TileMapIsntance = std::make_unique<TileMap>(16, 8);
 		}
 
 		return Instance;
