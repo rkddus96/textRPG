@@ -26,7 +26,6 @@
     <ClCompile Include="Source\Game\Battle\HandBattle.cpp" />
     <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
-    <ClCompile Include="Source\Game\Creatures\Devil.cpp" />
     <ClCompile Include="Source\Game\Creatures\Goblin.cpp" />
     <ClCompile Include="Source\Game\Creatures\Monster.cpp" />
     <ClCompile Include="Source\Game\Creatures\MonsterFactory.cpp" />
@@ -35,6 +34,7 @@
     <ClCompile Include="Source\Game\Creatures\Slime.cpp" />
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
     <ClCompile Include="Source\Game\Equipment.cpp" />
+    <ClCompile Include="Source\Game\HealthPotion.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
     <ClCompile Include="Source\Game\IScene.cpp" />
     <ClCompile Include="Source\Game\LogicHelper.cpp" />
@@ -44,6 +44,7 @@
     <ClCompile Include="Source\Game\OpeningScene.cpp" />
     <ClCompile Include="Source\Game\RenderingCanvas.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
+    <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
     <ClCompile Include="Source\Game\textRPG.cpp" />
     <ClCompile Include="Source\Game\TileMap.cpp" />
@@ -57,7 +58,6 @@
     <ClInclude Include="Source\Game\Battle\HandBattle.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />
-    <ClInclude Include="Source\Game\Creatures\Devil.h" />
     <ClInclude Include="Source\Game\Creatures\Goblin.h" />
     <ClInclude Include="Source\Game\Creatures\Monster.h" />
     <ClInclude Include="Source\Game\Creatures\MonsterFactory.h" />
@@ -66,9 +66,10 @@
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
     <ClInclude Include="Source\Game\Equipment.h" />
-    <ClInclude Include="Source\Game\IJob.h" />
+    <ClInclude Include="Source\Game\HealthPotion.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
     <ClInclude Include="Source\Game\IScene.h" />
+    <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />
     <ClInclude Include="Source\Game\Mage.h" />
     <ClInclude Include="Source\Game\Managers\GameManager.h" />
@@ -77,6 +78,7 @@
     <ClInclude Include="Source\Game\OpeningScene.h" />
     <ClInclude Include="Source\Game\RenderingCanvas.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
+    <ClInclude Include="Source\Game\Shop.h" />
     <ClInclude Include="Source\Game\TileMap.h" />
     <ClInclude Include="Source\Game\Status.h" />
     <ClInclude Include="Source\Game\Thief.h" />
