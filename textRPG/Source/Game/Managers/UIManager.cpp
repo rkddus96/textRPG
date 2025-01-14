@@ -7,7 +7,7 @@
 #include "TimerManager.h"
 #include <functional>
 #include "../Character.h"
-#include "../Item.h"
+#include "../IItem.h"
 
 UIManager::UIManager()
 {
