@@ -18,4 +18,8 @@ void Orc::DisplayIntroduction()
 {
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
+    //출력 
+    string s = "오크의 분노를 보여주마!";
+    wstring ws = LogicHelper::StringToWString(s);
+    GameManager::GetInstance().GetUIManager()->AddMessageToBasicCanvasEventInfoUI(ws);
 }
