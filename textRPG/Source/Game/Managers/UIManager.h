@@ -29,7 +29,8 @@ enum class EBasicCanvasLayer
 	MinimapBorder,
 	EventInfoUIBorder,
 	EventInfoUIContents,
-	StatInfo
+	StatInfo,
+	MonsterInfo
 };
 
 /// <summary>
@@ -80,6 +81,9 @@ enum class ETile;
 struct FASKIIArtContainer;
 class Item;
 enum class EStat;
+class Monster;
+enum class ECharacterEvent;
+enum class EStat;
 
 class UIManager
 {
@@ -109,6 +113,8 @@ public:
 	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
+	// 몬스터 이름은 영어로 되어있어야 가운데 맞춤이 정상적으로 이루어짐.
+	void SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int MonsterHp, bool bShouldUpdateUI = true);
 
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasBackgroundArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
@@ -135,9 +141,9 @@ private:
 
 	void Tick(double DeltaTime);
 
-	void OnCharacterChanged(enum class ECharacterEvent CharacterEvent, int Amount);
-	//std::function<void(EStat, int)> OnStatChanged;
-	void OnStatChanged(enum class EStat StatType, int Amount);
+	void OnCharacterChanged(ECharacterEvent CharacterEvent, int Amount);
+
+	void OnStatChanged(EStat StatType, int Amount);
 	void OnMinimapUIContentsChanged(const std::vector<std::vector<ETile>>& TileTypeInfos);
 
 private:
