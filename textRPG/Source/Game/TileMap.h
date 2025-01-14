@@ -25,7 +25,7 @@ struct FAvailableDirection
 };
 
 /// <summary>
-/// 좌상단이 0, 0으로 시작해서 우하단이 (width - 1, height - 1)의 좌표를 가진다.
+/// 좌상단이 0, 0으로 시작해서 우하단이 (width - 1, height - 1)의 좌표를 가진다. (x, y)의 좌표를 가진다.
 /// </summary>
 class TileMap
 {

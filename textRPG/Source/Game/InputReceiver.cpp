@@ -15,22 +15,18 @@ EKey InputReceiver::ChatchInput()
 
 		if (Key == 72)
 		{
-			std::cout << "You pressed Up Key!" << std::endl;
 			return EKey::UpArrow;
 		}
 		else if (Key == 80)
 		{
-			std::cout << "You pressed Down Key!" << std::endl;
 			return EKey::DownArrow;
 		}
 		else if (Key == 75)
 		{
-			std::cout << "You pressed Left Key!" << std::endl;
 			return EKey::LeftArrow;
 		}
 		else if (Key == 77)
 		{
-			std::cout << "You pressed Right Key!" << std::endl;
 			return EKey::RightArrow;
 		}
 	}
