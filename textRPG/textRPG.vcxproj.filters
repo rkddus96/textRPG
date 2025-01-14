@@ -85,7 +85,7 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Equipment.cpp">
       <Filter>Source\Game</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\Game\Battle\ABattle.cpp">
       <Filter>Source\Game\Battle</Filter>
     </ClCompile>
@@ -94,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Battle\HandBattle.cpp">
       <Filter>Source\Game\Battle</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\OpeningScene.cpp">
+      <Filter>Source\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +169,7 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Equipment.h">
       <Filter>Source</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="Source\Game\Battle\ABattle.h">
       <Filter>Source\Game\Battle</Filter>
     </ClInclude>
@@ -172,6 +178,12 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Battle\HandBattle.h">
       <Filter>Source\Game\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\OpeningScene.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
