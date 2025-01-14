@@ -57,14 +57,23 @@ enum class EInventoryCanvasLayer
 	ItemList
 };
 
-// 캐릭터 만들어질 때까지 임시
-enum class ETempStatType
+enum class EUIColor
 {
-	Level,
-	Hp,
-	Defence,
-	Power,
-	Luck
+	Black,
+	Blue,
+	Green,
+	Aqua,
+	Red,
+	Purple,
+	Yellow,
+	White_Default,
+	Gray,
+	LightBlue,
+	LightGreen,
+	LightAqua,
+	LightRed,
+	LightYellow,
+	BrightWhite
 };
 
 enum class ETile;
@@ -107,6 +116,8 @@ public:
 
 	void SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
 	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI = true);
+	
+	void SetConsoleColor(EUIColor UIColor);
 
 	void BindAllDelegate();
 
