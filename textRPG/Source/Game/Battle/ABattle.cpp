@@ -12,6 +12,9 @@
 
 ABattle::ABattle()
 {
+	// 전투 BGM 재생
+	AudioPlayer::PlayLoop(AudioPath::BATTLE_BGM, 0.2f);
+
 	// 1.보정계수, 빗나감, 치명타, 일반공격 수치 계산
 	SetMonsterCoEfficientValue();
 	SetMissProb();
@@ -38,6 +41,9 @@ void ABattle::MonsterAttackAction()
 	if (bGameFinished)
 		return;
 
+	// 로그 초기화
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+
 	// 플레이어의 정보를 가져옴
 	int PlayerHP = Player->GetStatus().GetStat(EStat::CurHp);
 	string PlayerName = Player->GetName();
@@ -50,6 +56,12 @@ void ABattle::MonsterAttackAction()
 	wstring CurHpLogToW;
 	wstring DeadLogToW;
 
+	// 플레이어 현재 체력 출력
+	CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
+	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
+	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
+	Sleep(1000);
+
 	// 공격 타입 계산
 	EAttackType AttackType = CalculateAttackProb(MonsterCriProb, MonsterMissProb, MonsterNormalProb);
 
@@ -60,8 +72,9 @@ void ABattle::MonsterAttackAction()
 	switch (AttackType)
 	{
 		case EAttackType::Critical:
-			Player->TakeDamage(Damage * 1.2);
-			DamageLog = "치명타 ! " + PlayerName + "의 체력이 " + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			UI->SetConsoleColor(EUIColor::LightRed);
+			Damage = Player->TakeDamage(Damage * 2);
+			DamageLog = "치명타 ! " + PlayerName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::CRITICALATTACK);
 			break;
 		case EAttackType::Miss:
@@ -69,23 +82,25 @@ void ABattle::MonsterAttackAction()
 			AudioPlayer::Play(AudioPath::MISS);
 			break;
 		case EAttackType::Normal:
-			Player->TakeDamage(Damage);
+			UI->SetConsoleColor(EUIColor::LightRed);
+			Damage = Player->TakeDamage(Damage);
 			DamageLog = PlayerName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::NORMALATTACK);
 			break;
 	}
 
 	// 로그 초기화
-	CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
+	CurHpLog = PlayerName + "의 피격 후 체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
-	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
 
-	Sleep(1000);
+	Sleep(200);
+	UI->SetConsoleColor(EUIColor::White_Default);
+	Sleep(800);
 
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
@@ -124,6 +139,7 @@ void ABattle::PotionAction()
 
 	// 로그 출력
 	Sleep(1000);
+	AudioPlayer::Play(AudioPath::POTION);
 	UI->AddMessageToBasicCanvasEventInfoUI(PotionLogToW);
 
 	Sleep(1000);
@@ -140,6 +156,9 @@ void ABattle::PlayerAttackAction()
 	if (bGameFinished)
 		return;
 
+	// 로그 클리어
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+
 	// 몬스터의 정보를 가져옴
 	int EnemyHp = Enemy->GetCurHp();
 	string EnemyName = Enemy->GetName();
@@ -152,6 +171,12 @@ void ABattle::PlayerAttackAction()
 	wstring CurHpLogToW;
 	wstring DeadLogToW;
 
+	// 몬스터 현재 체력 출력
+	CurHpLog = EnemyName + "의 현재체력 : " + to_string(Enemy->GetCurHp());
+	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
+	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
+	Sleep(1000);
+
 	// 몬스터에게 데미지
 	int Damage = Player->GetStatus().GetStat(EStat::Power);
 
@@ -162,8 +187,9 @@ void ABattle::PlayerAttackAction()
 	switch (AttackType)
 	{
 		case EAttackType::Critical:
-			Enemy->TakeDamage(Damage * 1.2);
-			DamageLog = "치명타 ! " + EnemyName + "의 체력이 " + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			UI->SetConsoleColor(EUIColor::LightRed);
+			Damage = Enemy->TakeDamage(Damage * 2);
+			DamageLog = "치명타 ! " + EnemyName + "의 체력이 " + to_string(int(Damage)) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::CRITICALATTACK, 0.6f);
 			break;
 		case EAttackType::Miss:
@@ -171,24 +197,24 @@ void ABattle::PlayerAttackAction()
 			AudioPlayer::Play(AudioPath::MISS);
 			break;
 		case EAttackType::Normal:
-			Enemy->TakeDamage(Damage);
+			UI->SetConsoleColor(EUIColor::LightRed);
+			Damage = Enemy->TakeDamage(Damage);
 			DamageLog = EnemyName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::NORMALATTACK);
 			break;
 	}
 
 	// 로그 초기화
-	CurHpLog = EnemyName + "의 현재체력 : " + to_string(Enemy->GetCurHp());
+	CurHpLog = EnemyName + "의 피격 후 체력 : " + to_string(Enemy->GetCurHp());
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
-	// 로그 출력
-	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
 
-	Sleep(1000);
-
+	Sleep(200);
+	UI->SetConsoleColor(EUIColor::White_Default);
+	Sleep(800);
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
 	// 연출용도로 잠시 대기
@@ -252,7 +278,8 @@ void ABattle::SetNormalProb()
 void ABattle::GameWin()
 {
 	UI->ClearMessageToBasicCanvasEventInfoUI(false);
-	
+	AudioPlayer::StopAll();
+
 	// 플레이어 경험치 증가
 	int Exp = Enemy->GetExp();
 	int Gold = Enemy->GetMoney();
@@ -260,6 +287,7 @@ void ABattle::GameWin()
 	// 재화 획득
 	Player->RaiseExp(Exp);
 	Player->RaiseGold(Gold);
+	
 
 	// 로그 선언
 	string InfoLog = "전투를 승리했습니다 !";
@@ -271,16 +299,21 @@ void ABattle::GameWin()
 
 	// 로그 출력
 	Sleep(1000);
+	AudioPlayer::Play(AudioPath::WIN, 0.5f);
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
 
+	// 플레이어 레벨업
 	Sleep(1000);
 	UI->AddMessageToBasicCanvasEventInfoUI(ExpLogToW);
+	if (Player->GetExp() + Exp >= Player->GetMaxExp())
+		Player->LevelUp();
 
+	// 플레이어 골드 획득
 	Sleep(1000);
 	UI->AddMessageToBasicCanvasEventInfoUI(GoldLogToW);
 
 	Sleep(1000);
-
+	AudioPlayer::Play(AudioPath::RESULT);
 	// 전투 종료
 	bGameFinished = true;
 }
@@ -288,13 +321,16 @@ void ABattle::GameWin()
 // 전투 패배시 수행하는 로직
 void ABattle::GameLose()
 {
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+	AudioPlayer::StopAll();
+
 	// 로그 선언
 	string InfoLog = "전투를 패배했습니다 !";
 	wstring InfoLogToW = LogicHelper::StringToWString(InfoLog);
 
 	// 연출용도로 잠시 대기
 	Sleep(1000);
-
+	AudioPlayer::Play(AudioPath::LOSE);
 	// 로그 출력
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
 

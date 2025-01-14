@@ -7,6 +7,11 @@ namespace AudioPath
 	const std::string NORMALATTACK = "NormalAttack.wav";
 	const std::string CRITICALATTACK = "CriticalAttack.wav";
 	const std::string FOOTSTEPSFX_GRASS = "FootStepSFX_Grass.wav";
+	const std::string WIN = "Win.wav";
+	const std::string LOSE = "Lose.wav";
+	const std::string RESULT = "Result.wav";
+	const std::string POTION = "Potion.wav";
+	const std::string BATTLE_BGM = "BattleBGM.wav";
 }
 
 namespace Console
