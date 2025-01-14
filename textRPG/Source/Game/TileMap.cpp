@@ -51,7 +51,7 @@ FAvailableDirection TileMap::GetAvailableDirection()
 
 bool TileMap::CanTraverse(int X, int Y) const
 {
-	return (X >= 0 && X < Width && Y >= 0 && Y < Height) && TileGrid[X][Y] != ETile::Block;
+	return (X >= 0 && X < Height && Y >= 0 && Y < Width) && TileGrid[X][Y] != ETile::Block;
 }
 
 std::vector<std::vector<ETile>> TileMap::GetCurretnMapData()
