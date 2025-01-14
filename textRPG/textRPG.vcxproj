@@ -61,8 +61,8 @@
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
     <ClInclude Include="Source\Game\Equipment.h" />
+    <ClInclude Include="Source\Game\IJob.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
-    <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />
     <ClInclude Include="Source\Game\Mage.h" />
     <ClInclude Include="Source\Game\Managers\GameManager.h" />

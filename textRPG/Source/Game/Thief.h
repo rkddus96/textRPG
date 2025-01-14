@@ -4,9 +4,9 @@
 class Thief : public IJob
 {
 public:
-	float GetPowerWeight() const override { return 1.0f; }
-	float GetDefenseWeight() const override { return 0.8f; }
-	float GetLuckWeight() const override { return 1.2f; }
+	int GetPowerWeight() const override { return 3; }
+	int GetDefenseWeight() const override { return 1; }
+	int GetLuckWeight() const override { return 7; }
 
 	std::wstring GetJobName() const override { return L"Thief"; }
 };

@@ -5,9 +5,9 @@ class Warrior : public IJob
 {
 public:
 	// Warrior의 각 능력치 가중치
-	float GetPowerWeight() const override { return 1.2f; }
-	float GetDefenseWeight() const override { return 1.0f; }
-	float GetLuckWeight() const override { return 0.8f; }
+	int GetPowerWeight() const override { return 5; }
+	int GetDefenseWeight() const override { return 1; }
+	int GetLuckWeight() const override { return 0; }
 	
 	std::wstring GetJobName() const override { return L"Warrior"; }
 };

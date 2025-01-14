@@ -108,7 +108,7 @@ void ABattle::PlayerAttackAction()
 	string EnemyName = Enemy->GetName();
 
 	// 몬스터에게 데미지
-	int Damage = Player->GetDamage();
+	int Damage = Player->GetDamage(); 
 	Enemy->TakeDamage(Damage);
 
 	// 로그 선언
