@@ -46,7 +46,7 @@ std::wstring LogicHelper::StringToWString(const std::string& Str)
 
     // 변환 수행
     MultiByteToWideChar(CP_UTF8, 0, Str.c_str(), -1, &NewWString[0], Size);
-
+    NewWString.resize(Size - 1);
     return NewWString;
 }
 
