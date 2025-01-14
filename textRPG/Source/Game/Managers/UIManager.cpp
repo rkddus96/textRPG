@@ -10,6 +10,11 @@
 #include "../IItem.h"
 #include "../Status.h"
 #include <algorithm>
+#include <Windows.h>
+
+// 매크로 제거
+#undef min
+#undef max
 
 UIManager::UIManager()
 {
@@ -275,7 +280,7 @@ void UIManager::ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI)
 	{
 	case 1:
 
-		JobInfoString += L"전사";
+		JobInfoString += L"전사  ";
 		break;
 
 	case 2:
@@ -283,7 +288,7 @@ void UIManager::ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI)
 		break;
 
 	case 3:
-		JobInfoString += L"도적";
+		JobInfoString += L"도적  ";
 		break;
 
 	default:
@@ -330,13 +335,13 @@ void UIManager::ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI)
 
 	std::wstring NumberString = std::to_wstring(Amount);
 
-	/*int SpaceCount = MaxLevelTextLength - (int)NumberString.size();
+	StatInfoString += NumberString;
+
+	int SpaceCount = MaxLevelTextLength - (int)NumberString.size();
 	for (int i = 0; i < SpaceCount; ++i)
 	{
 		StatInfoString.push_back(L' ');
-	}*/
-
-	StatInfoString += NumberString;
+	}
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
@@ -367,13 +372,13 @@ void UIManager::ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI)
 
 	std::wstring NumberString = std::to_wstring(Amount);
 
-	/*int SpaceCount = MaxExpTextLength - (int)NumberString.size();
+	StatInfoString += NumberString;
+
+	int SpaceCount = MaxExpTextLength - (int)NumberString.size();
 	for (int i = 0; i < SpaceCount; ++i)
 	{
 		StatInfoString.push_back(L' ');
-	}*/
-
-	StatInfoString += NumberString;
+	}
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
@@ -404,13 +409,13 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 
 	std::wstring NumberString = std::to_wstring(Amount);
 
-	/*int SpaceCount = MaxExpTextLength - (int)NumberString.size();
+	StatInfoString += NumberString;
+
+	int SpaceCount = MaxMoneyTextLength - (int)NumberString.size();
 	for (int i = 0; i < SpaceCount; ++i)
 	{
 		StatInfoString.push_back(L' ');
-	}*/
-
-	StatInfoString += NumberString;
+	}
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
@@ -466,13 +471,14 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 
 	std::wstring NumberString = std::to_wstring(Amount);
 
-	/*int SpaceCount = MaxStatNumberTextLength - (int)NumberString.size();
+	StatInfoString += NumberString;
+
+	int SpaceCount = MaxStatNumberTextLength - (int)NumberString.size();
 	for(int i = 0; i < SpaceCount; ++i)
 	{
 		StatInfoString.push_back(L' ');
-	}*/
+	}
 
-	StatInfoString += NumberString;
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
@@ -656,6 +662,12 @@ void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Ite
 	{
 		PrintUI(ERenderingCanvas::Inventory);
 	}
+}
+
+void UIManager::SetConsoleColor(EUIColor UIColor)
+{
+	HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(ConsoleHandle, (WORD)UIColor);
 }
 
 void UIManager::BindAllDelegate()
