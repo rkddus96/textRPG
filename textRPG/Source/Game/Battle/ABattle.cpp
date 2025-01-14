@@ -10,7 +10,7 @@
 #include "../InputReceiver.h"
 
 
-ABattle::ABattle(Character* Player) : Player(Player)
+ABattle::ABattle()
 {
 	// 1.보정계수, 빗나감, 치명타, 일반공격 수치 계산
 	SetMonsterCoEfficientValue();
@@ -19,7 +19,7 @@ ABattle::ABattle(Character* Player) : Player(Player)
 	SetNormalProb();
 
 	// 2. 캐릭터 변수 초기화
-	this->Player = Player;
+	this->Player = &Character::GetInstance();
 
 	// 3. 랜덤 몬스터 생성
 	Enemy = (new MonstserFactoryManager())->CreateRandomMonster(Player->GetLevel());
@@ -55,14 +55,13 @@ void ABattle::MonsterAttackAction()
 
 	// 플레이어에게 데미지
 	int Damage = Enemy->GetPower();
-	//Player-> TakeDamage(Damage);
 
 	// 공격 타입에 따라 공격 수행
 	switch (AttackType)
 	{
 		case EAttackType::Critical:
 			Player->TakeDamage(Damage * 1.2);
-			DamageLog = "치명타 ! " + PlayerName + "의 체력이" + to_string(Damage * 1.2) + "만큼 깎였습니다.";
+			DamageLog = "치명타 ! " + PlayerName + "의 체력이" + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
 			break;
 		case EAttackType::Miss:
 			DamageLog = "공격이 빗나갔습니다 !";
@@ -142,7 +141,7 @@ void ABattle::PlayerAttackAction()
 	wstring DeadLogToW;
 
 	// 몬스터에게 데미지
-	int Damage = Player->GetDamage();
+	int Damage = Player->GetStatus().GetStat(EStat::Power);
 
 	// 공격 타입 계산
 	EAttackType AttackType = CalculateAttackProb(PlayerCriProb, PlayerMissProb, PlayerNormalProb);
@@ -152,7 +151,7 @@ void ABattle::PlayerAttackAction()
 	{
 		case EAttackType::Critical:
 			Enemy->TakeDamage(Damage * 1.2);
-			DamageLog = "치명타 ! " + EnemyName + "의 체력이" + to_string(Damage * 1.2) + "만큼 깎였습니다.";
+			DamageLog = "치명타 ! " + EnemyName + "의 체력이" + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
 			break;
 		case EAttackType::Miss:
 			DamageLog = "공격이 빗나갔습니다 !";
@@ -202,10 +201,10 @@ void ABattle::SetMissProb()
 {
 	/*--------------------------------------------------------------
 	* 플레이어의 빗나감 확률 = (5 - 5(1 - e(-x / 100)))
-	* 몬스터의 빗나감 확률 = (Easy = 5%, Normal = 3.75%, Hard = 2.5%)
+	* 몬스터의 빗나감 확률 = (Easy = 10%, Normal = 7.5%, Hard = 5.0%)
 	--------------------------------------------------------------*/
-	PlayerMissProb = 5 - 5 * (1 - exp(-(1.0 / 100) * 30));
-	MonsterMissProb = 5 * (2 - MonsterCoefficientValue);
+	PlayerMissProb = 10 - 10 * (1 - exp(-(1.0 / 100) * 30));
+	MonsterMissProb = 10 * (2 - MonsterCoefficientValue);
 }
 
 // 플레이어, 몬스터 치명타 확률 계산 함수
@@ -240,6 +239,8 @@ void ABattle::GameWin()
 
 	// 연출용도로 잠시 대기
 	Sleep(1000);
+
+	Player->RaiseExp(50);
 
 	// 로그 출력
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);

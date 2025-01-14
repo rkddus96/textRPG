@@ -44,7 +44,7 @@ protected:
 	bool IsPotionEvent();
 
 	// 소멸자
-	~ABattle();
+	virtual ~ABattle() = default;
 
 private:
 
@@ -83,7 +83,7 @@ private:
 public:
 
 	// 생성자
-	ABattle(Character* Player);
+	ABattle();
 
 	// 전투 시작을 알리는 함수
 	void StartBattle();
