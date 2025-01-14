@@ -5,9 +5,10 @@
 class OpeningScene : public IScene
 {
 public:
+
 	OpeningScene();
 
 	virtual void PlayScene() final;
 
-	~OpeningScene() final;
+	virtual ~OpeningScene() final;
 };

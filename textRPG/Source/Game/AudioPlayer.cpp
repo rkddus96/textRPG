@@ -4,11 +4,13 @@
 #include <algorithm>
 #include <limits>
 #include "LogicHelper.h"
+#include "Managers/TimerManager.h"
+#include "ConstantContainer.h"
+
 #pragma comment(lib,"winmm.lib")
 
-std::unordered_set<std::string> AudioPlayer::AudioNameSet;
-std::list<AudioInfo> AudioPlayer::AudioInfos;
-
+std::unordered_map<std::string, std::shared_ptr<AudioInfo>> AudioPlayer::AudioNameMap;
+std::list<std::shared_ptr<AudioInfo>> AudioPlayer::AudioInfos;
 
 std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
 {
@@ -18,14 +20,14 @@ std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
 
         std::string AudioName = "Audio" + std::to_string(AudioIndex);
 
-        if (AudioNameSet.find(AudioName) != AudioNameSet.end() || IsPlaying(AudioName))
+        if (AudioNameMap.find(AudioName) != AudioNameMap.end() || IsPlaying(AudioName))
         {
             continue;
         }
 
-        AudioNameSet.insert(AudioName);
+        //AudioNameMap.insert(AudioName);
 
-        PlayInternal(FilePath, AudioName, Volume);
+        PlayInternal(FilePath, AudioName, Volume, false);
         return AudioName;
     }
 
@@ -35,16 +37,26 @@ std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
 
 void AudioPlayer::Play(const std::string& FilePath, const std::string& AudioName, float Volume)
 {
-    if (AudioNameSet.find(AudioName) != AudioNameSet.end() || IsPlaying(AudioName))
+    if (AudioNameMap.find(AudioName) != AudioNameMap.end() || IsPlaying(AudioName))
     {
         std::cout << "AudioPlayer, Play Fail to play Audio : " << FilePath << std::endl;
         return;
     }
 
-    PlayInternal(FilePath, AudioName, Volume);
+    PlayInternal(FilePath, AudioName, Volume, false);
 }
 
 void AudioPlayer::Stop(const std::string& AudioName)
+{
+    if (AudioNameMap[AudioName]->GetIsLoop())
+    {
+        AudioNameMap[AudioName]->SetIsLooping(false);
+    }
+
+    StopInternal(AudioName);
+}
+
+void AudioPlayer::StopInternal(const std::string& AudioName)
 {
     const std::string& Command = "close " + AudioName;
 
@@ -57,8 +69,8 @@ void AudioPlayer::StopAll()
 
     while (node != AudioInfos.end())
     {
-        Stop(node->Name);
-        AudioNameSet.erase(node->Name);
+        Stop((*node)->Name);
+        AudioNameMap.erase((*node)->Name);
 
         if (std::next(node) == AudioInfos.end())
         {
@@ -71,6 +83,35 @@ void AudioPlayer::StopAll()
             AudioInfos.erase(std::prev(node));
         }
     }
+}
+
+std::string AudioPlayer::PlayLoop(const std::string& FilePath, float Volume)
+{
+    for (int i = 0; i < 100; ++i)
+    {
+        int AudioIndex = LogicHelper::GetRandomNumberMaxRange();
+
+        std::string AudioName = "Audio" + std::to_string(AudioIndex);
+
+        if (AudioNameMap.find(AudioName) != AudioNameMap.end() || IsPlaying(AudioName))
+        {
+            continue;
+        }
+
+        //AudioNameMap.insert(AudioName);
+
+        PlayInternal(FilePath, AudioName, Volume, true);
+
+        if (TimerManager::GetInstance().OnTickForAudioPlayer == nullptr)
+        {
+            TimerManager::GetInstance().OnTickForAudioPlayer = Tick;
+        }
+
+        return AudioName;
+    }
+
+    std::cout << "AudioPlayer, Play, Fail to play Audio : " << FilePath << std::endl;
+    return "";
 }
 
 void AudioPlayer::SetVolume(const std::string& AudioName, float Volume)
@@ -106,10 +147,10 @@ void AudioPlayer::ClearRetiredAudios()
 
     while (node != AudioInfos.end())
     {
-        if (node->IsRetired())
+        if ((*node)->IsRetired() && (*node)->GetIsLoop() == false)
         {
-            Stop(node->Name);
-            AudioNameSet.erase(node->Name);
+            StopInternal((*node)->Name);
+            AudioNameMap.erase((*node)->Name);
 
             if (std::next(node) == AudioInfos.end())
             {
@@ -128,7 +169,7 @@ void AudioPlayer::ClearRetiredAudios()
     }
 }
 
-void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume)
+void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume, bool bShouldLoop)
 {
     // 미디어 파일 열기
     std::string Command = "open \"" + FilePath + "\" type mpegvideo alias " + AudioName;
@@ -148,6 +189,7 @@ void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& A
     int lengthInMilliseconds = std::stoi(Buffer);
     //std::cout << "Audio length: " << lengthInMilliseconds << " milliseconds." << std::endl;
 
+
     Command = "play " + AudioName;
     // 미디어 파일 재생
     if (mciSendStringA(Command.c_str(), NULL, 0, NULL) != 0)
@@ -158,7 +200,52 @@ void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& A
 
     SetVolume(AudioName, Volume);
 
-    AudioInfos.push_back(AudioInfo(AudioName, lengthInMilliseconds / 1000.0f));
+    if (AudioNameMap.find(AudioName) != AudioNameMap.end())
+    {
+        return;
+    }
+
+    auto NewAudioInfo = std::make_shared<AudioInfo>(AudioName, lengthInMilliseconds / 1000.0f, FilePath, Volume, bShouldLoop);
+    AudioNameMap[AudioName] = NewAudioInfo;
+    AudioInfos.push_back(NewAudioInfo);
+}
+
+void AudioPlayer::ReplayLoop()
+{
+    auto node = AudioInfos.begin();
+
+    while (node != AudioInfos.end())
+    {
+        bool retired = (*node)->IsRetired();
+        if ((*node)->IsRetired() && (*node)->GetIsLoop())
+        {
+            std::cout << "?????????????????";
+            StopInternal((*node)->Name);
+
+            PlayInternal((*node)->GetFilePath(), (*node)->Name, (*node)->GetVolume(), true);
+
+            //AudioNameMap.erase(node->Name);
+
+            if (std::next(node) == AudioInfos.end())
+            {
+                AudioInfos.erase(node);
+                break;
+            }
+            else
+            {
+                node++;
+                AudioInfos.erase(std::prev(node));
+                continue;
+            }
+        }
+
+        node++;
+    }
+}
+
+void AudioPlayer::Tick(double DeltaTime)
+{
+    ReplayLoop();
 }
 
 //AudioPlayer::~AudioPlayer()
