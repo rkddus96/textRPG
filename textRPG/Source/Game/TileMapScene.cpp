@@ -3,6 +3,7 @@
 #include "Managers/GameManager.h"
 #include "AssetHandler.h"
 #include "LogicHelper.h"
+#include "ConstantContainer.h"
 
 TileMapScene::TileMapScene()
 {
@@ -37,6 +38,7 @@ void TileMapScene::PlayScene()
 
 				TileMapInstance->Move(NextPosition.first, NextPosition.second);
 				// Play Move Sound
+				AudioPlayer::Play(AudioPath::FOOTSTEPSFX_GRASS);
 
 				// 도착한 Tile 처리
 				if (TileMapInstance->GetCurrentTileType() == ETile::Blank

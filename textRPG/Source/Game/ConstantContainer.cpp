@@ -6,6 +6,7 @@ namespace AudioPath
 	const std::string MISS = "Miss.wav";
 	const std::string NORMALATTACK = "NormalAttack.wav";
 	const std::string CRITICALATTACK = "CriticalAttack.wav";
+	const std::string FOOTSTEPSFX_GRASS = "FootStepSFX_Grass.wav";
 }
 
 namespace Console

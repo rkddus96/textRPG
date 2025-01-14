@@ -8,6 +8,7 @@ namespace AudioPath
 	extern const std::string CRITICALATTACK;
 	extern const std::string NORMALATTACK;
 	extern const std::string MISS;
+	extern const std::string FOOTSTEPSFX_GRASS;
 }
 
 namespace Console
