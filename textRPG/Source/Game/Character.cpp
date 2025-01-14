@@ -5,7 +5,7 @@
 #include "Warrior.h"
 #include "Mage.h"
 #include "Thief.h"
-#include "Item.h"
+#include "IItem.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
@@ -42,6 +42,16 @@ void Character::SetExp(int exp)
 		OnCharacterChanged(ECharacterEvent::Exp, Exp);
 	}
 }
+
+void Character::RaiseExp(int exp)
+{
+	Exp += exp;
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Exp, Exp);
+	}
+}
+
 void Character::SetLevel(int level)
 {
 	Level = std::max(1, std::min(level, 10));
@@ -50,6 +60,25 @@ void Character::SetLevel(int level)
 		OnCharacterChanged(ECharacterEvent::Level, Level);
 	}
 }
+
+void Character::SetGold(int gold)
+{
+	Gold = gold;
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Gold, Gold);
+	}
+}
+
+void Character::RaiseGold(int gold)
+{
+	Gold += gold;
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Gold, Gold);
+	}
+}
+
 
 // 생존 여부 반환 함수
 bool Character::IsDead()
@@ -64,19 +93,63 @@ bool Character::IsDead()
 	}
 }
 
-// Add Item
-void Character::AddItem(std::shared_ptr<Item> item)
+// 아이템 추가
+void Character::AddItem(std::shared_ptr<IItem> item)
 {
 	Inventory.push_back(item);
 
 	// 장비 아이템이면 바로 효과 적용
-	if (item->GetState() == true)
+	if (item->IsConsumable() == false)
 	{
 		item->Use(this);
 	}
 	
+	if (OnItemChanged)
+	{
+		OnItemChanged(Inventory);
+	}
+	
 }
 
+// 아이템 사용
+void Character::UsePotion(int index)
+{
+	// 잘못된 인덱스
+	if (index < 0 || index >= static_cast<int>(Inventory.size()))
+	{
+		std::cout << "Invalid index. No item found at index " << index << ".\n";
+		return;
+	}
+
+	// 아이템 타입 확인 -> Potion인지 아닌지
+	std::shared_ptr<IItem> item = Inventory[index];
+
+	// 만약 무기라면
+	if (item->IsConsumable() == false)
+	{
+		std::cout << "The item at index " << index << " is not a Potion." << std::endl;
+		return;
+	}
+	else
+	{
+		item->Use(this);
+		Inventory.erase(Inventory.begin() + index);
+		
+		if (OnItemChanged)
+		{
+			OnItemChanged(Inventory);
+		}
+	}
+
+}
+
+int Character::TakeDamage(int damage)
+{
+	Status Stats = this->GetStatus();
+	int Defense =Stats.GetStat(EStat::Defense);
+
+	return std::max((damage - Defense),0);
+}
 
 
 // 캐릭터 생성 함수
@@ -101,7 +174,10 @@ void Character::InitCharacter()
 	//2. 직업 선택
 	while (true)
 	{
-		std::cout << "직업을 선택해주세요.(1. Warrior / 2. Mage / 3. Theif)" << std::endl;
+		std::cout << "직업을 선택해주세요." << std::endl;
+		std::cout << "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다." << std::endl;
+		std::cout << "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 돕는 마법의 대가입니다." << std::endl;
+		std::cout << "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다. " << std::endl;
 		int JobChoice = 0;
 		std::cin >> JobChoice;
 

@@ -1,7 +1,7 @@
 #pragma once
-#include "Job.h"
+#include "IJob.h"
 
-class Mage : public Job
+class Mage : public IJob
 {
 public:
 	float GetPowerWeight() const override { return 0.8f; }
