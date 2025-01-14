@@ -7,6 +7,7 @@
 #include "TimerManager.h"
 #include <functional>
 #include "../Character.h"
+#include "../Item.h"
 
 UIManager::UIManager()
 {
@@ -68,6 +69,7 @@ void UIManager::Init()
 {
 	MakeEmtpyCanvasUI();
 	MakeOpningSceneUI();
+	MakeInventorySceneUI();
 
 	int PredictedMinimapWidth = 10;
 	int PredictedMinimapHeight = 10;
@@ -173,7 +175,31 @@ void UIManager::MakeOpningSceneUI()
 	AddRenderingCanvas(ERenderingCanvas::Opening, OpeningCanvas);
 }
 
-void UIManager::AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage)
+void UIManager::MakeEndingSceneUI()
+{
+}
+
+void UIManager::MakeInventorySceneUI()
+{
+	std::shared_ptr<RenderingLayer> BackgroundLayer = std::make_shared<RenderingLayer>((int)EInventoryCanvasLayer::Background);
+	InventoryCanvasLayerIdMap[EInventoryCanvasLayer::Background] = BackgroundLayer->GetLayerId();
+
+	BackgroundLayer->ClearLayerFor(L' ');
+	BackgroundLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingLayer> ItemListLayer = std::make_shared<RenderingLayer>((int)EInventoryCanvasLayer::ItemList, UI::USELESS_CHAR);
+	InventoryCanvasLayerIdMap[EInventoryCanvasLayer::ItemList] = ItemListLayer->GetLayerId();
+
+	ItemListLayer->ClearLayerFor(UI::USELESS_CHAR);
+
+	std::shared_ptr<RenderingCanvas> InventoryCanvas = std::make_shared<RenderingCanvas>();
+	InventoryCanvas->AddLayer(BackgroundLayer);
+	InventoryCanvas->AddLayer(ItemListLayer);
+
+	AddRenderingCanvas(ERenderingCanvas::Inventory, InventoryCanvas);
+}
+
+void UIManager::AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage, bool bShouldUpdateUI)
 {
 	int EventInfoUIContentsLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::EventInfoUIContents];
 
@@ -226,10 +252,13 @@ void UIManager::AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessag
 
 	EventInfoUIContentsLayer->CombineUiLines();
 	
-	PrintUI(ERenderingCanvas::Basic);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
 }
 
-void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount)
+void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount, bool bShouldUpdateUI)
 {
 	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
 
@@ -288,11 +317,13 @@ void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount)
 
 	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
 	StatInfoLayer->CombineUiLines();
-
-	PrintUI(ERenderingCanvas::Basic);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
 }
 
-void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface)
+void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI)
 {
 	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
 	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
@@ -308,10 +339,13 @@ void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surfa
 
 	ArtLayer->CombineUiLines();
 
-	PrintUI(ERenderingCanvas::Basic);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
 }
 
-void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer)
+void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI)
 {
 	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
 	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
@@ -322,8 +356,6 @@ void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer
 		return;
 	}
 	
-	const std::vector<std::wstring>& Surface = ArtContainer.ArtLines;
-
 	int CenterCoordX = (UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X - UI::BACKGRUOND_BORDER_FIRST_POSITION_X) / 2;
 	int CenterCoordY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
 
@@ -334,14 +366,17 @@ void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer
 	int DrawCoordY = CenterCoordY - ArtWidth / 2;
 
 	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
-	ArtLayer->DrawSurface(DrawCoordX, DrawCoordY, Surface);
+	ArtLayer->DrawSurface(DrawCoordX, DrawCoordY, ArtContainer.ArtLines);
 
 	ArtLayer->CombineUiLines();
 
-	PrintUI(ERenderingCanvas::Basic);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
 }
 
-void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType)
+void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI)
 {
 	int LayerId = BasicCanvasLayerIdMap[LayerType];
 	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(LayerId);
@@ -354,10 +389,13 @@ void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer Laye
 
 	Layer->SetIsHiding(bShouldHide);
 
-	PrintUI(ERenderingCanvas::Basic);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
 }
 
-void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface)
+void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI)
 {
 	int TitleLayerId = OpeningCanvasLayerIdMap[EOpeningCanvasLayer::Title];
 	std::shared_ptr<RenderingLayer> TitleLayer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(TitleLayerId);
@@ -373,10 +411,13 @@ void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std
 
 	TitleLayer->CombineUiLines();
 
-	PrintUI(ERenderingCanvas::Opening);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Opening);
+	}
 }
 
-void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType)
+void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType, bool bShouldUpdateUI)
 {
 	int LayerId = OpeningCanvasLayerIdMap[LayerType];
 	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(LayerId);
@@ -389,7 +430,46 @@ void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer 
 
 	Layer->SetIsHiding(bShouldHide);
 
-	PrintUI(ERenderingCanvas::Basic);
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Opening);
+	}
+}
+
+void UIManager::SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI)
+{
+	int LayerId = InventoryCanvasLayerIdMap[EInventoryCanvasLayer::Background];
+	std::shared_ptr<RenderingLayer> InventoryLayer = RenderingCanvasMap[ERenderingCanvas::Inventory]->GetRenderingLayer(LayerId);
+
+	if (InventoryLayer == nullptr)
+	{
+		std::cout << "UIManager, SetInventoryCanvasBackgroundImage : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	int CenterCoordX = (UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X - UI::BACKGRUOND_BORDER_FIRST_POSITION_X) / 2;
+	int CenterCoordY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+
+	int DrawCoordX = CenterCoordX - ArtHeight / 2;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2;
+
+	//InventoryLayer->ClearLayerFor(UI::USELESS_CHAR);
+
+	InventoryLayer->DrawSurface(10, 10, ArtContainer.ArtLines);
+	InventoryLayer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Inventory);
+	}
+}
+
+void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI)
+{
+	//InventoryInfo[1]->GetName()
 }
 
 void UIManager::BindAllDelegate()
