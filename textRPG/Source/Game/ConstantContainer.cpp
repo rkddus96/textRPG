@@ -2,7 +2,7 @@
 
 namespace AudioPath
 {
-	const std::string TEST1 = "Source\\Game\\Assets\\Audio\\Game Punch 2.wav";
+	const std::string TEST1 = "Game Punch 2.wav";
 }
 
 namespace Console
@@ -39,4 +39,7 @@ namespace UI
 
 	const int PRESS_ENTER_KEY_TO_START_UI_POSITION_X = 42;
 	const int PRESS_ENTER_KEY_TO_START_UI_POSITION_Y = 57;
+
+	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_X = 15;
+	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_Y = 15;
 }
