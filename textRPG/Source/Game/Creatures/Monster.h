@@ -17,7 +17,7 @@ public:
     bool IsDead();
 
     // Getters
-    string GetName() const { return name; }
+    string GetName() const { return Name; }
     int GetMaxHp() const { return MaxHp; }
     int GetCurHp() const { return CurHp; }
     int GetPower() const { return Power; }
@@ -26,7 +26,7 @@ public:
     int GetMoney() const { return Money; }
 
     // Setters
-    void SetName(const string& newName) { name = newName; }
+    void SetName(const string& newName) { Name = newName; }
     void SetMaxHp(int maxHp) { MaxHp = maxHp; }
     void SetCurHp(int curHp) { CurHp = curHp; }
     void SetPower(int power) { Power = power; }
@@ -39,9 +39,9 @@ public:
 protected:
     Monster(const string& name, int baseHp, int basePower, int baseDefense, int exp, int money, int level);
 
-    void CalculateStats(int hpModifier, int powerModifier, int defenseModifier);
+    void CalculateStats(int hpModifier, int powerModifier, int defenseModifier, int expModifier, int moneyModifier);
 
-    string name;
+    string Name;
     int BaseHp, BasePower, BaseDefense; // 기본 능력치
     int MaxHp, CurHp, Power, Defense;   // 레벨 기반 능력치
     int Exp, Money, Level;

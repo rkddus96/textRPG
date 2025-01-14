@@ -69,7 +69,6 @@ void Character::RaiseGold(int gold)
 	}
 }
 
-
 // 생존 여부 반환 함수
 bool Character::IsDead()
 {
@@ -138,7 +137,6 @@ void Character::TakeDamage(int rawdamage)
 
 	return ;
 }
-
 
 // 캐릭터 생성 함수
 void Character::InitCharacter()
@@ -248,8 +246,6 @@ void Character::RandomizeStats()
 			Choice = 0;
 		}
 
-
-
 		switch (Choice)
 		{
 		case 1:
@@ -259,9 +255,6 @@ void Character::RandomizeStats()
 			Stats.SetStat(EStat::Power, power);
 			Stats.SetStat(EStat::Defense, defense);
 			Stats.SetStat(EStat::Luck, luck);
-
-			
-			
 
 			std::cout << "능력치가 확정되었습니다." << std::endl;
 			break;
@@ -319,11 +312,6 @@ void Character::LevelUp()
 
 	
 }
-
-
-
-
-
 
 // Test용 Display 함수
 void Character::Display() const
