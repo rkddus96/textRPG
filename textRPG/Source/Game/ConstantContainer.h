@@ -5,9 +5,15 @@
 namespace AudioPath
 {
 	extern const std::string TEST1;
-	extern const std::string CRITICALATTACK;
-	extern const std::string NORMALATTACK;
-	extern const std::string MISS;
+	extern const std::string CRITICALATTACK;	// 치명타 공격시
+	extern const std::string NORMALATTACK;		// 일반 공격시
+	extern const std::string MISS;				// 회피시
+	extern const std::string WIN;				// 전투 승리시
+	extern const std::string LOSE;				// 전투 패배시
+	extern const std::string RESULT;			// 전투 보상 수령시
+	extern const std::string POTION;			// 포션 사용시
+	extern const std::string BATTLE_BGM;		// 전투 상태일 때의 브금
+
 }
 
 namespace Console
