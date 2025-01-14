@@ -29,10 +29,10 @@ void OpeningScene::PlayScene()
         KeyInput = InputReceiver::ChatchInput();
     }
 
-    const FASKIIArtContainer& TitleArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Title);
+    const FASCIIArtContainer& TitleArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Title);
     UIManagerInstance->SetOpeningCanvasTitleArt(10, 10, TitleArtContainer.ArtLines, false);
 
-    const FASKIIArtContainer& BacgroundArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Castle2);
+    const FASCIIArtContainer& BacgroundArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Castle2);
     UIManagerInstance->SetOpeningCanvasBackgroundArt(2, 65, BacgroundArtContainer.ArtLines);
  
     KeyInput = EKey::UnAvailable;

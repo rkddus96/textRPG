@@ -5,7 +5,7 @@ Goblin::Goblin(int level)
     : Monster("Goblin", 10, 10, 1, 20, 100, level)
 {
     //초기화
-    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Castle1);
+    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Castle1);
 
     int hpModifier = 10;
     int powerModifier = 4;

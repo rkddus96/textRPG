@@ -48,7 +48,7 @@ enum class EArtList
 
 };
 
-struct FASKIIArtContainer
+struct FASCIIArtContainer
 {
 public:
 
@@ -79,7 +79,7 @@ public:
 
 	~AssetHandler();
 
-	const FASKIIArtContainer& GetASKIIArtContainer(EArtList ArtList) const
+	const FASCIIArtContainer& GetASCIIArtContainer(EArtList ArtList) const
 	{
 		return ArtContainers[(int)ArtList];
 	}
@@ -90,7 +90,7 @@ private:
 
 	void ReadArt(const std::wstring& Filename);
 
-	std::vector<FASKIIArtContainer> ArtContainers;
+	std::vector<FASCIIArtContainer> ArtContainers;
 
 	friend class GameManager;
 };

@@ -364,7 +364,7 @@ void UIManager::ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI)
 	std::shared_ptr<RenderingLayer> StatInfoLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(StatInfoLayerId);
 	if (StatInfoLayer == nullptr)
 	{
-		std::cout << "UIManager, ChangeBasicCanvasStatInfoUI : Fail to get Layer" << std::endl;
+		std::cout << "UIManager, ChangeBasicCanvasExpInfoUI : Fail to get Layer" << std::endl;
 		return;
 	}
 
@@ -433,6 +433,11 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 
 void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI)
 {
+	if (StatType == EStat::MaxHp)
+	{
+		return;
+	}
+
 	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
 
 	std::shared_ptr<RenderingLayer> StatInfoLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(StatInfoLayerId);
@@ -494,7 +499,7 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 	}
 }
 
-void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+void UIManager::ChangeBasicCanvasArtImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
 {
 	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
 	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
@@ -636,7 +641,7 @@ void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer 
 	}
 }
 
-void UIManager::SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI)
+void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI)
 {
 	int LayerId = InventoryCanvasLayerIdMap[EInventoryCanvasLayer::Background];
 	std::shared_ptr<RenderingLayer> InventoryLayer = RenderingCanvasMap[ERenderingCanvas::Inventory]->GetRenderingLayer(LayerId);

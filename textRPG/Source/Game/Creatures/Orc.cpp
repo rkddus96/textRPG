@@ -3,7 +3,7 @@
 Orc::Orc(int level)
     : Monster("Orc", 30, 5, 3, 20, 100, level)
 {
-    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Orc);
+    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Orc);
 
     int hpModifier = 16;
     int powerModifier = 6;
