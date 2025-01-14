@@ -1,16 +1,34 @@
 #include "Equipment.h"
 
-std::string Equipment::GetName() const
+std::string Equipment::GetName() const 
 {
 	return Name;
 }
 
-void Equipment::Use(Character* character)
+int Equipment::GetPrice() const
 {
-	Status Stats = character->GetStatus();
+	return Price;
+}
+
+std::string Equipment::GetExplanation() const
+{
+	return Explanation;
+}
+
+void Equipment::Use(Character& character)
+{
+	Status Stats = character.GetStatus();
 
 	int StatPoint = Stats.GetStat(StatType);
 	StatPoint = StatPoint + AffectPoint;
 	Stats.SetStat(StatType, StatPoint);
 }
 
+void Equipment::UnUse(Character& character)
+{
+	Status Stats = character.GetStatus();
+
+	int StatPoint = Stats.GetStat(StatType);
+	StatPoint = StatPoint - AffectPoint;
+	Stats.SetStat(StatType, StatPoint);
+}
