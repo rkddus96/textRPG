@@ -23,6 +23,8 @@ void TileMapScene::PlayScene()
 	TileMapInstance->Move(0, 0);
 
 	DrawField();
+
+	// While : Character is Alive
 	while (true)
 	{
 		EKey KeyInput = InputReceiver::ChatchInput();
@@ -69,6 +71,8 @@ void TileMapScene::PlayScene()
 		// 아니면 캐릭터의 스탯이 변화한다거나
 		DrawField();
 	}
+
+	// 게임 클리어 / 게임 오버 시에 따라 다른 텍스트를 출력
 }
 
 void TileMapScene::DrawField()
@@ -81,7 +85,8 @@ void TileMapScene::DrawField()
 
 	EArtList CurrentTileArt = TileMapInstance->GetCurrentTileArt();
 	const FASKIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(CurrentTileArt);
-	UIManagerInstance->ChangeBasicCanvasArtImage(FieldArtContainer, false);
+	pair<int, int> TileArtOffset = TileMapInstance->GetCurrentTileArtOffset();
+	UIManagerInstance->ChangeBasicCanvasArtImage(FieldArtContainer, false, TileArtOffset.first, TileArtOffset.second);
 
 	UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
 }
