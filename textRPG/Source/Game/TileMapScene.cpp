@@ -38,9 +38,13 @@ void TileMapScene::PlayScene()
 				TileMapInstance->Move(NextPosition.first, NextPosition.second);
 				// Play Move Sound
 
-				// Battle? Reward?
-				unique_ptr<AutoBattle> Battle = make_unique<AutoBattle>();
-				Battle->StartBattle();
+				// 도착한 Tile 처리
+				if (TileMapInstance->GetCurrentTileType() == ETile::Blank
+					&& LogicHelper::GetRandomNumber(0.0, 1.0) < EncounterProbability)
+				{
+					unique_ptr<AutoBattle> Battle = make_unique<AutoBattle>();
+					Battle->StartBattle();
+				}
 			}
 			else
 			{

@@ -24,6 +24,11 @@ std::wstring TileMap::GetCurrentTileDescription() const
 	return TileDescriptionGrid[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
 }
 
+ETile TileMap::GetCurrentTileType() const
+{
+	return TileGrid[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
+}
+
 void TileMap::Move(int NextX, int NextY)
 {
 	if (!CanTraverse(NextX, NextY))

@@ -1,5 +1,6 @@
 #include "InputReceiver.h"
 #include <conio.h>  // _kbhit(), _getch()
+#include <Windows.h>
 
 InputReceiver::InputReceiver()
 {
@@ -7,6 +8,9 @@ InputReceiver::InputReceiver()
 
 EKey InputReceiver::ChatchInput()
 {
+	HANDLE InputHandle = GetStdHandle(STD_INPUT_HANDLE);
+	FlushConsoleInputBuffer(InputHandle);
+
 	int Key = _getch();  // 키 입력 받기
 
 	if (Key == 224) // 화살표입력

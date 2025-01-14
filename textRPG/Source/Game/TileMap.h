@@ -59,6 +59,8 @@ public:
 	/// <returns></returns>
 	std::wstring GetCurrentTileDescription() const;
 
+	ETile GetCurrentTileType() const;
+
 	/// <summary>
 	/// 현재 캐릭터의 위치를 이동한다. 이동할 수 없는 값이 주어질 경우 현재 위치를 유지한다.
 	/// </summary>

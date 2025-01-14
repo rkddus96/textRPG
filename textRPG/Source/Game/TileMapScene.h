@@ -14,6 +14,8 @@ public:
 	virtual void PlayScene() final;
 
 protected:
+	double EncounterProbability = 0.5;
+
 	virtual void DrawField();
 	bool IsMoveInput(EKey KeyInput) const;
 	bool IsInventoryInput(EKey KeyInput) const;
