@@ -1,4 +1,4 @@
-#include "MyTestScene.h"
+#include "OpeningScene.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -12,9 +12,13 @@
 #include "Managers/TimerManager.h"
 #include "Character.h"
 
-void MyTestScene::TestMain()
+OpeningScene::OpeningScene()
 {
-    LogicHelper::SetFixedConsoleSize(220, 60);
+
+}
+void OpeningScene::PlayOpening()
+{
+    LogicHelper::SetFixedConsoleSize(Console::CONSOLE_WIDTH, Console::CONSOLE_WIDTH);
 
     Character& MyCharacter = Character::GetInstance();
 
@@ -23,14 +27,17 @@ void MyTestScene::TestMain()
     UIManagerInstance->BindAllDelegate();
 
 
-    UIManagerInstance->PrintUI(ERenderingCanvas::Empty);
+   UIManagerInstance->PrintUI(ERenderingCanvas::Empty);
     TimerManager::GetInstance();
     
+    auto AudioName = AudioPlayer::PlayLoop(AudioPath::TEST1, 0.5);
+    const FASKIIArtContainer& InventoryBackgroundImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Test);
+    UIManagerInstance->SetInventoryCanvasBackgroundImage(InventoryBackgroundImage);
+
     EKey KeyInput = InputReceiver::ChatchInput();
 
     const FASKIIArtContainer& TitleArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Title);
     UIManagerInstance->SetOpeningCanvasTitleArt(10, 10, TitleArtContainer.ArtLines);
-    UIManagerInstance->PrintUI(ERenderingCanvas::Opening);
 
     Character::GetInstance().SetExp(100);
     MyCharacter.LevelUp();
@@ -40,7 +47,7 @@ void MyTestScene::TestMain()
     for (int i = 0; i < 100; ++i)
     {
         KeyInput = InputReceiver::ChatchInput();
-
+        AudioPlayer::Stop(AudioName);
         std::wstring NewStr = L"키를 눌렀습니다... : " + std::to_wstring(i);
 
         UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(NewStr);
@@ -50,17 +57,19 @@ void MyTestScene::TestMain()
         UIManagerInstance->ChangeBasicCanvasStatInfoUI(ETempStatType::Luck, LogicHelper::GetRandomNumber(0, 999));
         UIManagerInstance->ChangeBasicCanvasStatInfoUI(ETempStatType::Hp, LogicHelper::GetRandomNumber(0, 999));
 
-        const FASKIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer((EArtList)LogicHelper::GetRandomNumber(0, 3));
+        const FASKIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer((EArtList)LogicHelper::GetRandomNumber(0, 22));
         UIManagerInstance->ChangeBasicCanvasArtImage(ArtContainer);
 
-        UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
-        AudioPlayer::Play(AudioPath::TEST1, 0.5f);
+        //UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
+        //AudioPlayer::Play(AudioPath::TEST1, 0.5f);
     }
 
     TimerManager::GetInstance().TerminateThread();
     return;
 }
 
-MyTestScene::MyTestScene()
+OpeningScene::~OpeningScene()
 {
 }
+
+

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Source\Game\AssetHandler.cpp" />
     <ClCompile Include="Source\Game\AudioPlayer.cpp" />
     <ClCompile Include="Source\Game\Battle\ABattle.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
     <ClCompile Include="Source\Game\Managers\TimerManager.cpp" />
     <ClCompile Include="Source\Game\Managers\UIManager.cpp" />
+    <ClCompile Include="Source\Game\OpeningScene.cpp" />
     <ClCompile Include="Source\Game\RenderingCanvas.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
@@ -46,6 +48,7 @@
     <ClCompile Include="Source\Game\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="Source\Game\AssetHandler.h" />
     <ClInclude Include="Source\Game\AudioPlayer.h" />
     <ClInclude Include="Source\Game\Battle\ABattle.h" />
@@ -68,6 +71,7 @@
     <ClInclude Include="Source\Game\Managers\GameManager.h" />
     <ClInclude Include="Source\Game\Managers\TimerManager.h" />
     <ClInclude Include="Source\Game\Managers\UIManager.h" />
+    <ClInclude Include="Source\Game\OpeningScene.h" />
     <ClInclude Include="Source\Game\RenderingCanvas.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
     <ClInclude Include="Source\Game\TileMap.h" />
