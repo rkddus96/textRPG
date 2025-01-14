@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Source\Game\AssetHandler.cpp" />
     <ClCompile Include="Source\Game\AudioPlayer.cpp" />
     <ClCompile Include="Source\Game\Battle\ABattle.cpp" />
@@ -36,6 +35,7 @@
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
     <ClCompile Include="Source\Game\Equipment.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
+    <ClCompile Include="Source\Game\IScene.cpp" />
     <ClCompile Include="Source\Game\LogicHelper.cpp" />
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
     <ClCompile Include="Source\Game\Managers\TimerManager.cpp" />
@@ -48,7 +48,6 @@
     <ClCompile Include="Source\Game\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IScene.h" />
     <ClInclude Include="Source\Game\AssetHandler.h" />
     <ClInclude Include="Source\Game\AudioPlayer.h" />
     <ClInclude Include="Source\Game\Battle\ABattle.h" />
@@ -65,6 +64,7 @@
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
     <ClInclude Include="Source\Game\Equipment.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
+    <ClInclude Include="Source\Game\IScene.h" />
     <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />
     <ClInclude Include="Source\Game\Mage.h" />

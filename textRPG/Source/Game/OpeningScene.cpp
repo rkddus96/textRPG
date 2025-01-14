@@ -16,7 +16,8 @@ OpeningScene::OpeningScene()
 {
 
 }
-void OpeningScene::PlayOpening()
+
+void OpeningScene::PlayScene()
 {
     LogicHelper::SetFixedConsoleSize(Console::CONSOLE_WIDTH, Console::CONSOLE_WIDTH);
 
