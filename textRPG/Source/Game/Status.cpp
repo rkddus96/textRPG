@@ -5,10 +5,10 @@
 Status::Status()
 {
 	stats[EStat::MaxHp] = 100;
-	stats[EStat::MaxHp] = 100;
-	stats[EStat::MaxHp] = 10;
-	stats[EStat::MaxHp] = 10;
-	stats[EStat::MaxHp] = 10;
+	stats[EStat::CurHp] = 100;
+	stats[EStat::Power] = 10;
+	stats[EStat::Defense] = 10;
+	stats[EStat::Luck] = 10;
 }
 
 // auto의 자료형 std::unordered_map<EStat, int>::iterator
