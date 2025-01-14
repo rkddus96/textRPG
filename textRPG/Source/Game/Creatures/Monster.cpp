@@ -16,7 +16,7 @@ void Monster::CalculateStats(int hpModifier, int powerModifier, int defenseModif
     CurHp = MaxHp; 
 }
 
-void Monster::TakeDamage(int rawDamage)
+int Monster::TakeDamage(int rawDamage)
 {
     int damage = rawDamage - Defense;
     if (damage < 0)
@@ -26,6 +26,7 @@ void Monster::TakeDamage(int rawDamage)
     if (CurHp < 0)
         CurHp = 0;
 
+    return damage;
 }
 
 bool Monster::IsDead()
