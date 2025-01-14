@@ -30,7 +30,6 @@ private:
 	int MaxExp;
 	int Exp;
 	int Gold;
-	int Damage;
 
 	Status Stats;
 	std::shared_ptr<IJob> Jobs;
@@ -61,7 +60,6 @@ public:
 	const std::string& GetName() const { return Name; }
 	int GetLevel() const { return Level; }
 	int GetExp() const { return Exp; }
-	int GetDamage() const { return Damage; }
 	int GetMaxExp() const { return MaxExp; }
 	int GetGold() const { return Gold; }
 	Status& GetStatus() { return Stats; }
@@ -69,7 +67,6 @@ public:
 
 	// Setter 함수
 	void SetExp(int exp);
-	void SetDamage(int damage) { Damage = damage; }
 	void SetLevel(int level);
 	void SetGold(int gold);
 
@@ -89,7 +86,7 @@ public:
 	bool IsDead();
 
 	// 데미집 입는 함수
-	int TakeDamage(int damage);
+	void TakeDamage(int rawdamage);
 	
 	// 인벤토리 추가
 	void AddItem(std::shared_ptr<IItem> item);

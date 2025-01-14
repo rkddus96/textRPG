@@ -4,9 +4,9 @@
 class Mage : public IJob
 {
 public:
-	float GetPowerWeight() const override { return 0.8f; }
-	float GetDefenseWeight() const override { return 1.2f; }
-	float GetLuckWeight() const override { return 1.0f; }
+	int GetPowerWeight() const override { return 3; }
+	int GetDefenseWeight() const override { return 3; }
+	int GetLuckWeight() const override { return  0; }
 
 	std::wstring GetJobName() const override { return L"Mage"; }
 };
