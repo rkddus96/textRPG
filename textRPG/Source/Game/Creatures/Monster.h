@@ -47,6 +47,6 @@ protected:
     int MaxHp, CurHp, Power, Defense;   // 레벨 기반 능력치
     int Exp, Money, Level;
     
-    FASKIIArtContainer MonsterImage;
+    FASCIIArtContainer MonsterImage;
 };
 
