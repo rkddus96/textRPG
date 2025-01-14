@@ -34,6 +34,7 @@ enum class EMonsterType
 class MonstserFactoryManager
 {
 public:
+    MonstserFactoryManager();
     unordered_map<string, unique_ptr<MonsterFactory>> Factories;
 
 

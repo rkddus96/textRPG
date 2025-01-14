@@ -49,4 +49,3 @@ unique_ptr<Monster> MonstserFactoryManager::CreateRandomMonster(int level) const
 
     return it->second->Create(level); 
 }
-}
