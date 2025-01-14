@@ -96,8 +96,25 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 }
 
 // 아이템 사용
-void Character::UsePotion(int index)
+void Character::UsePotion()
 {
+	
+	for (int index = 0; index < Inventory.size(); index++)
+	{
+		if (Inventory[index]->IsConsumable())
+		{
+			Inventory[index]->Use(this);
+			Inventory.erase(Inventory.begin() + index);
+			break;
+		}
+	}
+	std::cout << "인벤토리 내부에 포션이 없습니다." << std::endl;
+	
+
+
+
+	// 매개변수가 인덱스일 때
+	/*
 	// 잘못된 인덱스
 	if (index < 0 || index >= static_cast<int>(Inventory.size()))
 	{
@@ -124,7 +141,7 @@ void Character::UsePotion(int index)
 			OnItemChanged(Inventory);
 		}
 	}
-
+	*/
 }
 
 void Character::TakeDamage(int rawdamage)
