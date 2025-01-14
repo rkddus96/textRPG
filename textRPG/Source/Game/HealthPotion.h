@@ -1,8 +1,8 @@
 #pragma once
-#include "Item.h"
+#include "IItem.h"
 
 
-class HealthPotion : public Item
+class HealthPotion : public IItem
 {
 private:
 	std::string Name;
@@ -10,7 +10,7 @@ private:
 
 
 public:
-	HealthPotion(std::string name, int healpoint) : Name{ name }, HealPoint{ healpoint },  {}
+	HealthPotion(std::string name, int healpoint) : Name{ name }, HealPoint{ healpoint }  {}
 	std::string GetName() const override;
 	void Use(Character* character) override;
 	bool IsConsumable() const override { return true; }

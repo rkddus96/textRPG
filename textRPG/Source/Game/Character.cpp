@@ -5,7 +5,7 @@
 #include "Warrior.h"
 #include "Mage.h"
 #include "Thief.h"
-#include "Item.h"
+#include "IItem.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
@@ -94,7 +94,7 @@ bool Character::IsDead()
 }
 
 // 아이템 추가
-void Character::AddItem(std::shared_ptr<Item> item)
+void Character::AddItem(std::shared_ptr<IItem> item)
 {
 	Inventory.push_back(item);
 
@@ -122,7 +122,7 @@ void Character::UsePotion(int index)
 	}
 
 	// 아이템 타입 확인 -> Potion인지 아닌지
-	std::shared_ptr<Item> item = Inventory[index];
+	std::shared_ptr<IItem> item = Inventory[index];
 
 	// 만약 무기라면
 	if (item->IsConsumable() == false)

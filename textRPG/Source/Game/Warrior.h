@@ -1,7 +1,7 @@
 #pragma once
-#include "Job.h"
+#include "IJob.h"
 
-class Warrior : public Job
+class Warrior : public IJob
 {
 public:
 	// Warrior의 각 능력치 가중치
