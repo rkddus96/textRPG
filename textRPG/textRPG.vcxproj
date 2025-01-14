@@ -26,6 +26,7 @@
     <ClCompile Include="Source\Game\Battle\HandBattle.cpp" />
     <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
+    <ClCompile Include="Source\Game\Creatures\Devil.cpp" />
     <ClCompile Include="Source\Game\Creatures\Goblin.cpp" />
     <ClCompile Include="Source\Game\Creatures\Monster.cpp" />
     <ClCompile Include="Source\Game\Creatures\MonsterFactory.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Source\Game\Battle\HandBattle.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />
+    <ClInclude Include="Source\Game\Creatures\Devil.h" />
     <ClInclude Include="Source\Game\Creatures\Goblin.h" />
     <ClInclude Include="Source\Game\Creatures\Monster.h" />
     <ClInclude Include="Source\Game\Creatures\MonsterFactory.h" />
