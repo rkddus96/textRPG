@@ -35,15 +35,18 @@
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
     <ClCompile Include="Source\Game\Equipment.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
+    <ClCompile Include="Source\Game\IScene.cpp" />
     <ClCompile Include="Source\Game\LogicHelper.cpp" />
     <ClCompile Include="Source\Game\Managers\GameManager.cpp" />
     <ClCompile Include="Source\Game\Managers\TimerManager.cpp" />
     <ClCompile Include="Source\Game\Managers\UIManager.cpp" />
+    <ClCompile Include="Source\Game\OpeningScene.cpp" />
     <ClCompile Include="Source\Game\RenderingCanvas.cpp" />
     <ClCompile Include="Source\Game\RenderingLayer.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
     <ClCompile Include="Source\Game\textRPG.cpp" />
     <ClCompile Include="Source\Game\TileMap.cpp" />
+    <ClCompile Include="Source\Game\TileMapScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h" />
@@ -61,18 +64,21 @@
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
     <ClInclude Include="Source\Game\Equipment.h" />
-    <ClInclude Include="Source\Game\IJob.h" />
     <ClInclude Include="Source\Game\InputReceiver.h" />
+    <ClInclude Include="Source\Game\IScene.h" />
+    <ClInclude Include="Source\Game\Job.h" />
     <ClInclude Include="Source\Game\LogicHelper.h" />
     <ClInclude Include="Source\Game\Mage.h" />
     <ClInclude Include="Source\Game\Managers\GameManager.h" />
     <ClInclude Include="Source\Game\Managers\TimerManager.h" />
     <ClInclude Include="Source\Game\Managers\UIManager.h" />
+    <ClInclude Include="Source\Game\OpeningScene.h" />
     <ClInclude Include="Source\Game\RenderingCanvas.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
     <ClInclude Include="Source\Game\TileMap.h" />
     <ClInclude Include="Source\Game\Status.h" />
     <ClInclude Include="Source\Game\Thief.h" />
+    <ClInclude Include="Source\Game\TileMapScene.h" />
     <ClInclude Include="Source\Game\Warrior.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

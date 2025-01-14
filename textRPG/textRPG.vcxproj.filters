@@ -1,6 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
     <Filter Include="Source">
       <UniqueIdentifier>{36bb499e-a83b-457c-9f65-a0889d2ff2ba}</UniqueIdentifier>
     </Filter>
@@ -15,9 +19,6 @@
     </Filter>
     <Filter Include="Source\Game\Battle">
       <UniqueIdentifier>{d0887c83-a7f9-426e-a55b-d01a19b49d49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Game\Character">
-      <UniqueIdentifier>{0eef7962-250f-417e-84c3-cb4264685460}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +43,9 @@
     <ClCompile Include="Source\Game\ConstantContainer.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Character.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Game\Managers\GameManager.cpp">
       <Filter>Source\Game\Managers</Filter>
     </ClCompile>
@@ -57,6 +61,7 @@
     <ClCompile Include="Source\Game\TileMap.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Status.cpp" />
     <ClCompile Include="Source\Game\Creatures\Goblin.cpp">
       <Filter>Source\Game\Creatures</Filter>
     </ClCompile>
@@ -90,11 +95,14 @@
     <ClCompile Include="Source\Game\Battle\HandBattle.cpp">
       <Filter>Source\Game\Battle</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Character.cpp">
-      <Filter>Source\Game\Character</Filter>
+    <ClCompile Include="Source\Game\OpeningScene.cpp">
+      <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Status.cpp">
-      <Filter>Source\Game\Character</Filter>
+    <ClCompile Include="Source\Game\IScene.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\TileMapScene.cpp">
+      <Filter>Source\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +124,9 @@
     <ClInclude Include="Source\Game\ConstantContainer.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Character.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Game\Managers\UIManager.h">
       <Filter>Source\Game\Managers</Filter>
     </ClInclude>
@@ -131,6 +142,10 @@
     <ClInclude Include="Source\Game\TileMap.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Job.h" />
+    <ClInclude Include="Source\Game\Mage.h" />
+    <ClInclude Include="Source\Game\Status.h" />
+    <ClInclude Include="Source\Game\Thief.h" />
     <ClInclude Include="Source\Game\Creatures\Goblin.h">
       <Filter>Source\Game\Creatures</Filter>
     </ClInclude>
@@ -149,8 +164,14 @@
     <ClInclude Include="Source\Game\Creatures\Slime.h">
       <Filter>Source\Game\Creatures</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\Warrior.h">
+      <Filter>Source\Game\Creatures</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Game\Creatures\Witch.h">
       <Filter>Source\Game\Creatures</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Equipment.h">
+      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Battle\ABattle.h">
       <Filter>Source\Game\Battle</Filter>
@@ -161,26 +182,14 @@
     <ClInclude Include="Source\Game\Battle\HandBattle.h">
       <Filter>Source\Game\Battle</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Mage.h">
-      <Filter>Source\Game\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Thief.h">
-      <Filter>Source\Game\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Character.h">
-      <Filter>Source\Game\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Status.h">
-      <Filter>Source\Game\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Equipment.h">
+    <ClInclude Include="Source\Game\OpeningScene.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Warrior.h">
-      <Filter>Source\Game\Character</Filter>
+    <ClInclude Include="Source\Game\IScene.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\IJob.h">
-      <Filter>Source\Game\Character</Filter>
+    <ClInclude Include="Source\Game\TileMapScene.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

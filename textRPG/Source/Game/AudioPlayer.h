@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <unordered_set>
+#include <unordered_map>
 #include <list>
 #include <chrono>
 #include "LogicHelper.h"
@@ -10,10 +10,13 @@ struct AudioInfo
 {
 public:
 
-	AudioInfo(const std::string& InName, float InLength)
+	AudioInfo(const std::string& InName, float InLength, const std::string& InFilePath, float InVolume, float bInIsLoop) :
+		Name(InName),
+		Length(InLength),
+		bIsLoop(bInIsLoop),
+		FilePath(InFilePath),
+		Volume(InVolume)
 	{
-		Name = InName;
-		Length = InLength;
 		StartTimeSeceond = LogicHelper::GetTimeSecond();
 	}
 
@@ -24,7 +27,39 @@ public:
 
 	bool IsRetired()
 	{
-		return (LogicHelper::GetTimeSecond() - StartTimeSeceond) >= Length;
+		double CurrentTime = LogicHelper::GetTimeSecond();
+		double ElapsedTime = (CurrentTime - StartTimeSeceond);
+		return  ElapsedTime >= Length;
+	}
+
+	bool GetIsLoop() const
+	{
+		return bIsLoop;
+	}
+
+	void SetIsLooping(bool bShouldLoop)
+	{
+		bIsLoop = bShouldLoop;
+	}
+
+	const std::string& GetFilePath() const
+	{
+		return FilePath;
+	}
+
+	float GetVolume() const
+	{
+		return Volume;
+	}
+
+	void InitStartTimeSeceond()
+	{
+		StartTimeSeceond = LogicHelper::GetTimeSecond();
+	}
+
+	bool operator == (const AudioInfo& Other) const
+	{
+		return Name == Other.Name;
 	}
 
 public:
@@ -34,7 +69,10 @@ public:
 
 private:
 
-	float StartTimeSeceond;
+	bool bIsLoop;
+	double StartTimeSeceond;
+	const std::string FilePath;
+	float Volume;
 
 };
 
@@ -54,6 +92,8 @@ public:
 	static void Stop(const std::string& AudioName);
 	static void StopAll();
 
+	static std::string PlayLoop(const std::string& FilePath, float Volume = 1);
+
 	static void SetVolume(const std::string& AudioName, float Volume);
 
 	static bool IsPlaying(const std::string& AudioName);
@@ -68,12 +108,17 @@ private:
 	AudioPlayer(AudioPlayer&&) = delete;
 	AudioPlayer& operator=(AudioPlayer&&) = delete;
 
-	static void PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume);
+	static void PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume, bool bShouldLoop);
+
+	static void ReplayLoop();
+
+	static void Tick(double DeltaTime);
+
+	static void StopInternal(const std::string& AudioName);
 
 private:
 
-	/*int AudioIndex = 0;*/
-	static std::unordered_set<std::string> AudioNameSet;
-	static std::list<AudioInfo> AudioInfos;
+	static std::unordered_map<std::string, std::shared_ptr<AudioInfo>> AudioNameMap;
+	static std::list<std::shared_ptr<AudioInfo>> AudioInfos;
 
 };

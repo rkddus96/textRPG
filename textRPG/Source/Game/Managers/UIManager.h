@@ -13,8 +13,8 @@ enum class ERenderingCanvas
 	Empty,
 	Basic,
 	Opening,
-	Ending
-
+	Ending,
+	Inventory
 };
 
 /// <summary>
@@ -43,6 +43,20 @@ enum class EOpeningCanvasLayer
 	PressEnterKeyToStart,
 };
 
+/// <summary>
+/// LayerOrder 순으로 선언되어 있다.
+/// </summary>
+enum class EEndingCanvasLayer
+{
+
+};
+
+enum class EInventoryCanvasLayer
+{
+	Background,
+	ItemList
+};
+
 // 캐릭터 만들어질 때까지 임시
 enum class ETempStatType
 {
@@ -54,6 +68,8 @@ enum class ETempStatType
 };
 
 enum class ETile;
+struct FASKIIArtContainer;
+class Item;
 
 class UIManager
 {
@@ -72,14 +88,18 @@ public:
 	void PrintUI(ERenderingCanvas CanvasType);
 
 	//void SetMiniMapUI(std::vector<std::wstring>& MapInfos);
-	void AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage);
-	void ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount);
-	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface);
-	void ChangeBasicCanvasArtImage(const struct FASKIIArtContainer& ArtContainer);
-	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType);
+	void AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
+	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
 
-	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface);
-	void SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType);
+	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
+	void SetOpeningCanvasBackgroundArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
+	void SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType, bool bShouldUpdateUI = true);
+
+	void SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
+	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI = true);
 
 	void BindAllDelegate();
 
@@ -90,8 +110,10 @@ private:
 	void MakeEmtpyCanvasUI();
 	void MakeBasicUI();
 	void MakeOpningSceneUI();
+	void MakeEndingSceneUI();
+	void MakeInventorySceneUI();
 
-	void SetMinimapUIContents(/*std::vector<std::vector<Tile>> TileInfos*/);
+	void SetMinimapUIContents(/*std::vector<std::vector<ETile>> TileInfos*/);
 
 	void Tick(double DeltaTime);
 
@@ -107,6 +129,8 @@ private:
 	
 	std::unordered_map<EBasicCanvasLayer, int> BasicCanvasLayerIdMap;
 	std::unordered_map<EOpeningCanvasLayer, int> OpeningCanvasLayerIdMap;
+	std::unordered_map<EEndingCanvasLayer, int> EndiningCanvasLayerIdMap;
+	std::unordered_map<EInventoryCanvasLayer, int> InventoryCanvasLayerIdMap;
 
 	std::deque<std::wstring> EventInfoUIContentsMsgs;
 

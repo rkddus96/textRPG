@@ -3,7 +3,7 @@
 #include "LogicHelper.h"
 
 TileMap::TileMap(int Width, int Height)
-	:TileGrid(Height, std::vector(Width, ETile::Blank)), Width(Width), Height(Height)
+	:TileGrid(Height, std::vector(Width, ETile::Blank)), TileArtGrid(Height, std::vector(Width, EArtList::Axe)), Width(Width), Height(Height)
 {
 	GenerateTestMap();
 }
@@ -20,7 +20,7 @@ EArtList TileMap::GetCurrentTileArt() const
 
 void TileMap::Move(int NextX, int NextY)
 {
-	if (!CanTraverse(NextY, NextY))
+	if (!CanTraverse(NextX, NextY))
 	{
 		// 필요할 경우 로깅 혹은 exeception 발생
 		return;
@@ -80,7 +80,11 @@ void TileMap::GenerateTestMap()
 	}
 
 	// 좌상단이 마을, 우상단이 마을2, 우하단이 마왕성
+	// To-Do : 초기화 과정에서 Tile Type과 Art Type을 한 번에 설정할 수 있도록 하는 기능 구현
 	TileGrid[0][0] = ETile::Village1;
+	TileArtGrid[0][0] = EArtList::Test;
 	TileGrid[Width - 1][0] = ETile::Village2;
+	TileArtGrid[Width - 1][0] = EArtList::Test;
 	TileGrid[Width - 1][Height - 1] = ETile::DemonLordCastle;
+	TileArtGrid[Width - 1][Height - 1] = EArtList::Castle1;
 }

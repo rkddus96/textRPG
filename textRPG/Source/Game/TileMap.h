@@ -25,11 +25,16 @@ struct FAvailableDirection
 };
 
 /// <summary>
-/// 좌상단이 0, 0으로 시작해서 우하단이 (width - 1, height - 1)의 좌표를 가진다.
+/// 좌상단이 0, 0으로 시작해서 우하단이 (width - 1, height - 1)의 좌표를 가진다. (x, y)의 좌표를 가진다.
 /// </summary>
 class TileMap
 {
 public:
+	/// <summary>
+	/// Width, Height로 맵을 생성한다. 기본적으로 Blank
+	/// </summary>
+	/// <param name="Width"></param>
+	/// <param name="Height"></param>
 	TileMap(int Width, int Height);
 
 	/// <summary>
@@ -83,9 +88,18 @@ protected:
 	/// </summary>
 	void GenerateTestMap();
 private:
+	/// <summary>
+	/// 타일 정보를 가지고 있는 2차원 배열
+	/// </summary>
 	std::vector<std::vector<ETile>> TileGrid;
+	/// <summary>
+	/// 타일을 표시하는 Art 정보를 가지고 있는 2차원 배열
+	/// </summary>
 	std::vector<std::vector<EArtList>> TileArtGrid;
 	int Width;
 	int Height;
+	/// <summary>
+	/// 현재 플레이어의 위치
+	/// </summary>
 	std::pair<int, int> CurrentPlayerPosition;
 };
