@@ -1,10 +1,16 @@
 #include "Orc.h"
 
 Orc::Orc(int level)
-    : Monster("Orc", 100, 20, 5, 20, 100, level)
+    : Monster("Orc", 30, 5, 3, 20, 100, level)
 {
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Orc);
-    CalculateStats(50, 10, 2);
+
+    int hpModifier = 16;
+    int powerModifier = 6;
+    int defenseModifier = 3;
+    int expModifier = 60;
+    int moneyModifier = 200;
+    CalculateStats(hpModifier, powerModifier, defenseModifier, expModifier, moneyModifier);
     DisplayIntroduction();
 }
 
@@ -13,7 +19,7 @@ void Orc::DisplayIntroduction()
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
     //정보 출력
-    cout << "Name : " << name << endl;
+    cout << "Name : " << Name << endl;
     cout << "Hp : " << CurHp << endl;
     cout << "Power : " << Power << endl;
     cout << "Defense : " << Defense << endl;
