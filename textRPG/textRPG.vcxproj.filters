@@ -85,6 +85,7 @@
     </ClCompile>
     <ClCompile Include="Source\Game\Equipment.cpp">
       <Filter>Source\Game</Filter>
+	</ClCompile>
     <ClCompile Include="Source\Game\Battle\ABattle.cpp">
       <Filter>Source\Game\Battle</Filter>
     </ClCompile>
