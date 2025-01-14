@@ -52,6 +52,11 @@ public:
 		return Volume;
 	}
 
+	void InitStartTimeSeceond()
+	{
+		StartTimeSeceond = LogicHelper::GetTimeSecond();
+	}
+
 	bool operator == (const AudioInfo& Other) const
 	{
 		return Name == Other.Name;
@@ -113,7 +118,6 @@ private:
 
 private:
 
-	/*int AudioIndex = 0;*/
 	static std::unordered_map<std::string, std::shared_ptr<AudioInfo>> AudioNameMap;
 	static std::list<std::shared_ptr<AudioInfo>> AudioInfos;
 
