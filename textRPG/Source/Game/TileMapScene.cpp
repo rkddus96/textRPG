@@ -5,7 +5,6 @@
 #include "LogicHelper.h"
 
 TileMapScene::TileMapScene()
-	:CurrentFieldArt(EArtList::Test)
 {
 }
 
@@ -21,7 +20,6 @@ void TileMapScene::PlayScene()
 	// 초기 상태 초기화 후 첫 화면 그리기
 	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
 	TileMapInstance->Move(0, 0);
-	CurrentFieldArt = TileMapInstance->GetCurrentTileArt();
 
 	DrawField();
 	while (true)
@@ -38,7 +36,6 @@ void TileMapScene::PlayScene()
 				// Move Code
 
 				TileMapInstance->Move(NextPosition.first, NextPosition.second);
-				CurrentFieldArt = TileMapInstance->GetCurrentTileArt();
 				// Play Move Sound
 
 				// Battle? Reward?
@@ -50,6 +47,15 @@ void TileMapScene::PlayScene()
 				continue;
 			}
 		}
+		else if (IsInventoryInput(KeyInput))
+		{
+			// Inventory 열기 설정
+		}
+		// 유효하지 않은 입력일 경우 다음 입력을 기다린다.
+		else {
+			continue;
+		}
+
 		// 현재 화면에 변화가 있을 경우에만 그려져야 한다.
 		// i.e. move를 호출한다거나
 		// 아니면 캐릭터의 스탯이 변화한다거나
@@ -60,18 +66,26 @@ void TileMapScene::PlayScene()
 void TileMapScene::DrawField()
 {
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
+	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
 
-	std::wstring Message = L"이동 방향을 선택하세요(상, 하, 좌, 우)";
+	std::wstring TileDescription = TileMapInstance->GetCurrentTileDescription();
+	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(TileDescription, false);
 
-	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(Message);
-	const FASKIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(CurrentFieldArt);
-	UIManagerInstance->ChangeBasicCanvasArtImage(FieldArtContainer);
+	EArtList CurrentTileArt = TileMapInstance->GetCurrentTileArt();
+	const FASKIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(CurrentTileArt);
+	UIManagerInstance->ChangeBasicCanvasArtImage(FieldArtContainer, false);
+
 	UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
 }
 
 bool TileMapScene::IsMoveInput(EKey KeyInput) const
 {
 	return KeyInput == EKey::LeftArrow || KeyInput == EKey::UpArrow || KeyInput == EKey::RightArrow || KeyInput == EKey::DownArrow;
+}
+
+bool TileMapScene::IsInventoryInput(EKey KeyInput) const
+{
+	return KeyInput == EKey::I || KeyInput == EKey::i;
 }
 
 std::pair<int, int> TileMapScene::CalculateNextPosition(std::pair<int, int> CurrentPosition, EKey KeyInput)

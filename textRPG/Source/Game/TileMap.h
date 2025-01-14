@@ -24,6 +24,10 @@ struct FAvailableDirection
 	bool bDown = false;
 };
 
+//
+// TO-DO : Tile을 클래스로 수정하고 팔레트 시스템으로 변경
+//
+
 /// <summary>
 /// 좌상단이 0, 0으로 시작해서 우하단이 (width - 1, height - 1)의 좌표를 가진다. (x, y)의 좌표를 가진다.
 /// </summary>
@@ -48,6 +52,12 @@ public:
 	/// </summary>
 	/// <returns>EArtList 타입</returns>
 	EArtList GetCurrentTileArt() const;
+
+	/// <summary>
+	/// 현재 타일의 설명 텍스트를 반환한다.
+	/// </summary>
+	/// <returns></returns>
+	std::wstring GetCurrentTileDescription() const;
 
 	/// <summary>
 	/// 현재 캐릭터의 위치를 이동한다. 이동할 수 없는 값이 주어질 경우 현재 위치를 유지한다.
@@ -88,16 +98,24 @@ protected:
 	/// </summary>
 	void GenerateTestMap();
 private:
+	int Width;
+	int Height;
+
 	/// <summary>
 	/// 타일 정보를 가지고 있는 2차원 배열
 	/// </summary>
 	std::vector<std::vector<ETile>> TileGrid;
+
 	/// <summary>
 	/// 타일을 표시하는 Art 정보를 가지고 있는 2차원 배열
 	/// </summary>
 	std::vector<std::vector<EArtList>> TileArtGrid;
-	int Width;
-	int Height;
+
+	/// <summary>
+	/// 타일의 설명을 표시하는 택스트를 가지고 있는 2차원 배열
+	/// </summary>
+	std::vector<std::vector<std::wstring>> TileDescriptionGrid;
+
 	/// <summary>
 	/// 현재 플레이어의 위치
 	/// </summary>
