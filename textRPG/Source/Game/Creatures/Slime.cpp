@@ -22,6 +22,7 @@ void Slime::DisplayIntroduction()
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
     //출력
+    GameManager::GetInstance().GetUIManager()->ClearMessageToBasicCanvasEventInfoUI();
     string s = "오ㅇ...ㅇ오오옳..ㅇ";
     wstring ws = LogicHelper::StringToWString(s);
     GameManager::GetInstance().GetUIManager()->AddMessageToBasicCanvasEventInfoUI(ws);

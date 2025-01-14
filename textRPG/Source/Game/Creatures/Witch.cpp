@@ -20,6 +20,7 @@ void Witch::DisplayIntroduction()
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
     //출력 
+    GameManager::GetInstance().GetUIManager()->ClearMessageToBasicCanvasEventInfoUI();
     string s = "내 주문이 너를 태울 것이다! 후회해도 늦어!";
     wstring ws = LogicHelper::StringToWString(s);
     GameManager::GetInstance().GetUIManager()->AddMessageToBasicCanvasEventInfoUI(ws);
