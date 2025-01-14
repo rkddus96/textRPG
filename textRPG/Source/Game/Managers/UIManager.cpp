@@ -258,6 +258,32 @@ void UIManager::AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessag
 	}
 }
 
+void UIManager::ClearMessageToBasicCanvasEventInfoUI(bool bShouldUpdateUI)
+{
+	int EventInfoUIContentsLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::EventInfoUIContents];
+
+	std::shared_ptr<RenderingLayer> EventInfoUIContentsLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(EventInfoUIContentsLayerId);
+	if (EventInfoUIContentsLayer == nullptr)
+	{
+		std::cout << "UIManager, AddMessageToBasicCanvasEventInfoUI : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	AddMessageToBasicCanvasEventInfoUI(L" ", false);
+	AddMessageToBasicCanvasEventInfoUI(L" ", false);
+	AddMessageToBasicCanvasEventInfoUI(L" ", false);
+	AddMessageToBasicCanvasEventInfoUI(L" ", false);
+
+	EventInfoUIContentsMsgs.resize(0);
+
+	EventInfoUIContentsLayer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
+}
+
 void UIManager::ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount, bool bShouldUpdateUI)
 {
 	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
