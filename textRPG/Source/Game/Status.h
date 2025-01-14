@@ -28,6 +28,4 @@ public:
 	void SetStat(EStat statType, int value);
 
 	
-	// 스탯 -> 데미지
-	float StatToDamage(float powerWeight, float defenseWeight, float luckWeight);
 };

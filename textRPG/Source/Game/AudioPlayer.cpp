@@ -25,8 +25,6 @@ std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
             continue;
         }
 
-        //AudioNameMap.insert(AudioName);
-
         PlayInternal(FilePath, AudioName, Volume, false);
         return AudioName;
     }
@@ -97,8 +95,6 @@ std::string AudioPlayer::PlayLoop(const std::string& FilePath, float Volume)
         {
             continue;
         }
-
-        //AudioNameMap.insert(AudioName);
 
         PlayInternal(FilePath, AudioName, Volume, true);
 
@@ -187,8 +183,6 @@ void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& A
 
     // 길이를 정수로 변환
     int lengthInMilliseconds = std::stoi(Buffer);
-    //std::cout << "Audio length: " << lengthInMilliseconds << " milliseconds." << std::endl;
-
 
     Command = "play " + AudioName;
     // 미디어 파일 재생
@@ -216,27 +210,11 @@ void AudioPlayer::ReplayLoop()
 
     while (node != AudioInfos.end())
     {
-        bool retired = (*node)->IsRetired();
         if ((*node)->IsRetired() && (*node)->GetIsLoop())
         {
-            std::cout << "?????????????????";
             StopInternal((*node)->Name);
-
+            (*node)->InitStartTimeSeceond();
             PlayInternal((*node)->GetFilePath(), (*node)->Name, (*node)->GetVolume(), true);
-
-            //AudioNameMap.erase(node->Name);
-
-            if (std::next(node) == AudioInfos.end())
-            {
-                AudioInfos.erase(node);
-                break;
-            }
-            else
-            {
-                node++;
-                AudioInfos.erase(std::prev(node));
-                continue;
-            }
         }
 
         node++;
@@ -247,10 +225,3 @@ void AudioPlayer::Tick(double DeltaTime)
 {
     ReplayLoop();
 }
-
-//AudioPlayer::~AudioPlayer()
-//{
-//    StopAll();
-//    std::cout << "Audio Destroyed" << std::endl;
-//}
-

@@ -8,20 +8,10 @@
 #include "IItem.h"
 
 
-Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0), Damage(0)
+Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0)
 {
 	InitCharacter();
 	RandomizeStats();
-
-/*	Stats.OnStatChanged = [this](EStat statType, int newValue)
-	{
-			if (OnCharacterChanged)
-			{
-				OnCharacterChanged(ECharacterEvent::Stat, static_cast<int>(statType));
-			}
-
-	};
-*/
 
 	Inventory.clear(); //Item 추가 시 추가
 	
@@ -83,14 +73,8 @@ void Character::RaiseGold(int gold)
 // 생존 여부 반환 함수
 bool Character::IsDead()
 {
-	if (Stats.GetStat(EStat::CurHp) <= 0)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (Stats.GetStat(EStat::CurHp) <= 0);
+
 }
 
 // 아이템 추가
@@ -112,8 +96,25 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 }
 
 // 아이템 사용
-void Character::UsePotion(int index)
+void Character::UsePotion()
 {
+	
+	for (int index = 0; index < Inventory.size(); index++)
+	{
+		if (Inventory[index]->IsConsumable())
+		{
+			Inventory[index]->Use(this);
+			Inventory.erase(Inventory.begin() + index);
+			break;
+		}
+	}
+	std::cout << "인벤토리 내부에 포션이 없습니다." << std::endl;
+	
+
+
+
+	// 매개변수가 인덱스일 때
+	/*
 	// 잘못된 인덱스
 	if (index < 0 || index >= static_cast<int>(Inventory.size()))
 	{
@@ -140,15 +141,19 @@ void Character::UsePotion(int index)
 			OnItemChanged(Inventory);
 		}
 	}
-
+	*/
 }
 
-int Character::TakeDamage(int damage)
+void Character::TakeDamage(int rawdamage)
 {
 	Status Stats = this->GetStatus();
 	int Defense =Stats.GetStat(EStat::Defense);
 
-	return std::max((damage - Defense),0);
+	int damage = std::max((rawdamage - Defense), 0);
+	int Hp = Stats.GetStat(EStat::CurHp) - damage;
+	Stats.SetStat(EStat::CurHp, Hp);
+
+	return ;
 }
 
 
@@ -219,28 +224,29 @@ void Character::RandomizeStats()
 	std::mt19937 gen(rd());
 
 	// 범위, 분포 설정
-	std::uniform_int_distribution<> distHp(150, 250);
-	std::uniform_int_distribution<> distStat(25, 35);
+	std::uniform_int_distribution<> distHp(100, 130);
+	std::uniform_int_distribution<> distPower(10, 15);
+	std::uniform_int_distribution<> distDefense(3, 5);
+	std::uniform_int_distribution<> distLuck(0, 10);
+
+	std::cout << "이  름 : " << Name << std::endl;
+	std::cout << "레  벨 : " << Level << std::endl;
+	std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
 
 	int Choice = 0;
 	while (Choice != 1)
 	{
 		// 랜덤 스탯을 할당한다.
 		int maxHp = distHp(gen);
-		int power = distStat(gen);
-		int defense = distStat(gen);
-		int luck = distStat(gen);
+		int power = distPower(gen);
+		int defense = distDefense(gen);
+		int luck = distLuck(gen);
 
 		// 스탯 표시
 		std::cout << " 능력치를 설정해주세요!" << std::endl;
 		std::cout << "-------------------------------------------------" << std::endl;
 		std::cout << "                  PLAYER STATUS                  " << std::endl;
 		std::cout << "-------------------------------------------------" << std::endl;
-		std::cout << "이  름 : " << Name << std::endl;
-		
-		std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
-		std::cout << "레  벨 : " << Level << std::endl;
-		std::cout << "경험치 : " << Exp << "/" << MaxExp << std::endl;
 		std::cout << "체  력 : " << maxHp << "/" << maxHp << std::endl;
 		std::cout << "공격력 : " << power << std::endl;
 		std::cout << "방어력 : " << defense << std::endl;
@@ -287,22 +293,21 @@ void Character::RandomizeStats()
 		}
 	}
 	// Damage 계산
-	float powerWeight = Jobs->GetPowerWeight();
-	float defenseWeight = Jobs->GetDefenseWeight();
-	float luckWeight = Jobs->GetLuckWeight();
-	float damage = Stats.StatToDamage(powerWeight, defenseWeight, luckWeight);
-	SetDamage(static_cast<int>(damage));
+	int powerWeight = Jobs->GetPowerWeight();
+	int defenseWeight = Jobs->GetDefenseWeight();
+	int luckWeight = Jobs->GetLuckWeight();
 }
 
 // 레벨업 함수
 void Character::LevelUp()
 {
-	while (Exp >= 100)
+	while (Exp >= MaxExp)
 	{
 		SetLevel(Level + 1);
 
 		// 100이 넘어갔을 경우 초과치를 다음 경험치에 추가합니다.
-		Exp = Exp - 100;
+		Exp = Exp - MaxExp;
+		MaxExp += 50;
 
 		
 	}
@@ -311,14 +316,14 @@ void Character::LevelUp()
 	int defense = Stats.GetStat(EStat::Defense);
 	int luck = Stats.GetStat(EStat::Luck);
 
-	float pWeight = Jobs->GetPowerWeight();
-	float dWeight = Jobs->GetDefenseWeight();
-	float lWeight = Jobs->GetLuckWeight();
+	int pWeight = Jobs->GetPowerWeight();
+	int dWeight = Jobs->GetDefenseWeight();
+	int lWeight = Jobs->GetLuckWeight();
 
-	maxHp += Level * 20;
-	power += static_cast<int>(3 * Level * pWeight);
-	defense += static_cast<int>(3 * Level * dWeight);
-	luck += static_cast<int>(3 * Level * lWeight);
+	maxHp += 20;
+	power += pWeight;
+	defense += dWeight;
+	luck += lWeight;
 
 	Stats.SetStat(EStat::MaxHp, maxHp);
 	Stats.SetStat(EStat::Power, power);
@@ -328,9 +333,6 @@ void Character::LevelUp()
 	// 체력 회복
 	Stats.SetStat(EStat::CurHp, maxHp);
 
-	// 데미지 재계산
-	float damage = Stats.StatToDamage(pWeight, dWeight, lWeight);
-	SetDamage(static_cast<int>(damage));
 
 	
 }
@@ -348,7 +350,6 @@ void Character::Display() const
 	int power = Stats.GetStat(EStat::Power);
 	int defense = Stats.GetStat(EStat::Defense);
 	int luck = Stats.GetStat(EStat::Luck);
-	int damage = GetDamage();
 
 	std::cout << "여러분의 선택이 캐릭터의 운명을 바꿉니다. 능력치를 설정해주세요!" << std::endl;
 	std::cout << "-------------------------------------------------" << std::endl;
@@ -362,6 +363,5 @@ void Character::Display() const
 	std::cout << "공격력 : " << power << std::endl;
 	std::cout << "방어력 : " << defense << std::endl;
 	std::cout << "행  운 : " << luck << std::endl;
-	std::cout << "데미지 : " << damage << std::endl;
 	std::cout << "-------------------------------------------------" << std::endl;
 }
