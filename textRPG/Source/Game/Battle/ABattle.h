@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <Windows.h>
+#include "../AudioPlayer.h"
 #include "../Creatures/Monster.h"
 #include "../Creatures/MonsterFactory.h"
 #include "../Character.h"

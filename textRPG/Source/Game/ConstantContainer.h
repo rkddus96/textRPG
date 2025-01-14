@@ -5,6 +5,9 @@
 namespace AudioPath
 {
 	extern const std::string TEST1;
+	extern const std::string CRITICALATTACK;
+	extern const std::string NORMALATTACK;
+	extern const std::string MISS;
 }
 
 namespace Console
