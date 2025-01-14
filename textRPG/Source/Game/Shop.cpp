@@ -33,42 +33,66 @@ Shop::Shop()
 
 void Shop::BuyItem(Character& character, int index)
 {
+	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
+
+	std::string CannotBuyLogOne;
+	std::string CannotBuyLogTwo;
+	std::wstring CannotBuyLogOneW;
+	std::wstring CannotBuyLogTwoW;
+
+	
+	CannotBuyLogOne = "돈이 부족합니다.";
+	CannotBuyLogTwo = "더 이상 아이템을 구매할 수 없습니다.";
+	
+	CannotBuyLogOneW = LogicHelper::StringToWString(CannotBuyLogOne);
+	CannotBuyLogTwoW = LogicHelper::StringToWString(CannotBuyLogTwo);
+
 	std::vector<std::shared_ptr<IItem>>& Inventory = character.GetInventory();
 	int Gold = character.GetGold();
 	int Price = ItemsForSale[index]->GetPrice();
 
-	if (Gold < Price)
+	// 인벤토리가 가득 차지 않은 경우
+	if (Inventory.size() <= 9)
 	{
-		std::cout << "돈이 부족합니다." << std::endl; // => 바꿔야 함
-		return;
+		if (Gold < Price)
+		{
+			UI->AddMessageToBasicCanvasEventInfoUI(CannotBuyLogOneW);
+			return;
+		}
+		else
+		{
+			// 인벤토리에 상품 넣기, 골드 차감
+			
+			Inventory.push_back(ItemsForSale[index]);
+			character.SetGold(Gold - Price);
+
+
+
+
+
+			// 포션이 아닐 경우
+			if (index != 0)
+			{
+				// 아이템 목록에서 상품 제거
+				ItemsForSale.erase(ItemsForSale.begin() + index);
+			}
+
+
+		}
 	}
+	// 인벤토리가 가득 찬 경우
 	else
 	{
-		// 인벤토리에 상품 넣기, 골드 차감
-		Inventory.push_back(ItemsForSale[index]);
-		character.SetGold(Gold - Price );
-		
-
-	
-
-
-		// 포션이 아닐 경우
-		if (index != 0)
-		{
-			// 아이템 목록에서 상품 제거
-			ItemsForSale.erase(ItemsForSale.begin() + index);
-		}
-
-		
+		UI->AddMessageToBasicCanvasEventInfoUI(CannotBuyLogTwoW);
 	}
 
-	
+
 	
 }
 
 void Shop::SellItem(Character& character, int index)
 {
-	std::vector<std::shared_ptr<IItem>> Inventory = character.GetInventory();
+	std::vector<std::shared_ptr<IItem>>& Inventory = character.GetInventory();
 	int Gold = character.GetGold();
 	int Price = Inventory[index]->GetPrice();
 
@@ -153,24 +177,27 @@ void Shop::ManageShop(Character& character)
 	
 	while (true) {
 		
-	//	std::cout << FirstChoiceOptionsLog;
 		UI->AddMessageToBasicCanvasEventInfoUI(FirstChoiceOptionsLogW);
 
 		// 입력값 초기화
 		int Choice;
 		int ItemChoice;
+		
 		std::cin >> Choice;
 
 		switch (Choice) {
 			case 1: // 구매
-			//	std::cout << PurchaseLog << std::endl;
 				// 구매
 				while (true)
 				{
 					UI->AddMessageToBasicCanvasEventInfoUI(PurchaseLogW);
-					// 사용자 소지 돈 초기화
-					Gold = character.GetGold();
+					
 					Display();
+					// 사용자 소지 돈 초기화, 출력
+					Gold = character.GetGold();
+					RemainGoldLog = "남은 골드: " + std::to_string(Gold);
+					RemainGoldLogW = LogicHelper::StringToWString(RemainGoldLog);
+					UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
 					std::cin >> ItemChoice;
 					if (ItemChoice == 0)
 					{
@@ -194,8 +221,10 @@ void Shop::ManageShop(Character& character)
 				while (true)
 				{
 					UI->AddMessageToBasicCanvasEventInfoUI(SellLogW);
-					Gold = character.GetGold();
 					character.DisplayInventory();
+					Gold = character.GetGold();
+					RemainGoldLog = "남은 골드: " + std::to_string(Gold);
+					RemainGoldLogW = LogicHelper::StringToWString(RemainGoldLog);
 					UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
 				
 					std::cin >> ItemChoice;

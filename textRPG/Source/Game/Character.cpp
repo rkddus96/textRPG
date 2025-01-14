@@ -100,7 +100,16 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 // 아이템 사용
 void Character::UsePotion()
 {
+	//UI 초기화
+	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
 	
+	std::string CannotUsePotionLog;
+	std::wstring CannotUsePotionLogW;
+	CannotUsePotionLog = "인벤토리 내부에 포션이 없습니다.";
+
+	CannotUsePotionLogW = LogicHelper::StringToWString(CannotUsePotionLog);
+	
+
 	for (int index = 0; index < Inventory.size(); index++)
 	{
 		if (Inventory[index]->IsConsumable())
@@ -114,40 +123,8 @@ void Character::UsePotion()
 			break;
 		}
 	}
-	std::cout << "인벤토리 내부에 포션이 없습니다." << std::endl;
+	UI->AddMessageToBasicCanvasEventInfoUI(CannotUsePotionLogW);
 	
-
-
-
-	// 매개변수가 인덱스일 때
-	/*
-	// 잘못된 인덱스
-	if (index < 0 || index >= static_cast<int>(Inventory.size()))
-	{
-		std::cout << "Invalid index. No item found at index " << index << ".\n";
-		return;
-	}
-
-	// 아이템 타입 확인 -> Potion인지 아닌지
-	std::shared_ptr<IItem> item = Inventory[index];
-
-	// 만약 무기라면
-	if (item->IsConsumable() == false)
-	{
-		std::cout << "The item at index " << index << " is not a Potion." << std::endl;
-		return;
-	}
-	else
-	{
-		item->Use(this);
-		Inventory.erase(Inventory.begin() + index);
-		
-		if (OnItemChanged)
-		{
-			OnItemChanged(Inventory);
-		}
-	}
-	*/
 }
 
 int Character::TakeDamage(int rawdamage)
@@ -237,7 +214,7 @@ void Character::RandomizeStats()
 
 	std::cout << "이  름 : " << Name << std::endl;
 	std::cout << "레  벨 : " << Level << std::endl;
-	std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
+	std::wcout <<"직  업 : " << Jobs->GetJobName() << std::endl;
 
 	int Choice = 0;
 	while (Choice != 1)
@@ -338,7 +315,7 @@ void Character::LevelUp()
 	
 }
 
-// DisplayInventory
+// DisplayInventory 함수
 void Character::DisplayInventory()
 {
 	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
@@ -370,31 +347,6 @@ void Character::DisplayInventory()
 		UI->AddMessageToBasicCanvasEventInfoUI(ItemPriceLogW);
 		UI->AddMessageToBasicCanvasEventInfoUI(ItemExplanationLogW);
 	}
-}
-
-
-// Test용 Display 함수
-void Character::Display() const
-{
-	int curHp = Stats.GetStat(EStat::CurHp);
-	int maxHp = Stats.GetStat(EStat::MaxHp);
-	int power = Stats.GetStat(EStat::Power);
-	int defense = Stats.GetStat(EStat::Defense);
-	int luck = Stats.GetStat(EStat::Luck);
-
-	std::cout << "여러분의 선택이 캐릭터의 운명을 바꿉니다. 능력치를 설정해주세요!" << std::endl;
-	std::cout << "-------------------------------------------------" << std::endl;
-	std::cout << "                  PLAYER STATUS                  " << std::endl;
-	std::cout << "-------------------------------------------------" << std::endl;
-	std::cout << "이  름 : " << Name << std::endl;
-	std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
-	std::cout << "레  벨 : " << Level << std::endl;
-	std::cout << "경험치 : " << Exp << "/" << MaxExp << std::endl;
-	std::cout << "체  력 : " << maxHp << "/" << maxHp << std::endl;
-	std::cout << "공격력 : " << power << std::endl;
-	std::cout << "방어력 : " << defense << std::endl;
-	std::cout << "행  운 : " << luck << std::endl;
-	std::cout << "-------------------------------------------------" << std::endl;
 }
 
 
