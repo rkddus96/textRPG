@@ -19,16 +19,19 @@ Shop::Shop()
 	ItemsForSale.emplace_back(std::make_shared<HealthPotion>("Potion", 200));
 	
 	// 저급 아이템
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Helmet", EStat::Defense, 2, 1200));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Armor", EStat::Defense, 2, 1200));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Axe", EStat::Power, 3, 1200));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Sword", EStat::Power, 3, 1200));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Short Sword", EStat::Luck, 3, 1200));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Helmet", std::vector<EStat>{ EStat::Defense }, std::vector<int>{ 2 }, 1200));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Armor", std::vector<EStat>{EStat::Defense}, std::vector<int>{ 2 }, 1200));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Axe", std::vector<EStat>{ EStat::Power }, std::vector<int>{ 3 }, 1200));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Sword", std::vector<EStat>{ EStat::Power }, std::vector<int>{ 3 }, 1200));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Short Sword", std::vector<EStat>{ EStat::Luck }, std::vector<int>{ 3 }, 1200));
 	
 	// 고급 아이템
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Ragnarok's Edge", EStat::Power, 18, 6000));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Yggdrasil's Branch", EStat::Defense, 12, 6000));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Loki's Charm", EStat::Luck, 18, 6000));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Ragnarok's Edge", std::vector<EStat>{ EStat::Power }, std::vector<int>{ 18 }, 6000));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Yggdrasil's Branch", std::vector<EStat>{ EStat::Defense }, std::vector<int>{ 12 }, 6000));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Loki's Charm", std::vector<EStat>{ EStat::Luck }, std::vector<int>{ 18 }, 6000));
+
+	// 극단적인 아이템
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Blood Axe", std::vector<EStat>{ EStat::Power, EStat::Defense }, std::vector<int>{ 36, -12 }, 6000));
 }
 
 void Shop::BuyItem(Character& character, int index)
