@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "ABattle.h"
 #include "../Creatures/Monster.h"
-#include "../Creatures/MonsterFactory.h"
+#include "../Creatures/MonstserFactoryManager.h"
 #include "../Character.h"
 #include "../Managers/GameManager.h"
 #include "../LogicHelper.h"
@@ -18,15 +18,16 @@ ABattle::ABattle(Character* Player) : Player(Player)
 	SetCriProb();
 	SetNormalProb();
 
-	// 2. 랜덤 몬스터 생성
-	//Enemy = new MonsterFactory()->Create();
-
-	// 3. UI 변수 초기화
-	UI = GameManager::GetInstance().GetUIManager();
-
-	// 4. 캐릭터 변수 초기화
+	// 2. 캐릭터 변수 초기화
 	this->Player = Player;
 
+	// 3. 랜덤 몬스터 생성
+	Enemy = (new MonstserFactoryManager())->CreateRandomMonster(Player->GetLevel());
+
+	// 4. UI 변수 초기화
+	UI = GameManager::GetInstance().GetUIManager();
+
+	// 5. 변수 초기값 지정
 	bGameFinished = false;
 	PotionEventStartingHp = 50;
 }
@@ -41,17 +42,42 @@ void ABattle::MonsterAttackAction()
 	int PlayerHP = Player->GetStatus().GetStat(EStat::CurHp);
 	string PlayerName = Player->GetName();
 
+	// 로그 선언
+	string DamageLog;
+	string CurHpLog;
+	string DeadLog = PlayerName + "(이)가 죽었습니다";;
+	wstring DamageLogToW;
+	wstring CurHpLogToW;
+	wstring DeadLogToW;
+
+	// 공격 타입 계산
+	EAttackType AttackType = CalculateAttackProb(MonsterCriProb, MonsterMissProb, MonsterNormalProb);
+
 	// 플레이어에게 데미지
 	int Damage = Enemy->GetPower();
 	//Player-> TakeDamage(Damage);
 
-	// 로그 선언
-	string DamageLog = PlayerName + "의 체력이" + to_string(Damage) + "만큼 깎였습니다.";
-	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(PlayerHP);
-	string DeadLog = PlayerName + "(이)가 죽었습니다";
-	wstring DamageLogToW = LogicHelper::StringToWString(DamageLog);
-	wstring CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
-	wstring DeadLogToW = LogicHelper::StringToWString(DeadLog);
+	// 공격 타입에 따라 공격 수행
+	switch (AttackType)
+	{
+		case EAttackType::Critical:
+			Player->TakeDamage(Damage * 1.2);
+			DamageLog = "치명타 ! " + PlayerName + "의 체력이" + to_string(Damage * 1.2) + "만큼 깎였습니다.";
+			break;
+		case EAttackType::Miss:
+			DamageLog = "공격이 빗나갔습니다 !";
+			break;
+		case EAttackType::Normal:
+			Player->TakeDamage(Damage);
+			DamageLog = PlayerName + "의 체력이" + to_string(Damage) + "만큼 깎였습니다.";
+			break;
+	}
+
+	// 로그 초기화
+	CurHpLog = PlayerName + "의 현재체력 : " + to_string(PlayerHP);
+	DamageLogToW = LogicHelper::StringToWString(DamageLog);
+	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
+	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
@@ -107,17 +133,41 @@ void ABattle::PlayerAttackAction()
 	int EnemyHp = Enemy->GetCurHp();
 	string EnemyName = Enemy->GetName();
 
+	// 로그 선언
+	string DamageLog;
+	string CurHpLog;
+	string DeadLog = EnemyName + "(이)가 죽었습니다";;
+	wstring DamageLogToW;
+	wstring CurHpLogToW;
+	wstring DeadLogToW;
+
 	// 몬스터에게 데미지
 	int Damage = Player->GetDamage();
-	Enemy->TakeDamage(Damage);
 
-	// 로그 선언
-	string DamageLog = EnemyName + "의 체력이 : " + to_string(Damage) + "만큼 깎였습니다";
-	string CurHpLog = EnemyName + "의 현재 체력 : " + to_string(EnemyHp);
-	string DeadLog = EnemyName + "(이)가 죽었습니다";
-	wstring DamageLogToW = LogicHelper::StringToWString(DamageLog);
-	wstring CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
-	wstring DeadLogToW = LogicHelper::StringToWString(DeadLog);
+	// 공격 타입 계산
+	EAttackType AttackType = CalculateAttackProb(PlayerCriProb, PlayerMissProb, PlayerNormalProb);
+
+	// 공격 타입에 따라 공격 수행
+	switch (AttackType)
+	{
+		case EAttackType::Critical:
+			Enemy->TakeDamage(Damage * 1.2);
+			DamageLog = "치명타 ! " + EnemyName + "의 체력이" + to_string(Damage * 1.2) + "만큼 깎였습니다.";
+			break;
+		case EAttackType::Miss:
+			DamageLog = "공격이 빗나갔습니다 !";
+			break;
+		case EAttackType::Normal:
+			Enemy->TakeDamage(Damage);
+			DamageLog = EnemyName + "의 체력이" + to_string(Damage) + "만큼 깎였습니다.";
+			break;
+	}
+
+	// 로그 초기화
+	CurHpLog = EnemyName + "의 현재체력 : " + to_string(EnemyHp);
+	DamageLogToW = LogicHelper::StringToWString(DamageLog);
+	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
+	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
@@ -213,6 +263,26 @@ void ABattle::GameLose()
 
 	// 전투 종료
 	bGameFinished = true;
+}
+
+// 공격 확률을 바탕으로 계산
+ABattle::EAttackType ABattle::CalculateAttackProb(float Critical, float Miss, float Normal)
+{
+	 // 0-99 사이의 랜덤 값 생성
+    float randomValue = static_cast<float>(rand() % 100);
+    
+    // Critical 구간 (0 ~ Critical)
+    if (randomValue < Critical) {
+        return EAttackType::Critical;
+    }
+    // Miss 구간 (Critical ~ Critical + Miss)
+    else if (randomValue < Critical + Miss) {
+        return EAttackType::Miss;
+    }
+    // Normal 구간 (나머지)
+	else {
+		return EAttackType::Normal;
+	}
 }
 
 

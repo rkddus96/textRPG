@@ -14,9 +14,9 @@ class ABattle
 { 
 protected:
 
-	Monster*	Enemy;						// 전투중인 몬스터
-	Character*	Player;						// 전투중인 캐릭터
 	shared_ptr<UIManager>	UI;				// UI에 로그 출력을 위해 선언
+	unique_ptr<Monster>	Enemy;				// 전투중인 몬스터
+	Character*	Player;						// 전투중인 캐릭터
 	EKey		Action;						// 플레이어의 행동 인덱스 ( 1 = 공격하기, 2 = 포션먹기 )
 	
 	bool		bGameFinished;				// 전투가 끝나면 True
@@ -48,6 +48,14 @@ protected:
 
 private:
 
+	// 공격 타입
+	enum EAttackType
+	{
+		Critical,
+		Miss,
+		Normal
+	};
+
 	// 몬스터 난이도에 따른 보정계수 계산 함수
 	void SetMonsterCoEfficientValue();
 
@@ -65,6 +73,9 @@ private:
 
 	// 전투 패배시 수행하는 로직
 	void GameLose();
+
+	// 공격 확률을 바탕으로 계산
+	EAttackType CalculateAttackProb(float Critical, float Miss, float Normal);
 
 	// 전투 진행 순수가상함수
 	virtual void Battle() = 0;

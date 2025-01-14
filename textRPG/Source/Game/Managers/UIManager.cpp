@@ -417,6 +417,28 @@ void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std
 	}
 }
 
+void UIManager::SetOpeningCanvasBackgroundArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI)
+{
+	int TitleLayerId = OpeningCanvasLayerIdMap[EOpeningCanvasLayer::BackgroundArt];
+	std::shared_ptr<RenderingLayer> TitleLayer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(TitleLayerId);
+
+	if (TitleLayer == nullptr)
+	{
+		std::cout << "UIManager, ChangeBasicCanvasArtImage : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	TitleLayer->ClearLayerFor(L' ');
+	TitleLayer->DrawSurface(PositionX, PositionY, Surface);
+
+	TitleLayer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Opening);
+	}
+}
+
 void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType, bool bShouldUpdateUI)
 {
 	int LayerId = OpeningCanvasLayerIdMap[LayerType];
