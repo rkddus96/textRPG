@@ -12,6 +12,6 @@ void HealthPotion::Use(Character* character)
 	//Character HP
 	int Hp = Stats.GetStat(EStat::CurHp);
 	int MaxHp = Stats.GetStat(EStat::MaxHp);
-	Hp = std::min(Hp + HealPoint, MaxHp);
+	Hp = std::min(Hp + MaxHP/2, MaxHp);
 	Stats.SetStat(EStat::CurHp, Hp);
 }
