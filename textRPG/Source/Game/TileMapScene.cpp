@@ -1,5 +1,5 @@
 #include "TileMapScene.h"
-
+#include "Battle/AutoBattle.h"
 #include "Managers/GameManager.h"
 #include "AssetHandler.h"
 #include "LogicHelper.h"
@@ -39,6 +39,8 @@ void TileMapScene::PlayScene()
 				// Play Move Sound
 
 				// Battle? Reward?
+				unique_ptr<AutoBattle> Battle = make_unique<AutoBattle>();
+				Battle->StartBattle();
 			}
 			else
 			{
