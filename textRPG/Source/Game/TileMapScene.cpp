@@ -18,6 +18,8 @@ void TileMapScene::PlayScene()
 	UIManagerInstance->BindAllDelegate();
 
 	GameManager::GetInstance().GetTileMap()->Move(0, 0);
+	CurrentFieldArt = GameManager::GetInstance().GetTileMap()->GetCurrentTileArt();
+
 	DrawField();
 	while (true)
 	{
@@ -30,8 +32,13 @@ void TileMapScene::PlayScene()
 
 			if (GameManager::GetInstance().GetTileMap()->CanTraverse(NextPosition.first, NextPosition.second))
 			{
+				// Move Code
+
 				GameManager::GetInstance().GetTileMap()->Move(NextPosition.first, NextPosition.second);
+				CurrentFieldArt = GameManager::GetInstance().GetTileMap()->GetCurrentTileArt();
 				// Play Move Sound
+
+				// Battle? Reward?
 			}
 			else
 			{
@@ -51,10 +58,8 @@ void TileMapScene::DrawField()
 	std::wstring Message = L"이동 방향을 선택하세요(상, 하, 좌, 우)";
 
 	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(Message);
-
-	const FASKIIArtContainer& TempArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer((EArtList)LogicHelper::GetRandomNumber(0, 3));
-	UIManagerInstance->ChangeBasicCanvasArtImage(TempArtContainer);
-
+	const FASKIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(CurrentFieldArt);
+	UIManagerInstance->ChangeBasicCanvasArtImage(FieldArtContainer);
 	UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
 }
 
