@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <functional>
+#include <unordered_map>
 #include "AssetHandler.h"
 
 enum class ETile
@@ -52,6 +53,8 @@ public:
 	/// </summary>
 	/// <returns>EArtList 타입</returns>
 	EArtList GetCurrentTileArt() const;
+
+	std::pair<int, int> GetCurrentTileArtOffset() const;
 
 	/// <summary>
 	/// 현재 타일의 설명 텍스트를 반환한다.
@@ -112,6 +115,8 @@ private:
 	/// 타일을 표시하는 Art 정보를 가지고 있는 2차원 배열
 	/// </summary>
 	std::vector<std::vector<EArtList>> TileArtGrid;
+
+	std::unordered_map<EArtList, std::pair<int, int>> TileOffsetMap;	
 
 	/// <summary>
 	/// 타일의 설명을 표시하는 택스트를 가지고 있는 2차원 배열
