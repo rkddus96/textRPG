@@ -83,8 +83,8 @@ void TileMap::GenerateTestMap()
 	// To-Do : 초기화 과정에서 Tile Type과 Art Type을 한 번에 설정할 수 있도록 하는 기능 구현
 	TileGrid[0][0] = ETile::Village1;
 	TileArtGrid[0][0] = EArtList::Test;
-	TileGrid[Width - 1][0] = ETile::Village2;
-	TileArtGrid[Width - 1][0] = EArtList::Test;
-	TileGrid[Width - 1][Height - 1] = ETile::DemonLordCastle;
-	TileArtGrid[Width - 1][Height - 1] = EArtList::Castle1;
+	TileGrid[Height - 1][0] = ETile::Village2;
+	TileArtGrid[Height - 1][0] = EArtList::Test;
+	TileGrid[Height - 1][Width - 1] = ETile::DemonLordCastle;
+	TileArtGrid[Height - 1][Width - 1] = EArtList::Castle1;
 }
