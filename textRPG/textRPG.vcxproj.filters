@@ -163,6 +163,7 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Equipment.h">
       <Filter>Source</Filter>
+    </ClInclude>    
     <ClInclude Include="Source\Game\Battle\ABattle.h">
       <Filter>Source\Game\Battle</Filter>
     </ClInclude>
