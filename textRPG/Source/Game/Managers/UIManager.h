@@ -113,7 +113,7 @@ private:
 	void MakeEndingSceneUI();
 	void MakeInventorySceneUI();
 
-	void SetMinimapUIContents(/*std::vector<std::vector<Tile>> TileInfos*/);
+	void SetMinimapUIContents(/*std::vector<std::vector<ETile>> TileInfos*/);
 
 	void Tick(double DeltaTime);
 
