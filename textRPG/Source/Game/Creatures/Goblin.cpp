@@ -21,4 +21,9 @@ void Goblin::DisplayIntroduction()
 {
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
+    //출력 
+    GameManager::GetInstance().GetUIManager()->ClearMessageToBasicCanvasEventInfoUI();
+    string s = "네 보물은 이제 내 거다! 하하하!";
+    wstring ws = LogicHelper::StringToWString(s);
+    GameManager::GetInstance().GetUIManager()->AddMessageToBasicCanvasEventInfoUI(ws);
 }

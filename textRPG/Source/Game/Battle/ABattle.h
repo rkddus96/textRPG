@@ -57,6 +57,9 @@ private:
 		Normal
 	};
 
+	// 전투 진행 BGM 이름
+	string BGMName;
+
 	// 몬스터 난이도에 따른 보정계수 계산 함수
 	void SetMonsterCoEfficientValue();
 
