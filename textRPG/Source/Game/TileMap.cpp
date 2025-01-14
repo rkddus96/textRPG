@@ -19,6 +19,20 @@ EArtList TileMap::GetCurrentTileArt() const
 	return TileArtGrid[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
 }
 
+std::pair<int, int> TileMap::GetCurrentTileArtOffset() const
+{
+	auto iter = TileOffsetMap.find(GetCurrentTileArt());
+	if (iter != TileOffsetMap.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		// 필요할 경우 로깅
+		return {0, 0};
+	}
+}
+
 std::wstring TileMap::GetCurrentTileDescription() const
 {
 	return TileDescriptionGrid[CurrentPlayerPosition.first][CurrentPlayerPosition.second];
@@ -99,6 +113,12 @@ void TileMap::GenerateTestMap()
 											,L"푸른 초원이 끝없이 펼쳐지고, 바람에 풀잎이 흔들리며 평온한 분위기가 감돈다."
 											, L"험난한 바위산과 눈 덮인 봉우리가 하늘을 찌를 듯 솟아있고, 차가운 바람이 몰아친다."
 											, L"거대한 물줄기가 절벽에서 떨어져 내리며, 시원한 물보라가 공기 중에 흩날린다."};
+
+	TileOffsetMap[EArtList::Desert] = {0, 0};
+	TileOffsetMap[EArtList::Landscape] = { 0, 0 };
+	TileOffsetMap[EArtList::Mountain3] = { 0, -30 };
+	TileOffsetMap[EArtList::Waterfall] = { 5, -25 };
+
 	for (int row = 0; row < Height; row++)
 	{
 		for (int col = 0; col < Width; col++)
