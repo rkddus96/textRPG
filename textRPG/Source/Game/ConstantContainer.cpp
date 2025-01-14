@@ -3,6 +3,9 @@
 namespace AudioPath
 {
 	const std::string TEST1 = "Game Punch 2.wav";
+	const std::string MISS = "Miss.wav";
+	const std::string NORMALATTACK = "NormalAttack.wav";
+	const std::string CRITICALATTACK = "CriticalAttack.wav";
 }
 
 namespace Console

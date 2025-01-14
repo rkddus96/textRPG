@@ -8,7 +8,7 @@
 #include "../Managers/GameManager.h"
 #include "../LogicHelper.h"
 #include "../InputReceiver.h"
-
+#include "../ConstantContainer.h"
 
 ABattle::ABattle()
 {
@@ -62,18 +62,21 @@ void ABattle::MonsterAttackAction()
 		case EAttackType::Critical:
 			Player->TakeDamage(Damage * 1.2);
 			DamageLog = "치명타 ! " + PlayerName + "의 체력이 " + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::CRITICALATTACK);
 			break;
 		case EAttackType::Miss:
 			DamageLog = "공격이 빗나갔습니다 !";
+			AudioPlayer::Play(AudioPath::MISS);
 			break;
 		case EAttackType::Normal:
 			Player->TakeDamage(Damage);
 			DamageLog = PlayerName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::NORMALATTACK);
 			break;
 	}
 
 	// 로그 초기화
-	CurHpLog = PlayerName + "의 현재체력 : " + to_string(PlayerHP);
+	CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
@@ -115,7 +118,7 @@ void ABattle::PotionAction()
 
 	// 로그 선언
 	string PotionLog = PlayerName + "이 회복 물약을 사용했습니다.";
-	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(PlayerHP);
+	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
 	wstring PotionLogToW = LogicHelper::StringToWString(PotionLog);
 	wstring CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 
@@ -161,18 +164,21 @@ void ABattle::PlayerAttackAction()
 		case EAttackType::Critical:
 			Enemy->TakeDamage(Damage * 1.2);
 			DamageLog = "치명타 ! " + EnemyName + "의 체력이 " + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::CRITICALATTACK, 0.6f);
 			break;
 		case EAttackType::Miss:
 			DamageLog = "공격이 빗나갔습니다 !";
+			AudioPlayer::Play(AudioPath::MISS);
 			break;
 		case EAttackType::Normal:
 			Enemy->TakeDamage(Damage);
 			DamageLog = EnemyName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::NORMALATTACK);
 			break;
 	}
 
 	// 로그 초기화
-	CurHpLog = EnemyName + "의 현재체력 : " + to_string(EnemyHp);
+	CurHpLog = EnemyName + "의 현재체력 : " + to_string(Enemy->GetCurHp());
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
