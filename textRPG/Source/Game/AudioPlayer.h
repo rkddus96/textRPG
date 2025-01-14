@@ -14,7 +14,7 @@ public:
 		Name(InName),
 		Length(InLength),
 		bIsLoop(bInIsLoop),
-		FilePath(InFilePath),
+		FileName(InFilePath),
 		Volume(InVolume)
 	{
 		StartTimeSeceond = LogicHelper::GetTimeSecond();
@@ -42,9 +42,9 @@ public:
 		bIsLoop = bShouldLoop;
 	}
 
-	const std::string& GetFilePath() const
+	const std::string& GetFileName() const
 	{
-		return FilePath;
+		return FileName;
 	}
 
 	float GetVolume() const
@@ -71,7 +71,7 @@ private:
 
 	bool bIsLoop;
 	double StartTimeSeceond;
-	const std::string FilePath;
+	const std::string FileName;
 	float Volume;
 
 };
@@ -80,19 +80,19 @@ class AudioPlayer
 {
 public:
 
-	/// <param name="FilePath">파일 경로</param>
+	/// <param name="FilePath">파일 이름, wav 파일만 실행 가능</param>
 	/// <param name="Volume"></param>
 	/// <returns></returns>
-	static std::string Play(const std::string& FilePath, float Volume = 1);
+	static std::string Play(const std::string& FileName, float Volume = 1);
 
-	/// <param name="FilePath">파일 경로</param>
+	/// <param name="FilePath">파일 이름, wav 파일만 실행 가능</param>
 	/// <param name="AudioName">오디오 이름, 이름을 정해서 Stop하거나 볼륨 줄이거나 현재 재생 중인지 알 수 있음</param>
 	/// <param name="Volume"></param>
-	static void Play(const std::string& FilePath, const std::string& AudioName, float Volume = 1);
+	static void Play(const std::string& FileName, const std::string& AudioName, float Volume = 1);
 	static void Stop(const std::string& AudioName);
 	static void StopAll();
 
-	static std::string PlayLoop(const std::string& FilePath, float Volume = 1);
+	static std::string PlayLoop(const std::string& FileName, float Volume = 1);
 
 	static void SetVolume(const std::string& AudioName, float Volume);
 
@@ -108,7 +108,7 @@ private:
 	AudioPlayer(AudioPlayer&&) = delete;
 	AudioPlayer& operator=(AudioPlayer&&) = delete;
 
-	static void PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume, bool bShouldLoop);
+	static void PlayInternal(const std::string& FileName, const std::string& AudioName, float Volume, bool bShouldLoop);
 
 	static void ReplayLoop();
 

@@ -17,6 +17,7 @@ enum class EArtList
 	CastleSmall,
 	Church,
 	Desert,
+	Devil,
 	FakeBoss,
 	Goblin,
 	Helmet,

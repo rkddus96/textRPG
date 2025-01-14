@@ -5,6 +5,9 @@
 namespace AudioPath
 {
 	extern const std::string TEST1;
+	extern const std::string CRITICALATTACK;
+	extern const std::string NORMALATTACK;
+	extern const std::string MISS;
 }
 
 namespace Console
@@ -43,4 +46,7 @@ namespace UI
 
 	extern const int PRESS_ENTER_KEY_TO_START_UI_POSITION_X;
 	extern const int PRESS_ENTER_KEY_TO_START_UI_POSITION_Y;
+
+	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_X;
+	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_Y;
 }

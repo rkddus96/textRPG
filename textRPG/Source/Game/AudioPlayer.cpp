@@ -12,7 +12,7 @@
 std::unordered_map<std::string, std::shared_ptr<AudioInfo>> AudioPlayer::AudioNameMap;
 std::list<std::shared_ptr<AudioInfo>> AudioPlayer::AudioInfos;
 
-std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
+std::string AudioPlayer::Play(const std::string& FileName, float Volume)
 {
     for (int i = 0; i < 100; ++i)
     {
@@ -25,23 +25,23 @@ std::string AudioPlayer::Play(const std::string& FilePath, float Volume)
             continue;
         }
 
-        PlayInternal(FilePath, AudioName, Volume, false);
+        PlayInternal(FileName, AudioName, Volume, false);
         return AudioName;
     }
 
-    std::cout << "AudioPlayer, Play, Fail to play Audio : " << FilePath << std::endl;
+    std::cout << "AudioPlayer, Play, Fail to play Audio : " << FileName << std::endl;
     return "";
 }
 
-void AudioPlayer::Play(const std::string& FilePath, const std::string& AudioName, float Volume)
+void AudioPlayer::Play(const std::string& FileName, const std::string& AudioName, float Volume)
 {
     if (AudioNameMap.find(AudioName) != AudioNameMap.end() || IsPlaying(AudioName))
     {
-        std::cout << "AudioPlayer, Play Fail to play Audio : " << FilePath << std::endl;
+        std::cout << "AudioPlayer, Play Fail to play Audio : " << FileName << std::endl;
         return;
     }
 
-    PlayInternal(FilePath, AudioName, Volume, false);
+    PlayInternal(FileName, AudioName, Volume, false);
 }
 
 void AudioPlayer::Stop(const std::string& AudioName)
@@ -83,7 +83,7 @@ void AudioPlayer::StopAll()
     }
 }
 
-std::string AudioPlayer::PlayLoop(const std::string& FilePath, float Volume)
+std::string AudioPlayer::PlayLoop(const std::string& FileName, float Volume)
 {
     for (int i = 0; i < 100; ++i)
     {
@@ -96,7 +96,7 @@ std::string AudioPlayer::PlayLoop(const std::string& FilePath, float Volume)
             continue;
         }
 
-        PlayInternal(FilePath, AudioName, Volume, true);
+        PlayInternal(FileName, AudioName, Volume, true);
 
         if (TimerManager::GetInstance().OnTickForAudioPlayer == nullptr)
         {
@@ -106,7 +106,7 @@ std::string AudioPlayer::PlayLoop(const std::string& FilePath, float Volume)
         return AudioName;
     }
 
-    std::cout << "AudioPlayer, Play, Fail to play Audio : " << FilePath << std::endl;
+    std::cout << "AudioPlayer, Play, Fail to play Audio : " << FileName << std::endl;
     return "";
 }
 
@@ -165,8 +165,10 @@ void AudioPlayer::ClearRetiredAudios()
     }
 }
 
-void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& AudioName, float Volume, bool bShouldLoop)
+void AudioPlayer::PlayInternal(const std::string& FileName, const std::string& AudioName, float Volume, bool bShouldLoop)
 {
+    const std::string& FilePath = "Source\\Game\\Assets\\Audio\\" + FileName;
+
     // 미디어 파일 열기
     std::string Command = "open \"" + FilePath + "\" type mpegvideo alias " + AudioName;
     if (mciSendStringA(Command.c_str(), NULL, 0, NULL) != 0)
@@ -199,7 +201,7 @@ void AudioPlayer::PlayInternal(const std::string& FilePath, const std::string& A
         return;
     }
 
-    auto NewAudioInfo = std::make_shared<AudioInfo>(AudioName, lengthInMilliseconds / 1000.0f, FilePath, Volume, bShouldLoop);
+    auto NewAudioInfo = std::make_shared<AudioInfo>(AudioName, lengthInMilliseconds / 1000.0f, FileName, Volume, bShouldLoop);
     AudioNameMap[AudioName] = NewAudioInfo;
     AudioInfos.push_back(NewAudioInfo);
 }
@@ -214,7 +216,7 @@ void AudioPlayer::ReplayLoop()
         {
             StopInternal((*node)->Name);
             (*node)->InitStartTimeSeceond();
-            PlayInternal((*node)->GetFilePath(), (*node)->Name, (*node)->GetVolume(), true);
+            PlayInternal((*node)->GetFileName(), (*node)->Name, (*node)->GetVolume(), true);
         }
 
         node++;

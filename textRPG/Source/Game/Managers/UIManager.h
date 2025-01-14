@@ -57,19 +57,29 @@ enum class EInventoryCanvasLayer
 	ItemList
 };
 
-// 캐릭터 만들어질 때까지 임시
-enum class ETempStatType
+enum class EUIColor
 {
-	Level,
-	Hp,
-	Defence,
-	Power,
-	Luck
+	Black,
+	Blue,
+	Green,
+	Aqua,
+	Red,
+	Purple,
+	Yellow,
+	White_Default,
+	Gray,
+	LightBlue,
+	LightGreen,
+	LightAqua,
+	LightRed,
+	LightYellow,
+	BrightWhite
 };
 
 enum class ETile;
 struct FASKIIArtContainer;
 class Item;
+enum class EStat;
 
 class UIManager
 {
@@ -89,9 +99,15 @@ public:
 
 	//void SetMiniMapUI(std::vector<std::wstring>& MapInfos);
 	void AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage, bool bShouldUpdateUI = true);
-	void ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount, bool bShouldUpdateUI = true);
-	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
-	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
+	void ClearMessageToBasicCanvasEventInfoUI(bool bShouldUpdateUI = true);
+
+	void ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
+
+	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
 
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
@@ -100,6 +116,8 @@ public:
 
 	void SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
 	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI = true);
+	
+	void SetConsoleColor(EUIColor UIColor);
 
 	void BindAllDelegate();
 

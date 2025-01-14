@@ -2,7 +2,10 @@
 
 namespace AudioPath
 {
-	const std::string TEST1 = "Source\\Game\\Assets\\Audio\\Game Punch 2.wav";
+	const std::string TEST1 = "Game Punch 2.wav";
+	const std::string MISS = "Miss.wav";
+	const std::string NORMALATTACK = "NormalAttack.wav";
+	const std::string CRITICALATTACK = "CriticalAttack.wav";
 }
 
 namespace Console
@@ -32,11 +35,14 @@ namespace UI
 	const int EVENT_INFO_UI_BORDER_HEIGHT = 6;
 
 	const int STAT_INFO_UI_FIRST_POSITION_X = 3;
-	const int STAT_INFO_UI_FIRST_POSITION_Y = 136;
+	const int STAT_INFO_UI_FIRST_POSITION_Y = 133;
 
 	const int MIMIMAP_BORDER_UI_FIRST_POSITION_X = 2;
 	const int MIMIMAP_BORDER_UI_FIRST_POSITION_Y = 2;
 
 	const int PRESS_ENTER_KEY_TO_START_UI_POSITION_X = 42;
 	const int PRESS_ENTER_KEY_TO_START_UI_POSITION_Y = 57;
+
+	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_X = 15;
+	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_Y = 15;
 }

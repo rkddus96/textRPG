@@ -8,7 +8,7 @@
 #include "../Managers/GameManager.h"
 #include "../LogicHelper.h"
 #include "../InputReceiver.h"
-
+#include "../ConstantContainer.h"
 
 ABattle::ABattle()
 {
@@ -61,25 +61,32 @@ void ABattle::MonsterAttackAction()
 	{
 		case EAttackType::Critical:
 			Player->TakeDamage(Damage * 1.2);
-			DamageLog = "치명타 ! " + PlayerName + "의 체력이" + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			DamageLog = "치명타 ! " + PlayerName + "의 체력이 " + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::CRITICALATTACK);
 			break;
 		case EAttackType::Miss:
 			DamageLog = "공격이 빗나갔습니다 !";
+			AudioPlayer::Play(AudioPath::MISS);
 			break;
 		case EAttackType::Normal:
 			Player->TakeDamage(Damage);
-			DamageLog = PlayerName + "의 체력이" + to_string(Damage) + "만큼 깎였습니다.";
+			DamageLog = PlayerName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::NORMALATTACK);
 			break;
 	}
 
 	// 로그 초기화
-	CurHpLog = PlayerName + "의 현재체력 : " + to_string(PlayerHP);
+	CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
+
+	Sleep(1000);
+
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
 	// 연출용도로 잠시 대기
@@ -100,21 +107,26 @@ void ABattle::PotionAction()
 	if (bGameFinished)
 		return;
 
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+
 	// 플레이어의 현재체력을 가져옴
 	int PlayerHP = Player->GetStatus().GetStat(EStat::CurHp);
 	string PlayerName = Player->GetName();
 
 	// 플레이어의 체력 회복
-	PlayerHP += 5;
+	Player->UsePotion();
 
 	// 로그 선언
-	string PotionLog = PlayerName + "의 체력이 찼습니다.";
-	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(PlayerHP);
+	string PotionLog = PlayerName + "이 회복 물약을 사용했습니다.";
+	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
 	wstring PotionLogToW = LogicHelper::StringToWString(PotionLog);
 	wstring CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 
 	// 로그 출력
+	Sleep(1000);
 	UI->AddMessageToBasicCanvasEventInfoUI(PotionLogToW);
+
+	Sleep(1000);
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
 	// 연출용도로 잠시 대기
@@ -151,25 +163,32 @@ void ABattle::PlayerAttackAction()
 	{
 		case EAttackType::Critical:
 			Enemy->TakeDamage(Damage * 1.2);
-			DamageLog = "치명타 ! " + EnemyName + "의 체력이" + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			DamageLog = "치명타 ! " + EnemyName + "의 체력이 " + to_string(int(Damage * 1.2)) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::CRITICALATTACK, 0.6f);
 			break;
 		case EAttackType::Miss:
 			DamageLog = "공격이 빗나갔습니다 !";
+			AudioPlayer::Play(AudioPath::MISS);
 			break;
 		case EAttackType::Normal:
 			Enemy->TakeDamage(Damage);
-			DamageLog = EnemyName + "의 체력이" + to_string(Damage) + "만큼 깎였습니다.";
+			DamageLog = EnemyName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
+			AudioPlayer::Play(AudioPath::NORMALATTACK);
 			break;
 	}
 
 	// 로그 초기화
-	CurHpLog = EnemyName + "의 현재체력 : " + to_string(EnemyHp);
+	CurHpLog = EnemyName + "의 현재체력 : " + to_string(Enemy->GetCurHp());
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
+
+	Sleep(1000);
+
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
 	// 연출용도로 잠시 대기
@@ -211,7 +230,7 @@ void ABattle::SetMissProb()
 void ABattle::SetCriProb()
 {
 	/*--------------------------------------------------------------
-	* 플레이어 치명타 확률 = ( 70(1 - e(-x/20)) )
+	* 플레이어 치명타 확률 = ( 30 + 70(1 - e(-x/20)) )
 	* 몬스터 치명타 확률 = (Easy = 30%, Normal = 37.5%, Hard = 45%)
 	--------------------------------------------------------------*/
 	PlayerCriProb = 30 + 70 * (1 - exp(-(1.0 / 30 * 30)));
@@ -232,18 +251,35 @@ void ABattle::SetNormalProb()
 // 전투 승리시 수행하는 로직
 void ABattle::GameWin()
 {
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+	
 	// 플레이어 경험치 증가
+	int Exp = Enemy->GetExp();
+	int Gold = Enemy->GetMoney();
+
+	// 재화 획득
+	Player->RaiseExp(Exp);
+	Player->RaiseGold(Gold);
+
 	// 로그 선언
 	string InfoLog = "전투를 승리했습니다 !";
+	string ExpLog = "경험치를 " + to_string(Exp) + "만큼 획득했습니다 !";
+	string GoldLog = "골드를 " + to_string(Gold) + "만큼 획득했습니다 !";
 	wstring InfoLogToW = LogicHelper::StringToWString(InfoLog);
-
-	// 연출용도로 잠시 대기
-	Sleep(1000);
-
-	Player->RaiseExp(50);
+	wstring ExpLogToW = LogicHelper::StringToWString(ExpLog);
+	wstring GoldLogToW = LogicHelper::StringToWString(GoldLog);
 
 	// 로그 출력
+	Sleep(1000);
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
+
+	Sleep(1000);
+	UI->AddMessageToBasicCanvasEventInfoUI(ExpLogToW);
+
+	Sleep(1000);
+	UI->AddMessageToBasicCanvasEventInfoUI(GoldLogToW);
+
+	Sleep(1000);
 
 	// 전투 종료
 	bGameFinished = true;
@@ -261,6 +297,9 @@ void ABattle::GameLose()
 
 	// 로그 출력
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
+
+
+	Sleep(1000);
 
 	// 전투 종료
 	bGameFinished = true;
