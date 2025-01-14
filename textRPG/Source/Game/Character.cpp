@@ -1,12 +1,15 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <memory>
 #include "Character.h"
 #include "Warrior.h"
 #include "Mage.h"
 #include "Thief.h"
 #include "IItem.h"
-
+#include "Managers/UIManager.h"
+#include "LogicHelper.h"
+#include "Managers/GameManager.h"
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0)
 {
@@ -335,6 +338,41 @@ void Character::LevelUp()
 	
 }
 
+// DisplayInventory
+void Character::DisplayInventory()
+{
+	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
+
+
+	std::string ItemNameLog;
+	std::string ItemPriceLog;
+	std::string	ItemExplanationLog;
+
+	std::wstring ItemNameLogW;
+	std::wstring ItemPriceLogW;
+	std::wstring ItemExplanationLogW;
+
+
+
+
+	for (int i = 0; i < Inventory.size(); i++)
+	{
+		ItemNameLog = std::to_string(i + 1) + ". Name: " + Inventory[i]->GetName();
+		ItemPriceLog = "  Price: " + std::to_string(Inventory[i]->GetPrice());
+		ItemExplanationLog = "  Explanation: " + Inventory[i]->GetExplanation();
+
+		ItemNameLogW = LogicHelper::StringToWString(ItemNameLog);
+		ItemPriceLogW = LogicHelper::StringToWString(ItemPriceLog);
+		ItemExplanationLogW = LogicHelper::StringToWString(ItemExplanationLog);
+
+
+		UI->AddMessageToBasicCanvasEventInfoUI(ItemNameLogW);
+		UI->AddMessageToBasicCanvasEventInfoUI(ItemPriceLogW);
+		UI->AddMessageToBasicCanvasEventInfoUI(ItemExplanationLogW);
+	}
+}
+
+
 // Test용 Display 함수
 void Character::Display() const
 {
@@ -358,3 +396,20 @@ void Character::Display() const
 	std::cout << "행  운 : " << luck << std::endl;
 	std::cout << "-------------------------------------------------" << std::endl;
 }
+
+
+void Character::Notify()
+{
+	SetExp(GetExp());
+	SetLevel(GetLevel());
+	SetGold(GetGold());
+	
+	Status& Stats = GetStatus();
+	Stats.SetStat(EStat::CurHp, Stats.GetStat(EStat::CurHp));
+	Stats.SetStat(EStat::Power, Stats.GetStat(EStat::Power));
+	Stats.SetStat(EStat::Defense, Stats.GetStat(EStat::Defense));
+	Stats.SetStat(EStat::Luck, Stats.GetStat(EStat::Luck));
+	Stats.SetStat(EStat::MaxHp, Stats.GetStat(EStat::MaxHp));
+}
+
+

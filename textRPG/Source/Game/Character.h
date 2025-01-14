@@ -33,7 +33,7 @@ private:
 
 	Status Stats;
 	std::shared_ptr<IJob> Jobs;
-	std::vector<std::shared_ptr<IItem>> Inventory; // Item 구현 시 추가
+	std::vector<std::shared_ptr<IItem>> Inventory; 
 
 	
 
@@ -64,7 +64,7 @@ public:
 	int GetGold() const { return Gold; }
 	Status& GetStatus() { return Stats; }
 	std::shared_ptr<IJob> GetJob() const { return Jobs; }
-	std::vector<std::shared_ptr<IItem>> GetInventory() const { return Inventory; }
+	std::vector<std::shared_ptr<IItem>>& GetInventory() { return Inventory; }
 
 	// Setter 함수
 	void SetExp(int exp);
@@ -95,6 +95,12 @@ public:
 	// 아이템 사용
 	void UsePotion();
 
-	
+	// 인벤토리 출력
+	void DisplayInventory();
+
+
 	void Display() const;
+
+	void Notify();
+
 };
