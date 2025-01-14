@@ -98,8 +98,7 @@ public:
 	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
 
 	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
-	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
-	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
 
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);

@@ -201,7 +201,7 @@ void AudioPlayer::PlayInternal(const std::string& FileName, const std::string& A
         return;
     }
 
-    auto NewAudioInfo = std::make_shared<AudioInfo>(AudioName, lengthInMilliseconds / 1000.0f, FilePath, Volume, bShouldLoop);
+    auto NewAudioInfo = std::make_shared<AudioInfo>(AudioName, lengthInMilliseconds / 1000.0f, FileName, Volume, bShouldLoop);
     AudioNameMap[AudioName] = NewAudioInfo;
     AudioInfos.push_back(NewAudioInfo);
 }
@@ -216,7 +216,7 @@ void AudioPlayer::ReplayLoop()
         {
             StopInternal((*node)->Name);
             (*node)->InitStartTimeSeceond();
-            PlayInternal((*node)->GetFilePath(), (*node)->Name, (*node)->GetVolume(), true);
+            PlayInternal((*node)->GetFileName(), (*node)->Name, (*node)->GetVolume(), true);
         }
 
         node++;

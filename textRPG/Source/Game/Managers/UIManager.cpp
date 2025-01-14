@@ -9,6 +9,7 @@
 #include "../Character.h"
 #include "../IItem.h"
 #include "../Status.h"
+#include <algorithm>
 
 UIManager::UIManager()
 {
@@ -481,29 +482,7 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 	}
 }
 
-void UIManager::ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI)
-{
-	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
-	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
-
-	if (ArtLayer == nullptr)
-	{
-		std::cout << "UIManager, ChangeBasicCanvasArtImage : Fail to get Layer" << std::endl;
-		return;
-	}
-
-	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
-	ArtLayer->DrawSurface(3, 20, Surface);
-
-	ArtLayer->CombineUiLines();
-
-	if (bShouldUpdateUI)
-	{
-		PrintUI(ERenderingCanvas::Basic);
-	}
-}
-
-void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI)
+void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
 {
 	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
 	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
@@ -524,7 +503,7 @@ void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer
 	int DrawCoordY = CenterCoordY - ArtWidth / 2;
 
 	ArtLayer->ClearLayerFor(UI::USELESS_CHAR);
-	ArtLayer->DrawSurface(DrawCoordX, DrawCoordY, ArtContainer.ArtLines);
+	ArtLayer->DrawSurface(DrawCoordX + OffsetX, DrawCoordY + OffsetY, ArtContainer.ArtLines);
 
 	ArtLayer->CombineUiLines();
 
@@ -638,7 +617,7 @@ void UIManager::SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtC
 
 	//InventoryLayer->ClearLayerFor(UI::USELESS_CHAR);
 
-	InventoryLayer->DrawSurface(10, 10, ArtContainer.ArtLines);
+	InventoryLayer->DrawSurface(UI::INVENTORY_BACKGROUND_FIRST_POSITION_X, UI::INVENTORY_BACKGROUND_FIRST_POSITION_Y, ArtContainer.ArtLines);
 	InventoryLayer->CombineUiLines();
 
 	if (bShouldUpdateUI)
@@ -649,7 +628,34 @@ void UIManager::SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtC
 
 void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI)
 {
-	//InventoryInfo[1]->GetName()
+	int LayerId = InventoryCanvasLayerIdMap[EInventoryCanvasLayer::ItemList];
+	std::shared_ptr<RenderingLayer> InventoryLayer = RenderingCanvasMap[ERenderingCanvas::Inventory]->GetRenderingLayer(LayerId);
+
+	if (InventoryLayer == nullptr)
+	{
+		std::cout << "UIManager, SetInventoryCanvasItemList : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	std::wstring ItemInfoText = L"";
+
+	int MaxDisplayableItemCount = 10;
+
+	int ItemCount = std::min(MaxDisplayableItemCount, (int)InventoryInfo.size());
+	InventoryLayer->ClearLayerFor(UI::USELESS_CHAR);
+
+	for (int i = 0; i < 10; ++i)
+	{
+		ItemInfoText = std::to_wstring(i + 1) + L". 대충 아이템 텍스트";
+		InventoryLayer->DrawString(10 + i, 10, ItemInfoText);
+	}
+
+	InventoryLayer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Inventory);
+	}
 }
 
 void UIManager::BindAllDelegate()
