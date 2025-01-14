@@ -1,5 +1,6 @@
 #include "TimerManager.h"
 #include "../LogicHelper.h"
+#include "../AudioPlayer.h"
 
 TimerManager::TimerManager() :
     PreviousTickTime(LogicHelper::GetTimeSecond()),
@@ -14,10 +15,10 @@ void TimerManager::RunTimerThread()
 	{
 		while (bIsTerminated == false)
 		{
-			float CurrentTime = LogicHelper::GetTimeSecond();
-			float DeltaTime = CurrentTime - PreviousTickTime;
+			double CurrentTime = LogicHelper::GetTimeSecond();
+			double DeltaTime = CurrentTime - PreviousTickTime;
 			PreviousTickTime = CurrentTime;
-			Tick(DeltaTime);
+			Tick((float)DeltaTime);
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(34));
 		}
@@ -33,8 +34,11 @@ void TimerManager::RunTimerThread()
 void TimerManager::Tick(float DeltaTime)
 {
     ManageTimers(DeltaTime);
-
-    OnTickForUIDelegate(DeltaTime);
+    
+    if (OnTickForAudioPlayer)
+    {
+        OnTickForAudioPlayer(DeltaTime);
+    }
 }
 
 void TimerManager::ManageTimers(double DeltaTime)

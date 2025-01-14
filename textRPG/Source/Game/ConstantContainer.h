@@ -43,5 +43,4 @@ namespace UI
 
 	extern const int PRESS_ENTER_KEY_TO_START_UI_POSITION_X;
 	extern const int PRESS_ENTER_KEY_TO_START_UI_POSITION_Y;
-
 }

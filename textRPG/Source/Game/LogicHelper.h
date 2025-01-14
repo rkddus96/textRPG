@@ -36,11 +36,11 @@ public: //콘솔 관련
 public: // 시간
 
 
-	static float GetTimeSecond()
+	static double GetTimeSecond()
 	{
 		auto Now = std::chrono::system_clock::now();
 		long long Milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(Now.time_since_epoch()).count();
-		return Milliseconds / 1000.0f;
+		return Milliseconds / 1000.0;
 	}
 
 	// MiliSeconds 시간 동안 해당 쓰레드 정지

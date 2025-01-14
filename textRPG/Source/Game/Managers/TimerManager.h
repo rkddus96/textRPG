@@ -139,6 +139,7 @@ public:
 public:
 
     std::function<void(double)> OnTickForUIDelegate;
+    std::function<void(double)> OnTickForAudioPlayer;
 
 private:
 

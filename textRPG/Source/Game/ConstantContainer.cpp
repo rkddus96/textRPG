@@ -8,7 +8,7 @@ namespace AudioPath
 namespace Console
 {
 	const int CONSOLE_WIDTH = 150;
-	const int CONSOLE_HEIGHT = 50;
+	const int CONSOLE_HEIGHT = 51;
 }
 
 namespace UI
