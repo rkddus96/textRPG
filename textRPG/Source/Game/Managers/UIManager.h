@@ -89,6 +89,8 @@ public:
 
 	//void SetMiniMapUI(std::vector<std::wstring>& MapInfos);
 	void AddMessageToBasicCanvasEventInfoUI(const std::wstring& NewMessage, bool bShouldUpdateUI = true);
+	void ClearMessageToBasicCanvasEventInfoUI(bool bShouldUpdateUI = true);
+
 	void ChangeBasicCanvasStatInfoUI(ETempStatType StatType, int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasArtImage(const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);

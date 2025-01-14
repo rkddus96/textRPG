@@ -79,7 +79,11 @@ void ABattle::MonsterAttackAction()
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
+
+	Sleep(1000);
+
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
 	// 연출용도로 잠시 대기
@@ -169,7 +173,11 @@ void ABattle::PlayerAttackAction()
 	DeadLogToW = LogicHelper::StringToWString(DeadLog);
 
 	// 로그 출력
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	UI->AddMessageToBasicCanvasEventInfoUI(DamageLogToW);
+
+	Sleep(1000);
+
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
 
 	// 연출용도로 잠시 대기
