@@ -78,7 +78,7 @@ enum class EUIColor
 };
 
 enum class ETile;
-struct FASKIIArtContainer;
+struct FASCIIArtContainer;
 class Item;
 enum class EStat;
 class Monster;
@@ -111,7 +111,7 @@ public:
 	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
 
 	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
-	void ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+	void ChangeBasicCanvasArtImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
 	// 몬스터 이름은 영어로 되어있어야 가운데 맞춤이 정상적으로 이루어짐.
 	void SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int MonsterHp, bool bShouldUpdateUI = true);
@@ -120,7 +120,7 @@ public:
 	void SetOpeningCanvasBackgroundArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType, bool bShouldUpdateUI = true);
 
-	void SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
+	void SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
 	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI = true);
 	
 	void SetConsoleColor(EUIColor UIColor);

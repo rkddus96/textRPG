@@ -8,7 +8,7 @@ Devil::Devil()
     Power = BasePower;
     Defense = BaseDefense;
     
-    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Devil);
+    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Devil);
     DisplayIntroduction();
 
 }
