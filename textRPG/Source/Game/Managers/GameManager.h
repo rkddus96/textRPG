@@ -65,6 +65,16 @@ public:
 		return TileMapIsntance;
 	}
 
+	bool IsSpecialEventActivated() const
+	{
+		return bIsSpecialEventActivated;
+	}
+
+	void SetSpecialEventActive(bool bShouldActivate)
+	{
+		bIsSpecialEventActivated = bShouldActivate;
+	}
+
 private:
 
 	GameManager();
@@ -78,6 +88,7 @@ private:
 private:
 	
 	bool bIsClearGame;
+	bool bIsSpecialEventActivated;
 
 	std::shared_ptr<UIManager> UIManagerInstance;
 

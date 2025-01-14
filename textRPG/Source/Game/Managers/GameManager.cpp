@@ -1,7 +1,8 @@
 #include "GameManager.h"
 
 GameManager::GameManager() :
-	bIsClearGame(false)
+	bIsClearGame(false),
+	bIsSpecialEventActivated(false)
 {
 
 }
