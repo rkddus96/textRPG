@@ -101,6 +101,9 @@
     <ClCompile Include="Source\Game\IScene.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\TileMapScene.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h">
@@ -183,6 +186,9 @@
       <Filter>Source\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\IScene.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\TileMapScene.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>

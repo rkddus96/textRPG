@@ -517,9 +517,8 @@ void UIManager::BindAllDelegate()
 		};
 }
 
-void UIManager::SetMinimapUIContents()
+void UIManager::SetMinimapUIContents(/*std::vector<std::vector<ETile>> TileTypeInfos*/)
 {
-	// TODO : 맵 타일 내용 받아서 그리기
 }
 
 void UIManager::Tick(double DeltaTime)
@@ -569,11 +568,11 @@ void UIManager::OnMinimapUIContentsChanged(const std::vector<std::vector<ETile>>
 
 			if (TileTypeInfos[i][j] == ETile::Block)
 			{
-				TileImage = L' ';
+				TileImage = L'#';
 			}
 			else if (TileTypeInfos[i][j] == ETile::Blank)
 			{
-				TileImage = L'O';
+				TileImage = L'.';
 			}
 			else if (TileTypeInfos[i][j] == ETile::Character)
 			{
