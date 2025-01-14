@@ -13,7 +13,7 @@
 ABattle::ABattle()
 {
 	// 전투 BGM 재생
-	AudioPlayer::PlayLoop(AudioPath::BATTLE_BGM, 0.2f);
+	BGMName = AudioPlayer::PlayLoop(AudioPath::BATTLE_BGM, 0.2f);
 
 	// 1.보정계수, 빗나감, 치명타, 일반공격 수치 계산
 	SetMonsterCoEfficientValue();
@@ -26,6 +26,8 @@ ABattle::ABattle()
 
 	// 3. 랜덤 몬스터 생성
 	Enemy = (new MonstserFactoryManager())->CreateRandomMonster(Player->GetLevel());
+
+	Sleep(3000);
 
 	// 4. UI 변수 초기화
 	UI = GameManager::GetInstance().GetUIManager();
@@ -278,7 +280,7 @@ void ABattle::SetNormalProb()
 void ABattle::GameWin()
 {
 	UI->ClearMessageToBasicCanvasEventInfoUI(false);
-	AudioPlayer::StopAll();
+	AudioPlayer::Stop(BGMName);
 
 	// 플레이어 경험치 증가
 	int Exp = Enemy->GetExp();
@@ -322,7 +324,7 @@ void ABattle::GameWin()
 void ABattle::GameLose()
 {
 	UI->ClearMessageToBasicCanvasEventInfoUI(false);
-	AudioPlayer::StopAll();
+	AudioPlayer::Stop(BGMName);
 
 	// 로그 선언
 	string InfoLog = "전투를 패배했습니다 !";
