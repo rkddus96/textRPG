@@ -34,16 +34,3 @@ void Status::SetStat(EStat statType, int value)
 	}
 }
 
-float Status::StatToDamage(float powerWeight, float defenseWeight, float luckWeight)
-{
-	// 입력한 가중치에 각 스탯을 곱한다.
-	float power = static_cast<float>(GetStat(EStat::Power)) * powerWeight;
-	float defense = static_cast<float>(GetStat(EStat::Defense)) * defenseWeight;
-	float luck = static_cast<float>(GetStat(EStat::Luck)) * luckWeight;
-
-	// Damage 계산 로직 => (power + luck ) + defense
-	float damage = std::max(power + luck + defense, 0.0f);
-
-	return damage;
-	
-}
