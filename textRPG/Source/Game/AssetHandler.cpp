@@ -36,7 +36,7 @@ void AssetHandler::ReadAllArts()
                     continue;
                 }
 
-                FASKIIArtContainer ArtContainer;
+                FASCIIArtContainer ArtContainer;
                 ArtContainer.ArtName = FileName;
 
                 std::wstring Line;
@@ -52,7 +52,7 @@ void AssetHandler::ReadAllArts()
             }
         }
 
-        std::sort(ArtContainers.begin(), ArtContainers.end(), [](const FASKIIArtContainer& ArtContainer1, const FASKIIArtContainer& ArtContainer2)->bool
+        std::sort(ArtContainers.begin(), ArtContainers.end(), [](const FASCIIArtContainer& ArtContainer1, const FASCIIArtContainer& ArtContainer2)->bool
             {
                 return ArtContainer1.ArtName < ArtContainer2.ArtName;
             });
@@ -83,7 +83,7 @@ void AssetHandler::ReadArt(const std::wstring& Filename)
     std::wstring Line;
 
     int Width = 0;
-    FASKIIArtContainer ArtContainer;
+    FASCIIArtContainer ArtContainer;
 
     while (std::getline(WIF, Line)) 
     {

@@ -3,7 +3,7 @@
 Orc::Orc(int level)
     : Monster("Orc", 30, 5, 3, 20, 100, level)
 {
-    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(EArtList::Orc);
+    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Orc);
 
     int hpModifier = 16;
     int powerModifier = 6;
@@ -18,4 +18,9 @@ void Orc::DisplayIntroduction()
 {
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
+    //출력 
+    GameManager::GetInstance().GetUIManager()->ClearMessageToBasicCanvasEventInfoUI();
+    string s = "오크의 분노를 보여주마!";
+    wstring ws = LogicHelper::StringToWString(s);
+    GameManager::GetInstance().GetUIManager()->AddMessageToBasicCanvasEventInfoUI(ws);
 }

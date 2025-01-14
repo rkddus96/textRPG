@@ -84,7 +84,7 @@ void TileMapScene::DrawField()
 	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(TileDescription, false);
 
 	EArtList CurrentTileArt = TileMapInstance->GetCurrentTileArt();
-	const FASKIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASKIIArtContainer(CurrentTileArt);
+	const FASCIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(CurrentTileArt);
 	pair<int, int> TileArtOffset = TileMapInstance->GetCurrentTileArtOffset();
 	UIManagerInstance->ChangeBasicCanvasArtImage(FieldArtContainer, false, TileArtOffset.first, TileArtOffset.second);
 

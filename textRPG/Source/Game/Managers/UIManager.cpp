@@ -11,6 +11,7 @@
 #include "../Status.h"
 #include <algorithm>
 #include <Windows.h>
+#include "../Creatures/Monster.h"
 
 // 매크로 제거
 #undef min
@@ -106,6 +107,11 @@ void UIManager::MakeBasicUI()
 
 	std::shared_ptr<RenderingLayer> StatInfoLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::StatInfo, UI::USELESS_CHAR);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo] = StatInfoLayer->GetLayerId();
+
+	StatInfoLayer->ClearLayerFor(UI::USELESS_CHAR);
+
+	std::shared_ptr<RenderingLayer> MonsterInfoLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::MonsterInfo, UI::USELESS_CHAR);
+	BasicCanvasLayerIdMap[EBasicCanvasLayer::MonsterInfo] = StatInfoLayer->GetLayerId();
 
 	StatInfoLayer->ClearLayerFor(UI::USELESS_CHAR);
 
@@ -358,7 +364,7 @@ void UIManager::ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI)
 	std::shared_ptr<RenderingLayer> StatInfoLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(StatInfoLayerId);
 	if (StatInfoLayer == nullptr)
 	{
-		std::cout << "UIManager, ChangeBasicCanvasStatInfoUI : Fail to get Layer" << std::endl;
+		std::cout << "UIManager, ChangeBasicCanvasExpInfoUI : Fail to get Layer" << std::endl;
 		return;
 	}
 
@@ -427,6 +433,11 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 
 void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI)
 {
+	if (StatType == EStat::MaxHp)
+	{
+		return;
+	}
+
 	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
 
 	std::shared_ptr<RenderingLayer> StatInfoLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(StatInfoLayerId);
@@ -488,7 +499,7 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 	}
 }
 
-void UIManager::ChangeBasicCanvasArtImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+void UIManager::ChangeBasicCanvasArtImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
 {
 	int ArtLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::Art];
 	std::shared_ptr<RenderingLayer> ArtLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(ArtLayerId);
@@ -531,6 +542,35 @@ void UIManager::SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer Laye
 	}
 
 	Layer->SetIsHiding(bShouldHide);
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
+}
+
+void UIManager::SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int MonsterHp, bool bShouldUpdateUI)
+{
+	int LayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::MonsterInfo];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetBasicCanvasMonsterInfoUI : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	std::string MonsterHpString = to_string(MonsterHp);
+	std::wstring NameWString = LogicHelper::StringToWString(MonsterName);
+	std::wstring HpWString = L"HP : " + LogicHelper::StringToWString(MonsterHpString);
+
+	int PositionX = UI::BACKGRUOND_BORDER_FIRST_POSITION_X + 2;
+	int PositionY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
+
+	Layer->DrawString(PositionX, PositionY - (int)NameWString.size() / 2, NameWString);
+	Layer->DrawString(PositionX + 1, PositionY - (int)HpWString.size() / 2, HpWString);
+
+	Layer->CombineUiLines();
 
 	if (bShouldUpdateUI)
 	{
@@ -601,7 +641,7 @@ void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer 
 	}
 }
 
-void UIManager::SetInventoryCanvasBackgroundImage(const FASKIIArtContainer& ArtContainer, bool bShouldUpdateUI)
+void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI)
 {
 	int LayerId = InventoryCanvasLayerIdMap[EInventoryCanvasLayer::Background];
 	std::shared_ptr<RenderingLayer> InventoryLayer = RenderingCanvasMap[ERenderingCanvas::Inventory]->GetRenderingLayer(LayerId);
