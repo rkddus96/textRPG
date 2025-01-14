@@ -10,14 +10,6 @@
 
 AssetHandler::AssetHandler()
 {
-    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
-    //ReadArt(L"Castle1");
-    //ReadArt(L"Castle2");
-    //ReadArt(L"Test");
-    //ReadArt(L"Test2");
-    //ReadArt(L"Title");
-  
-
     ReadAllArts();
 }
 

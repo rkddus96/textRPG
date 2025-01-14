@@ -77,9 +77,6 @@ private:
 
 	void ReadArt(const std::wstring& Filename);
 
-	int ConsoleWidth = 0;
-	int ConsoleHeight = 0;
-
 	std::vector<FASKIIArtContainer> ArtContainers;
 
 	friend class GameManager;

@@ -22,10 +22,8 @@ RenderingLayer::RenderingLayer(int InLayerOrder, wchar_t InMask) :
 
 void RenderingLayer::ClearLayerFor(wchar_t CellWChar)
 {
-    int ConsoleWidth = 0;
-    int ConsoleHeight = 0;
-
-    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    int ConsoleWidth = Console::CONSOLE_WIDTH;
+    int ConsoleHeight = Console::CONSOLE_HEIGHT;
 
     Layer.reserve(ConsoleWidth * ConsoleHeight);
     FreeViewLayer.reserve(ConsoleWidth * ConsoleHeight);
@@ -66,10 +64,8 @@ void RenderingLayer::PrintCurrentLayer()
 
 void RenderingLayer::DrawRectanlge(int PositionX, int PositionY, int Width, int Height)
 {
-    int ConsoleWidth = 0;
-    int ConsoleHeight = 0;
-
-    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    int ConsoleWidth = Console::CONSOLE_WIDTH;
+    int ConsoleHeight = Console::CONSOLE_HEIGHT;
 
     int MaxX = PositionX + Height;
     int MaxY = PositionY + Width;
@@ -127,10 +123,8 @@ void RenderingLayer::DrawRectanlge(int PositionX, int PositionY, int Width, int 
 
 void RenderingLayer::DrawWCharacter(int PositionX, int PositionY, wchar_t WChar)
 {
-    int ConsoleWidth = 0;
-    int ConsoleHeight = 0;
-
-    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    int ConsoleWidth = Console::CONSOLE_WIDTH;
+    int ConsoleHeight = Console::CONSOLE_HEIGHT;
 
     if (ConsoleWidth - 1 < PositionY || ConsoleHeight - 1 < PositionX)
     {
@@ -187,10 +181,8 @@ void RenderingLayer::DrawString(int PositionX, int PositionY, const std::wstring
         return;
     }
 
-    int ConsoleWidth = 0;
-    int ConsoleHeight = 0;
-
-    LogicHelper::GetConsoleSize(ConsoleWidth, ConsoleHeight);
+    int ConsoleWidth = Console::CONSOLE_WIDTH;
+    int ConsoleHeight = Console::CONSOLE_HEIGHT;
 
     int Size = (int)NewWString.size();
 
