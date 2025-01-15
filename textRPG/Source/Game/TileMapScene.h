@@ -24,7 +24,10 @@ protected:
 	int MoveDelay = 500;
 
 	virtual void DrawField();
+
 	bool IsMoveInput(EKey KeyInput) const;
 	bool IsInventoryInput(EKey KeyInput) const;
+
 	std::pair<int, int> CalculateNextPosition(std::pair<int, int> CurrentPosition, EKey KeyInput);
+	std::vector<std::wstring> SplitByNewLine(const std::wstring& Str);
 };

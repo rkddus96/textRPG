@@ -116,6 +116,9 @@ private:
 	/// </summary>
 	std::vector<std::vector<EArtList>> TileArtGrid;
 
+	/// <summary>
+	/// Tile Art를 출력할 Offset, 현재 가운데 정렬을 하기 위해서는 임의의 오프셋을 잡을 필요가 있다.
+	/// </summary>
 	std::unordered_map<EArtList, std::pair<int, int>> TileOffsetMap;	
 
 	/// <summary>

@@ -81,8 +81,13 @@ void TileMapScene::DrawField()
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
 
+	// 현재 타일 입장 택스트 출력
 	std::wstring TileDescription = TileMapInstance->GetCurrentTileDescription();
-	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(TileDescription, false);
+	std::vector<std::wstring> TileDescLines = SplitByNewLine(TileDescription);
+	for (std::wstring Description : TileDescLines)
+	{
+		UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(Description, false);
+	}
 
 	EArtList CurrentTileArt = TileMapInstance->GetCurrentTileArt();
 	const FASCIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(CurrentTileArt);
@@ -122,4 +127,20 @@ std::pair<int, int> TileMapScene::CalculateNextPosition(std::pair<int, int> Curr
 			break;
 	}
 	return CurrentPosition;
+}
+
+std::vector<std::wstring> TileMapScene::SplitByNewLine(const std::wstring& Str)
+{
+	std::vector<std::wstring> Result;
+	size_t Start = 0, End;
+
+	while ((End = Str.find(L'\n', Start)) != std::wstring::npos)
+	{
+		Result.push_back(Str.substr(Start, End - Start));
+		Start = End + 1;
+	}
+
+	Result.push_back(Str.substr(Start));
+
+	return Result;
 }

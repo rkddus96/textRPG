@@ -133,11 +133,11 @@ void TileMap::GenerateTestMap()
 	// To-Do : 초기화 과정에서 Tile Type과 Art Type을 한 번에 설정할 수 있도록 하는 기능 구현
 	TileGrid[0][0] = ETile::Village1;
 	TileArtGrid[0][0] = EArtList::Village1;
-	TileDescriptionGrid[0][0] = L"당신의 여정이 시작되는 작은 마을입니다.";
+	TileDescriptionGrid[0][0] = L"당신의 여정이 시작되는 작은 마을입니다.\n주변을 둘러보거나 마을 사람들과 대화하려면 Z키를 눌러 상호작용하세요.";
 
 	TileGrid[Height - 1][0] = ETile::Village2;
 	TileArtGrid[Height - 1][0] = EArtList::Village2;
-	TileDescriptionGrid[Height - 1][0] = L"번화한 도시에 도착했습니다. 마왕의 소식으로 불안한 기운도 있지만 아직 활기찬 분위기가 남아있습니다.";
+	TileDescriptionGrid[Height - 1][0] = L"번화한 도시에 도착했습니다. 마왕의 소식으로 불안한 기운도 있지만 아직 활기찬 분위기가 남아있습니다.\n주변을 둘러보거나 마을 사람들과 대화하려면 Z키를 눌러 상호작용하세요.";
 
 	// 마왕성 관련 설정
 	// 마왕성 왼쪽
@@ -153,5 +153,5 @@ void TileMap::GenerateTestMap()
 
 	TileGrid[Height - 1][Width - 1] = ETile::DemonLordCastle;
 	TileArtGrid[Height - 1][Width - 1] = EArtList::Castle2;
-	TileDescriptionGrid[Height - 1][Width - 1] = L"칠흑 같은 하늘 아래, 성은 거대한 그림자처럼 서 있습니다. 더는 물러설 곳도, 선택할 다른 길도 없습니다.";
+	TileDescriptionGrid[Height - 1][Width - 1] = L"칠흑 같은 하늘 아래, 성은 거대한 그림자처럼 서 있습니다. 더는 물러설 곳도, 선택할 다른 길도 없습니다.\nZ 키를 눌러 전투를 시작하세요.";
 }
