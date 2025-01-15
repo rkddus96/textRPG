@@ -78,7 +78,9 @@ void TileMapScene::PlayScene()
 			}
 			else if (CurrentTile == ETile::Village2)
 			{
-				
+				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
+				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.Run();
 			}
 			else if (CurrentTile == ETile::DemonLordCastle)
 			{
