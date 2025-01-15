@@ -1,8 +1,4 @@
 #include "MonsterFactory.h"
-#include "Slime.h"
-#include "Orc.h"
-#include "Witch.h"
-#include "Goblin.h"
 
 unique_ptr<Monster> SlimeFactory::Create() const
 {
@@ -42,4 +38,14 @@ unique_ptr<Monster> GoblinFactory::Create() const
 unique_ptr<Monster> GoblinFactory::Create(int level) const
 {
     return make_unique<Goblin>(level);
+}
+
+unique_ptr<Monster> KingFactory::Create() const
+{
+    return make_unique<King>();
+}
+
+unique_ptr<Monster> DevilFactory::Create() const
+{
+    return make_unique<Devil>();
 }

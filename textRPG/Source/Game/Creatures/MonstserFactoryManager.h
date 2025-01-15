@@ -9,17 +9,6 @@
 #include <cstdlib> // For rand and srand
 #include <ctime>   // For time
 
-class Monster;
-class Slime;
-class Orc;
-class Witch;
-class Goblin;
-class MonsterFactory;
-class SlimeFactory;
-class OrcFactory;
-class WitchFactory;
-class GoblinFactory;
-
 using namespace std;
 
 enum class EMonsterType
@@ -27,7 +16,10 @@ enum class EMonsterType
     Slime,
     Orc,
     Witch,
-    Goblin
+    Goblin,
+    King,
+    Devil
+
 };
 
 
@@ -35,15 +27,15 @@ class MonstserFactoryManager
 {
 public:
     MonstserFactoryManager();
-    unordered_map<string, unique_ptr<MonsterFactory>> Factories;
+    unordered_map<EMonsterType, unique_ptr<MonsterFactory>> Factories;
 
 
 public:
 
-    void RegisterFactory(const string& type, unique_ptr<MonsterFactory> factory);
+    void RegisterFactory(EMonsterType type, unique_ptr<MonsterFactory> factory);
 
-    unique_ptr<Monster> CreateMonster(const string& type) const;
-    unique_ptr<Monster> CreateMonster(const string& type, int level) const;
+    unique_ptr<Monster> CreateMonster(EMonsterType type) const;
+    unique_ptr<Monster> CreateMonster(EMonsterType type, int level) const;
     unique_ptr<Monster> CreateRandomMonster(int level) const;
 
 };
