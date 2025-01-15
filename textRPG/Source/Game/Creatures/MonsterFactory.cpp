@@ -45,7 +45,16 @@ unique_ptr<Monster> KingFactory::Create() const
     return make_unique<King>();
 }
 
+unique_ptr<Monster> KingFactory::Create(int level) const
+{
+    return make_unique<King>();
+}
 unique_ptr<Monster> DevilFactory::Create() const
+{
+    return make_unique<Devil>();
+}
+
+unique_ptr<Monster> DevilFactory::Create(int level) const
 {
     return make_unique<Devil>();
 }
