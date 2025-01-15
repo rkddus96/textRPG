@@ -1,27 +1,26 @@
-#include "Devil.h"
+#include "King.h"
 
-
-Devil::Devil()
-    : Monster("Devil", 700, 90, 30, 0, 0, 99)
+King::King()
+    : Monster("Devil", 444, 70, 20, 0, 0, 99)
 {
     MaxHp = BaseHp;
     Power = BasePower;
     Defense = BaseDefense;
-    
-    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Devil);
-    DisplayIntroduction();
 
+    MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::King);
+    DisplayIntroduction();
 }
 
-void Devil::DisplayIntroduction()
+
+void King::DisplayIntroduction()
 {
     //아트
     GameManager::GetInstance().GetUIManager()->ChangeBasicCanvasArtImage(MonsterImage);
     //출력 
     GameManager::GetInstance().GetUIManager()->ClearMessageToBasicCanvasEventInfoUI();
-    string script1 = "감히 나에게 도전하다니, 얼마나 웃기는 일인가.";
-    string script2 = "넌 태생부터 패배할 운명이었음을 깨달아라.";
-    string script3 = "이제 너를 기다리는 건 오직 영원한 절망뿐이다.";
+    string script1 = "나를 배신자라 부르는가? 내가 이 왕국을 지켜왔고, 그 대가로 받은 건 배신뿐이었다.";
+    string script2 = "힘이 없으면 아무것도 지킬 수 없지… 그래서 선택한 것이다.마왕의 힘을!";
+    string script3 = "이제 이 왕국은 나의 뜻대로 흘러갈 것이다.누구도 날 막을 수 없다!";
     wstring ws1 = LogicHelper::StringToWString(script1);
     wstring ws2 = LogicHelper::StringToWString(script2);
     wstring ws3 = LogicHelper::StringToWString(script3);

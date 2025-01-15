@@ -22,6 +22,7 @@ enum class EArtList
 	Goblin,
 	Helmet,
 	Heroine,
+	King,
 	Landscape,
 	MainCharacter,
 	Merchant,
