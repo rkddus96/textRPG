@@ -131,6 +131,7 @@ public:
 	void ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
 
 	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);

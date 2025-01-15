@@ -517,6 +517,7 @@ void Character::Notify()
 	Stats.SetStat(EStat::Luck, Stats.GetStat(EStat::Luck));
 	Stats.SetStat(EStat::MaxHp, Stats.GetStat(EStat::MaxHp));
 	SetJob(GetJob());
+	SetMaxExp(GetMaxExp());
 }
 
 

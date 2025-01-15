@@ -476,6 +476,43 @@ void UIManager::ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI)
 	}
 }
 
+void UIManager::ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI)
+{
+	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
+
+	std::shared_ptr<RenderingLayer> StatInfoLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(StatInfoLayerId);
+	if (StatInfoLayer == nullptr)
+	{
+		std::cout << "UIManager, ChangeBasicCanvasMaxExpInfoUI : Fail to get Layer" << std::endl;
+		return;
+	}
+	
+	int MaxExpTextLength = 6;
+
+	std::wstring StatInfoString;
+	StatInfoString.reserve(MaxExpTextLength);
+
+	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 3;
+	StatInfoString = L"필  경 ";
+
+	std::wstring NumberString = std::to_wstring(Amount);
+
+	StatInfoString += NumberString;
+
+	int SpaceCount = MaxExpTextLength - (int)NumberString.size();
+	for (int i = 0; i < SpaceCount; ++i)
+	{
+		StatInfoString.push_back(L' ');
+	}
+
+	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
+	StatInfoLayer->CombineUiLines();
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
+}
+
 void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 {
 	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
@@ -492,7 +529,7 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxMoneyTextLength);
 
-	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 7;
+	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 9;
 	StatInfoString = L"소지금 ";
 
 	std::wstring NumberString = std::to_wstring(Amount);
@@ -515,11 +552,6 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 
 void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI)
 {
-	if (StatType == EStat::MaxHp)
-	{
-		return;
-	}
-
 	int StatInfoLayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::StatInfo];
 
 	std::shared_ptr<RenderingLayer> StatInfoLayer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(StatInfoLayerId);
@@ -535,31 +567,33 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 	StatInfoString.reserve(MaxStatNumberTextLength);
 
 	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X;
-	
+	int PositionY = UI::STAT_INFO_UI_FIRST_POSITION_Y;
+
 	if (StatType == EStat::CurHp)
 	{
 		StatInfoString = L"체  력 ";
-		PositionX += 3;
+		PositionX += 4;
 	}
 	else if (StatType == EStat::Power)
 	{
 		StatInfoString = L"공격력 ";
-		PositionX += 4;
+		PositionX += 6;
 	}
 	else if (StatType == EStat::Defense)
 	{
 		StatInfoString = L"방어력 ";
-		PositionX += 5;
+		PositionX += 7;
 	}
 	else if (StatType == EStat::Luck)
 	{
 		StatInfoString = L"행  운 ";
-		PositionX += 6;
+		PositionX += 8;
 	}
-	else
+	else if(StatType == EStat::MaxHp)
 	{
-		std::cout << "UIManager, ChangeBasicCanvasStatInfoUI : Weird Stat Type" << std::endl;
-		return;
+		StatInfoString = L"최대체력 ";
+		PositionX += 5;
+		PositionY -= 2;
 	}
 
 	std::wstring NumberString = std::to_wstring(Amount);
@@ -573,7 +607,7 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 	}
 
 
-	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
+	StatInfoLayer->DrawString(PositionX, PositionY, StatInfoString);
 	StatInfoLayer->CombineUiLines();
 	if (bShouldUpdateUI)
 	{
@@ -649,6 +683,8 @@ void UIManager::SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int 
 	int PositionX = UI::BACKGRUOND_BORDER_FIRST_POSITION_X + 2;
 	int PositionY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
 
+	Layer->DrawString(PositionX, PositionY - (int)NameWString.size() / 2, L"                        ");
+	Layer->DrawString(PositionX + 1, PositionY - (int)HpWString.size() / 2, L"                   ");
 	Layer->DrawString(PositionX, PositionY - (int)NameWString.size() / 2, NameWString);
 	Layer->DrawString(PositionX + 1, PositionY - (int)HpWString.size() / 2, HpWString);
 
@@ -1092,6 +1128,9 @@ void UIManager::OnCharacterChanged(ECharacterEvent CharacterEvent, int Amount)
 		break;
 	case ECharacterEvent::Gold:
 		ChangeBasicCanvasMoneyInfoUI(Amount, false);
+		break;
+	case ECharacterEvent::MaxExp:
+		ChangeBasicCanvasMaxExpInfoUI(Amount, false);
 		break;
 	default:
 		break;
