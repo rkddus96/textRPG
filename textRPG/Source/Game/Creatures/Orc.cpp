@@ -5,7 +5,7 @@ Orc::Orc(int level)
 {
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Orc);
 
-    int hpModifier = 16;
+    int hpModifier = 20;
     int powerModifier = 6;
     int defenseModifier = 3;
     int expModifier = 60;

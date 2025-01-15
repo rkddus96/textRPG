@@ -14,7 +14,7 @@ public:
 	void SellItem(Character& character, int index);
 
 	// 상점 가기를 누르면 실행
-	//void ManageShop(Character& character);
+	void ManageShop(Character& character);
 	
 	
 	std::function<void(const std::vector<std::shared_ptr<IItem>>&)> OnItemChanged;
