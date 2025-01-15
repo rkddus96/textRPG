@@ -66,7 +66,7 @@ void ABattle::MonsterAttackAction()
 	{
 		case EAttackType::Critical:
 			UI->SetConsoleColor(EUIColor::LightRed);
-			Damage = Player->TakeDamage(Damage * 2);
+			Damage = Player->TakeDamage(Damage * 1.2);
 			DamageLog = "치명타 ! " + PlayerName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::CRITICALATTACK);
 			break;
@@ -174,7 +174,7 @@ void ABattle::PlayerAttackAction()
 	{
 		case EAttackType::Critical:
 			UI->SetConsoleColor(EUIColor::LightRed);
-			Damage = Enemy->TakeDamage(Damage * 2);
+			Damage = Enemy->TakeDamage(Damage * 1.2);
 			DamageLog = "치명타 ! " + EnemyName + "의 체력이 " + to_string(int(Damage)) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::CRITICALATTACK, 0.6f);
 			break;
