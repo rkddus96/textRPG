@@ -57,6 +57,8 @@ void UIManager::Init()
 	int PredictedMinimapHeight = 10;
 	MinimapUIContents = std::vector<std::vector<wchar_t>>(PredictedMinimapHeight, std::vector<wchar_t>(PredictedMinimapWidth, L'O'));
 	MakeBasicUI();
+
+	MakeEndingSceneUI();
 }
 
 void UIManager::MakeEmtpyCanvasUI()
@@ -182,6 +184,67 @@ void UIManager::MakeOpningSceneUI()
 
 void UIManager::MakeEndingSceneUI()
 {
+	std::shared_ptr<RenderingLayer> BackgroundLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::Background);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::Background] = BackgroundLayer->GetLayerId();
+
+	BackgroundLayer->ClearLayerFor(L' ');
+	BackgroundLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingLayer> BackgrundArtLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::BackgroundArt, UI::USELESS_CHAR);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::BackgroundArt] = BackgrundArtLayer->GetLayerId();
+
+	BackgrundArtLayer->ClearLayerFor(UI::USELESS_CHAR);
+	BackgrundArtLayer->CombineUiLines();
+
+
+
+	std::shared_ptr<RenderingLayer> GameOverLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::GameOver, UI::USELESS_CHAR);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::GameOver] = GameOverLayer->GetLayerId();
+
+	GameOverLayer->ClearLayerFor(UI::USELESS_CHAR);
+	
+	const FASCIIArtContainer& SkeletonHeadArt = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::SkeletonHead);
+	int PositionX = UI::CENTER_OF_UI_X - SkeletonHeadArt.GetHeight() / 2;
+	int PositionY = UI::CENTER_OF_UI_Y - SkeletonHeadArt.GetWidth() / 2;
+
+	GameOverLayer->DrawSurface(PositionX, PositionY, SkeletonHeadArt.ArtLines);
+
+	const FASCIIArtContainer& GameOverArt = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::GameOver);
+	PositionX = UI::CENTER_OF_UI_X - GameOverArt.GetHeight() / 2 + 20;
+	PositionY = UI::CENTER_OF_UI_Y - GameOverArt.GetWidth() / 2;
+
+	GameOverLayer->DrawSurface(PositionX, PositionY, GameOverArt.ArtLines);
+	GameOverLayer->CombineUiLines();
+
+
+
+	std::shared_ptr<RenderingLayer> ThankYouForPlayingLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::ThankYouForPlaying, UI::USELESS_CHAR);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::ThankYouForPlaying] = ThankYouForPlayingLayer->GetLayerId();
+
+	ThankYouForPlayingLayer->ClearLayerFor(UI::USELESS_CHAR);
+	ThankYouForPlayingLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingLayer> EpilogBackgroundLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::EpilogBackground, UI::USELESS_CHAR);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogBackground] = EpilogBackgroundLayer->GetLayerId();
+
+	EpilogBackgroundLayer->ClearLayerFor(UI::USELESS_CHAR);
+	EpilogBackgroundLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingLayer> EpilogueTextLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::EpilogueText, UI::USELESS_CHAR);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogueText] = EpilogueTextLayer->GetLayerId();
+
+	EpilogueTextLayer->ClearLayerFor(UI::USELESS_CHAR);
+	EpilogueTextLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingCanvas> EndingCanvas = std::make_shared<RenderingCanvas>();
+	EndingCanvas->AddLayer(BackgroundLayer);
+	EndingCanvas->AddLayer(BackgrundArtLayer);
+	EndingCanvas->AddLayer(GameOverLayer);
+	EndingCanvas->AddLayer(ThankYouForPlayingLayer);
+	EndingCanvas->AddLayer(EpilogBackgroundLayer);
+	EndingCanvas->AddLayer(EpilogueTextLayer);
+
+	AddRenderingCanvas(ERenderingCanvas::Ending, EndingCanvas);
 }
 
 void UIManager::MakeInventorySceneUI()
@@ -819,6 +882,58 @@ void UIManager::DrawInventory(const std::vector<std::shared_ptr<IItem>>& Invento
 
 	SetInventoryCanvasItemList(InventoryInfo, DrawCoordX + OffsetX, DrawCoordY + OffsetY, false);
 	SetInventoryCanvasBackgroundImage(ArtContainer, bShouldUpdateUI, OffsetX, OffsetY);
+}
+
+void UIManager::OpenInventory()
+{
+	// 구현 예정
+}
+
+void UIManager::SetEndingCanvasLayerHide(bool bShouldHide, EEndingCanvasLayer LayerType, bool bShouldUpdateUI)
+{
+	int LayerId = EndiningCanvasLayerIdMap[LayerType];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Ending]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetEndingCanvasLayerHide : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	Layer->SetIsHiding(bShouldHide);
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Ending);
+	}
+}
+
+void UIManager::ShowGameOverScene()
+{
+	int LayerId = EndiningCanvasLayerIdMap[EEndingCanvasLayer::GameOver];
+	std::shared_ptr<RenderingLayer> GameOverLayer = RenderingCanvasMap[ERenderingCanvas::Ending]->GetRenderingLayer(LayerId);
+
+	if (GameOverLayer == nullptr)
+	{
+		std::cout << "UIManager, ShowGameOverScene : Fail to get Layer : GameOverLayer" << std::endl;
+		return;
+	}
+
+	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::BackgroundArt, false);
+	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::EpilogBackground, false);
+	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::EpilogueText, false);
+	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::ThankYouForPlaying, false);
+	SetEndingCanvasLayerHide(false, EEndingCanvasLayer::GameOver);
+
+	Sleep(1000);
+
+	/*int PositionX = UI::CENTER_OF_UI_X + 15;
+	int PositionY = UI::CENTER_OF_UI_Y;
+
+	GameOverLayer->DrawString(PositionX, PositionY, L"Press Enter Key To Continue");
+	PrintUI(ERenderingCanvas::Ending);
+
+	Sleep(10000);*/
 }
 
 void UIManager::SetConsoleColor(EUIColor UIColor)
