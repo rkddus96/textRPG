@@ -2,7 +2,7 @@
 
 
 Devil::Devil()
-    : Monster("Devil", 500, 70, 20, 0, 0, 99)
+    : Monster("Devil", 700, 90, 30, 0, 0, 99)
 {
     MaxHp = BaseHp;
     Power = BasePower;
