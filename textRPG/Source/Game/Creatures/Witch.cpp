@@ -6,7 +6,7 @@ Witch::Witch(int level)
     //초기화
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Witch);
 
-    int hpModifier = 10;
+    int hpModifier = 15;
     int powerModifier = 5;
     int defenseModifier = 2;
     int expModifier = 50;
