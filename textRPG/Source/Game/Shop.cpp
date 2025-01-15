@@ -15,6 +15,7 @@
 
 
 
+
 Shop::Shop()
 {
 	// Potion index는 항상 0
@@ -60,7 +61,9 @@ void Shop::BuyItem(Character& character, int& index)
 	{
 		if (Gold < Price)
 		{
+			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(CannotBuyLogOneW);
+			Sleep(500);
 			return;
 		}
 		else
@@ -90,7 +93,9 @@ void Shop::BuyItem(Character& character, int& index)
 	// 인벤토리가 가득 찬 경우
 	else
 	{
+		UI->ClearMessageToBasicCanvasEventInfoUI(false);
 		UI->AddMessageToBasicCanvasEventInfoUI(CannotBuyLogTwoW);
+		Sleep(500);
 	}
 
 
@@ -246,7 +251,9 @@ void Shop::ManageShop(Character& character)
 						}
 						else
 						{
+							UI->ClearMessageToBasicCanvasEventInfoUI(false);
 							UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+							Sleep(500);
 						}
 						break;
 
@@ -261,12 +268,15 @@ void Shop::ManageShop(Character& character)
 						}
 						else
 						{
+							UI->ClearMessageToBasicCanvasEventInfoUI(false);
 							UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+							Sleep(500);
 						}
 						break;
 
 					default: // 잘못된 선택
 						UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+						Sleep(500);
 						break;
 					}
 
@@ -331,12 +341,16 @@ void Shop::ManageShop(Character& character)
 						}
 						else
 						{
+							UI->ClearMessageToBasicCanvasEventInfoUI(false);
 							UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+							Sleep(500);
 						}
 						break;
 
 					default: // 잘못된 선택
+						UI->ClearMessageToBasicCanvasEventInfoUI(false);
 						UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+						Sleep(500);
 						break;
 					}
 
