@@ -1,9 +1,10 @@
 #include "King.h"
 
 King::King()
-    : Monster("타락한 왕", 444, 70, 20, 0, 0, 99)
+    : Monster("King", 444, 70, 20, 0, 0, 99)
 {
     MaxHp = BaseHp;
+    CurHp = MaxHp;
     Power = BasePower;
     Defense = BaseDefense;
 

@@ -2,9 +2,10 @@
 
 
 Devil::Devil()
-    : Monster("악마", 700, 90, 30, 0, 0, 99)
+    : Monster("Devil", 700, 90, 30, 0, 0, 99)
 {
     MaxHp = BaseHp;
+    CurHp = MaxHp;
     Power = BasePower;
     Defense = BaseDefense;
     
