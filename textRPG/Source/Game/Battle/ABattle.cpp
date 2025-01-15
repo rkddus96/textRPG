@@ -2,6 +2,7 @@
 #include <cmath>
 #include <windows.h>
 #include "ABattle.h"
+#include "../ConstantContainer.h"
 
 ABattle::ABattle()
 {
@@ -21,6 +22,12 @@ ABattle::ABattle()
 	bGameFinished = false;
 	PotionEventStartingHp = 50;
 }
+
+ABattle::~ABattle()
+{
+	UI->SetBasicCanvasLayerHide(false, EBasicCanvasLayer::MonsterInfo);
+}
+
 // 몬스터의 공격
 void ABattle::MonsterAttackAction()
 {
@@ -60,7 +67,7 @@ void ABattle::MonsterAttackAction()
 	{
 		case EAttackType::Critical:
 			UI->SetConsoleColor(EUIColor::LightRed);
-			Damage = Player->TakeDamage(Damage * 2);
+			Damage = Player->TakeDamage(Battle::CRITICAL * Damage);
 			DamageLog = "치명타 ! " + PlayerName + "의 체력이 " + to_string(Damage) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::CRITICALATTACK);
 			break;
@@ -168,7 +175,7 @@ void ABattle::PlayerAttackAction()
 	{
 		case EAttackType::Critical:
 			UI->SetConsoleColor(EUIColor::LightRed);
-			Damage = Enemy->TakeDamage(Damage * 2);
+			Damage = Enemy->TakeDamage(Battle::CRITICAL * Damage);
 			DamageLog = "치명타 ! " + EnemyName + "의 체력이 " + to_string(int(Damage)) + "만큼 깎였습니다.";
 			AudioPlayer::Play(AudioPath::CRITICALATTACK, 0.6f);
 			break;
@@ -185,6 +192,7 @@ void ABattle::PlayerAttackAction()
 	}
 
 	// 로그 초기화
+	UI->SetBasicCanvasMonsterInfoUI(Enemy->GetName(), Enemy->GetCurHp());
 	CurHpLog = EnemyName + "의 피격 후 체력 : " + to_string(Enemy->GetCurHp());
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);

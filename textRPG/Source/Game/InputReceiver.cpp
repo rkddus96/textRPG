@@ -37,7 +37,6 @@ EKey InputReceiver::ChatchInput()
 	else if (Key == 0) // 특수 키 비활성화
 	{
 		Key = _getch();
-		std::cout << "UnAvailable Key! " << Key << std::endl;
 		return EKey::UnAvailable;
 	}
 	// Enter(키패드 포함), ESC, Tab, A~Z, a~z, 0~9(키패드 포함)
@@ -50,7 +49,6 @@ EKey InputReceiver::ChatchInput()
 	}
 
 	// 그 외 사용 금지
-	std::cout << "UnAvailable Key! " << Key << std::endl;
 	return EKey::UnAvailable;
 }
 

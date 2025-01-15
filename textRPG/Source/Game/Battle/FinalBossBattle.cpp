@@ -11,6 +11,10 @@ FinalBossBattle::FinalBossBattle()
 	// 보스 몬스터 생성
 	Enemy = (new MonstserFactoryManager())->CreateMonster(EMonsterType::Devil);
 
+	// 몬스터 UI 출력
+	UI->SetBasicCanvasLayerHide(false, EBasicCanvasLayer::MonsterInfo);
+	UI->SetBasicCanvasMonsterInfoUI(Enemy->GetName(), Enemy->GetCurHp());
+
 	Sleep(3000);
 }
 
@@ -96,6 +100,9 @@ void FinalBossBattle::GameWin()
 
 	Sleep(1000);
 	AudioPlayer::Play(AudioPath::RESULT);
+
+
+	PrintRealEndingLog();
 	// 전투 종료
 	bGameFinished = true;
 }
@@ -121,4 +128,26 @@ void FinalBossBattle::GameLose()
 
 	// 전투 종료
 	bGameFinished = true;
+}
+
+void FinalBossBattle::PrintRealEndingLog()
+{
+	Sleep(1000);
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+
+	// 로그 선언
+	string endingLog1 = "리안나 : 네가 아니었으면 이 모든 걸 끝낼 수 없었을 거야.";
+	string endingLog2 = "리안나 : 정말 고마워.";
+
+	wstring endingLog1ToW = LogicHelper::StringToWString(endingLog1);
+	wstring endingLog2ToW = LogicHelper::StringToWString(endingLog2);
+
+	// 연출용도로 1초 간격으로 로그 출력
+	Sleep(2000);
+	UI->AddMessageToBasicCanvasEventInfoUI(endingLog1ToW);
+
+	Sleep(2000);
+	UI->AddMessageToBasicCanvasEventInfoUI(endingLog2ToW);
+
+	Sleep(2000);
 }

@@ -1,12 +1,12 @@
 #include "Orc.h"
 
 Orc::Orc(int level)
-    : Monster("Orc", 30, 5, 3, 20, 100, level)
+    : Monster("Orc", 30, 10, 3, 20, 100, level)
 {
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Orc);
 
     int hpModifier = 20;
-    int powerModifier = 6;
+    int powerModifier = 8;
     int defenseModifier = 3;
     int expModifier = 60;
     int moneyModifier = 200;

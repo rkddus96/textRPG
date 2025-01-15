@@ -9,7 +9,7 @@
 #include "IItem.h"
 #include "InputReceiver.h"
 #include "ConstantContainer.h"
-
+#include "AudioPlayer.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0)
@@ -45,11 +45,19 @@ void Character::SetExp(int exp)
 
 void Character::RaiseExp(int exp)
 {
-	Exp += exp;
-	if (OnCharacterChanged)
+	if (Level >= 10)
 	{
-		OnCharacterChanged(ECharacterEvent::Exp, Exp);
+		Exp = std::min(MaxExp, Exp + exp);
 	}
+	else
+	{
+		Exp += exp;
+		if (OnCharacterChanged)
+		{
+			OnCharacterChanged(ECharacterEvent::Exp, Exp);
+		}
+	}
+	
 }
 
 void Character::SetLevel(int level)
@@ -180,7 +188,7 @@ void Character::InitCharacter()
 	CharacterNameErrorLog = "이름을 입력하지 않았습니다. 다시 입력해주세요";
 	ChooseJobLog = "직업을 선택해주세요.  ";
 	WarriorExplainLog = "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
-	MageExplainLog = "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 돕는 마법의 대가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
+	MageExplainLog = "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 마법의 대가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
 	ThiefExplainLog = "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
 	InputErrorLog = "잘못된 입력입니다. 다시 시도해주세요.";
 
@@ -228,6 +236,8 @@ void Character::InitCharacter()
 		}
 	}
 
+	AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 	
 	std::vector<std::wstring> WLogList = { WarriorExplainLogW, MageExplainLogW, ThiefExplainLogW };
 	std::vector<std::string> LogList = { WarriorExplainLog, MageExplainLog, ThiefExplainLog };
@@ -256,6 +266,8 @@ void Character::InitCharacter()
 		switch (JobChoice)
 		{
 		case EKey::Key_1:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			if (JobIndex > 0)
 			{
 				JobIndex--;
@@ -278,8 +290,11 @@ void Character::InitCharacter()
 			break;
 
 		case EKey::Key_2:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			if (!JobList.empty() && JobIndex >= 0 && JobIndex < JobList.size())
 			{
+
 				Jobs = JobList[JobIndex];
 				UI->AddMessageToBasicCanvasEventInfoUI(L"직업 선택을 완료했습니다.");
 			//	std::cout << "직업 선택을 완료했습니다.";
@@ -294,8 +309,11 @@ void Character::InitCharacter()
 			break;
 
 		case EKey::Key_3:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			if (JobIndex < JobList.size() - 1)
 			{
+
 				JobIndex++;
 				//초기화 후 다음 직업 설명
 				UI->ClearMessageToBasicCanvasEventInfoUI(false);
@@ -313,6 +331,8 @@ void Character::InitCharacter()
 			break;
 
 		default:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 시도해주세요.");
 			Sleep(500);
@@ -393,6 +413,8 @@ void Character::RandomizeStats()
 		switch (Choice)
 		{
 		case EKey::Key_1:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			// Stats에 저장, Damage 계산
 			Stats.SetStat(EStat::MaxHp, maxHp);
 			Stats.SetStat(EStat::CurHp, maxHp);
@@ -406,12 +428,16 @@ void Character::RandomizeStats()
 			break;
 
 		case EKey::Key_2:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"스탯을 재설정합니다.");
 		//	std::cout << "스탯을 재설정합니다." << std::endl;
 			break;
 
 		default:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 입력해주세요.");
 		//	std::cout << "잘못된 입력입니다. 다시 입력해주세요." << std::endl;
@@ -433,7 +459,7 @@ void Character::RandomizeStats()
 // 레벨업 함수
 void Character::LevelUp()
 {
-	while (Exp >= MaxExp)
+	while (Exp >= MaxExp && Level < 10)
 	{
 		SetLevel(Level + 1);
 
@@ -497,7 +523,7 @@ void Character::DisplayInventory(int index)
 	std::wstring ItemPriceLogW;
 	std::wstring ItemExplanationLogW;
 
-	ItemNameLog = std::to_string(index + 1) + ". Name: " + Inventory[index]->GetName() + "  Price: " + std::to_string(Inventory[index]->GetPrice()/2) + "  Effect: " + Inventory[index]->GetExplanation() + "   [ 1. 이전],[ 2. 구매/판매 ],[ 3. 다음  ], [ 0. 처음으로 ]";
+	ItemNameLog = std::to_string(index + 1) + ". 이름: " + Inventory[index]->GetName() + "  가격: " + std::to_string(Inventory[index]->GetPrice()/2) + "  효과: " + Inventory[index]->GetExplanation() + "   [ 1. 이전],[ 2. 구매/판매 ],[ 3. 다음  ], [ 0. 처음으로 ]";
 	//	ItemPriceLog = 
 	//	ItemExplanationLog = ;
 

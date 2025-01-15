@@ -52,7 +52,7 @@ protected:
 	virtual void GameLose() = 0;
 
 	// 소멸자
-	virtual ~ABattle() = default;
+	~ABattle();
 
 private:
 

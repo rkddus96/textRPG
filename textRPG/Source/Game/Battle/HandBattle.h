@@ -15,6 +15,12 @@ private:
 	// 게임 패배
 	void GameLose();
 
+	// 엔딩 로그 출력
+	void PrintNormalEndingLog();
+
+	// 최종 엔딩 로그 출력
+	void PrintFinalEndingLog();
+
 public:
 	// 수동 전투 생성자
 	HandBattle();
