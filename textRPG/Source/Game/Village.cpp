@@ -6,6 +6,7 @@
 #include "InputReceiver.h"
 #include "LogicHelper.h"
 #include "Character.h"
+#include "Shop.h"
 
 Village::Village(Character& Player, std::shared_ptr<UIManager> ui, EArtList VillageArt)
 	:Player(Player), UIManagerInstance(ui), DefualtArt(VillageArt)
@@ -55,9 +56,8 @@ void Village::DrawDefaultScene()
 
 void Village::VisitStore()
 {
-	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(L"상점", true);
-
-	EKey KeyInput = InputReceiver::ChatchInput();
+	std::shared_ptr<Shop> ShopInstance = GameManager::GetInstance().GetShop();
+	ShopInstance->ManageShop(Player);
 }
 
 void Village::VisitChurch()

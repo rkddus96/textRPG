@@ -36,6 +36,8 @@ public:
 		return Instance;
 	}
 
+	void InitShop();
+
 	//std::unique_ptr<Monster> GenerateMonster(int Level);
 	//std::unique_ptr<BossMonster> GenerateMonster(int Level);
 	//void VisitShop();
@@ -63,6 +65,11 @@ public:
 	std::shared_ptr<TileMap>& GetTileMap()
 	{
 		return TileMapIsntance;
+	}
+
+	std::shared_ptr<class Shop>& GetShop()
+	{
+		return ShopInstance;
 	}
 
 	bool IsSpecialEventActivated() const
@@ -95,4 +102,6 @@ private:
 	std::shared_ptr<AssetHandler> AssetHandlerInstance;
 
 	std::shared_ptr<TileMap> TileMapIsntance;
+
+	std::shared_ptr<class Shop> ShopInstance;
 };

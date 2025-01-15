@@ -21,6 +21,7 @@ void TileMapScene::PlayScene()
 	UIManagerInstance->BindAllDelegate();
 	auto& Player = Character::GetInstance();
 	Player.Notify();
+	GameManager::GetInstance().InitShop();
 
 	// 초기 상태 초기화 후 첫 화면 그리기
 	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
