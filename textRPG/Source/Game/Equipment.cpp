@@ -15,20 +15,30 @@ std::string Equipment::GetExplanation() const
 	return Explanation;
 }
 
+const FASCIIArtContainer& Equipment::GetArtContainer() const
+{
+	return ArtContainer;
+}
+
+
 void Equipment::Use(Character& character)
 {
 	Status Stats = character.GetStatus();
 
-	int StatPoint = Stats.GetStat(StatType);
-	StatPoint = StatPoint + AffectPoint;
-	Stats.SetStat(StatType, StatPoint);
+	for (int i = 0; i < StatTypes.size(); i++)
+	{
+		int StatPoint = Stats.GetStat(StatTypes[i]);
+		Stats.SetStat(StatTypes[i], StatPoint + AffectPoints[i]);
+	}
 }
 
 void Equipment::UnUse(Character& character)
 {
 	Status Stats = character.GetStatus();
 
-	int StatPoint = Stats.GetStat(StatType);
-	StatPoint = StatPoint - AffectPoint;
-	Stats.SetStat(StatType, StatPoint);
+	for (int i = 0; i < StatTypes.size(); i++)
+	{
+		int StatPoint = Stats.GetStat(StatTypes[i]);
+		Stats.SetStat(StatTypes[i], StatPoint - AffectPoints[i]);
+	}
 }

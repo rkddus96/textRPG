@@ -28,6 +28,7 @@
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
     <ClCompile Include="Source\Game\Creatures\Devil.cpp" />
     <ClCompile Include="Source\Game\Creatures\Goblin.cpp" />
+    <ClCompile Include="Source\Game\Creatures\King.cpp" />
     <ClCompile Include="Source\Game\Creatures\Monster.cpp" />
     <ClCompile Include="Source\Game\Creatures\MonsterFactory.cpp" />
     <ClCompile Include="Source\Game\Creatures\MonstserFactoryManager.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="Source\Game\ConstantContainer.h" />
     <ClInclude Include="Source\Game\Creatures\Devil.h" />
     <ClInclude Include="Source\Game\Creatures\Goblin.h" />
+    <ClInclude Include="Source\Game\Creatures\King.h" />
     <ClInclude Include="Source\Game\Creatures\Monster.h" />
     <ClInclude Include="Source\Game\Creatures\MonsterFactory.h" />
     <ClInclude Include="Source\Game\Creatures\MonstserFactoryManager.h" />

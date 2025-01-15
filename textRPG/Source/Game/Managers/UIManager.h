@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <deque>
+#include "../LogicHelper.h"
 
 class RenderingLayer;
 class RenderingCanvas;
@@ -22,10 +23,10 @@ enum class ERenderingCanvas
 /// </summary>
 enum class EBasicCanvasLayer
 {
+	BackgroundBorder,
 	MinimapContents,
 	Art,
 	Vfx,
-	BackgroundBorder,
 	MinimapBorder,
 	EventInfoUIBorder,
 	EventInfoUIContents,
@@ -38,10 +39,12 @@ enum class EBasicCanvasLayer
 /// </summary>
 enum class EOpeningCanvasLayer
 {
+	BackgroundBorder,
 	BackgroundArt,
 	Title,
-	BackgroundBorder,
 	PressEnterKeyToStart,
+	PrologBackground,
+	PrologueText,
 };
 
 /// <summary>
@@ -49,7 +52,11 @@ enum class EOpeningCanvasLayer
 /// </summary>
 enum class EEndingCanvasLayer
 {
-
+	BackgroundArt,
+	GameOver,
+	ThankYouForPlaying,
+	EpilogBackground,
+	EpilogueText,
 };
 
 enum class EInventoryCanvasLayer
@@ -79,11 +86,26 @@ enum class EUIColor
 
 enum class ETile;
 struct FASCIIArtContainer;
-class Item;
+class IItem;
 enum class EStat;
 class Monster;
 enum class ECharacterEvent;
 enum class EStat;
+
+struct FStoryTextContainer
+{
+	void AddTextLine(const std::string& NewText)
+	{
+		AddTextLine(LogicHelper::StringToWString(NewText));
+	}
+
+	void AddTextLine(const std::wstring& NewText)
+	{
+		StoryTextLines.push_back(NewText);
+	}
+
+	std::vector<std::wstring> StoryTextLines;
+};
 
 class UIManager
 {
@@ -119,10 +141,14 @@ public:
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasBackgroundArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType, bool bShouldUpdateUI = true);
+	void SetOpeningCanvasPrologueBackgroundArt(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+	void SetOpeningCanvasPrologueText(const FStoryTextContainer& StoryTextConatiner, int PositionX, int PositionY, bool bShouldUpdateUI = true);
+	void DrawOpeningCanvasPrologue(const FStoryTextContainer& StoryTextConatiner, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
 
-	void SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
-	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI = true);
-	
+	void SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<IItem>>& InventoryInfo, int PositionX, int PositionY, bool bShouldUpdateUI = true);
+	void DrawInventory(const std::vector<std::shared_ptr<IItem>>& InventoryInfo, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+
 	void SetConsoleColor(EUIColor UIColor);
 
 	void BindAllDelegate();
