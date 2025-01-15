@@ -10,6 +10,9 @@ private:
 
 public:
 	Shop();
+	
+	std::vector<std::shared_ptr<IItem>> GetItemsForSale() { return ItemsForSale; }
+
 	// 유저가 Buy
 	void BuyItem(Character& character, int& index);
 	void SellItem(Character& character, int& index);

@@ -16,6 +16,7 @@ enum class EArtList
 	Castle2,
 	CastleSmall,
 	Church,
+	Clock,
 	Desert,
 	Devil,
 	FakeBoss,
