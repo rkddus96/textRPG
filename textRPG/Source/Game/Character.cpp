@@ -70,6 +70,15 @@ void Character::SetGold(int gold)
 	}
 }
 
+void Character::SetJob(std::shared_ptr<IJob> jobs)
+{
+	Jobs = jobs;
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::Job, Jobs->GetJobNum());
+	}
+}
+
 void Character::RaiseGold(int gold)
 {
 	Gold += gold;
@@ -78,6 +87,7 @@ void Character::RaiseGold(int gold)
 		OnCharacterChanged(ECharacterEvent::Gold, Gold);
 	}
 }
+
 
 // 생존 여부 반환 함수
 bool Character::IsDead()
@@ -309,11 +319,6 @@ void Character::InitCharacter()
 		//	std::cout << "잘못된 입력입니다. 다시 시도해주세요." << std::endl;
 		}
 
-		if (OnCharacterChanged)
-		{
-			OnCharacterChanged(ECharacterEvent::Job, JobIndex);
-		}
-
 		if (bSelectJob)
 		{
 			break;
@@ -476,6 +481,7 @@ void Character::Notify()
 	Stats.SetStat(EStat::Defense, Stats.GetStat(EStat::Defense));
 	Stats.SetStat(EStat::Luck, Stats.GetStat(EStat::Luck));
 	Stats.SetStat(EStat::MaxHp, Stats.GetStat(EStat::MaxHp));
+	SetJob(GetJob());
 }
 
 
