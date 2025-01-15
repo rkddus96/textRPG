@@ -40,12 +40,90 @@ void OpeningScene::PlayScene()
     {
         KeyInput = InputReceiver::ChatchInput();
     }
+
+    PlayOpeningPrologue();
     
     return;
 }
 
 OpeningScene::~OpeningScene()
 {
+}
+
+void OpeningScene::PlayOpeningPrologue()
+{
+    auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
+
+    UIManagerInstance->SetOpeningCanvasLayerHide(true, EOpeningCanvasLayer::Title, false);
+    UIManagerInstance->SetOpeningCanvasLayerHide(true, EOpeningCanvasLayer::BackgroundArt, false);
+    UIManagerInstance->SetOpeningCanvasLayerHide(true, EOpeningCanvasLayer::PressEnterKeyToStart, false);
+    FStoryTextContainer StoryText;
+
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
+
+    EKey KeyInput = EKey::UnAvailable;
+    while (KeyInput != EKey::Enter)
+    {
+        KeyInput = InputReceiver::ChatchInput();
+    }
+
+    StoryText.StoryTextLines.resize(0);
+
+    StoryText.AddTextLine(L"대충 스토리........22..");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리....2......");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리......22....");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
+
+    KeyInput = EKey::UnAvailable;
+    while (KeyInput != EKey::Enter)
+    {
+        KeyInput = InputReceiver::ChatchInput();
+    }
+
+    StoryText.StoryTextLines.resize(0);
+
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리....33......");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리....3......");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
+
+    KeyInput = EKey::UnAvailable;
+    while (KeyInput != EKey::Enter)
+    {
+        KeyInput = InputReceiver::ChatchInput();
+    }
+
+    StoryText.StoryTextLines.resize(0);
+
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리...44.......");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    StoryText.AddTextLine(L"대충 스토리....44......");
+    StoryText.AddTextLine(L"대충 스토리..........");
+    UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
+
+    KeyInput = EKey::UnAvailable;
+    while (KeyInput != EKey::Enter)
+    {
+        KeyInput = InputReceiver::ChatchInput();
+    }
 }
 
 
