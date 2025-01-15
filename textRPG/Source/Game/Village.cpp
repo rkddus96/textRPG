@@ -66,7 +66,7 @@ void Village::VisitChurch()
 	UIManagerInstance->ChangeBasicCanvasArtImage(DefaultArtContainer, false);
 
 	std::wstring ChurchEnterMessage = L"신성한 기도와 차분한 분위기가 당신을 감싸고 있습니다.";
-	std::wstring ChurchQuestionMessage = L"회복의 축복을 받으시겠습니까? 비용은 " + std::to_wstring(DefaultHealCharge) + L"골드입니다.Z키로 수락, X키로 거절합니다.";
+	std::wstring ChurchQuestionMessage = L"회복의 축복을 받으시겠습니까? 비용은 " + std::to_wstring(DefaultHealCharge) + L"골드입니다. Z키로 수락, X키로 거절합니다.";
 	std::wstring ChurchHealMessage = L"사제가 두 손을 들어 당신을 축복합니다. 따스한 빛이 몸을 감싸며 상처가 아물기 시작합니다.";
 	std::wstring ChurchGoldRejectMessage = L"신의 축복은 모든 이에게 열려있지만, 이곳의 유지에는 헌금이 필요합니다. 골드가 조금 부족한 것 같군요.";
 	std::wstring ChurchRejectMessage = L"당신의 선택을 존중합니다. 신의 은총이 함께 하기를 바랍니다. ";
