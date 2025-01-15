@@ -1,10 +1,11 @@
 #include "TileMapScene.h"
-#include "Battle/AutoBattle.h"
 #include "Managers/GameManager.h"
-#include "AssetHandler.h"
 #include "LogicHelper.h"
 #include "ConstantContainer.h"
+#include "AssetHandler.h"
 #include "Village.h"
+#include "Battle/AutoBattle.h"
+#include "Battle/HandBattle.h"
 
 TileMapScene::TileMapScene()
 {
@@ -16,6 +17,10 @@ TileMapScene::~TileMapScene()
 
 void TileMapScene::PlayScene()
 {
+	// 출력에 필요한 택스트 
+	// 보스 배틀을 실행할 수 없을 때 출력되는 메시지, 추후 변경
+	std::wstring BossBattleDeniedMessage = L"마왕성의 문은 강한 자만을 허락합니다. 당신의 레벨로는 아직 이 문을 열 수 없습니다.";
+
 	// Initialize
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	UIManagerInstance->BindAllDelegate();
@@ -30,9 +35,10 @@ void TileMapScene::PlayScene()
 	DrawField();
 
 	// While : Character is Alive
-	while (true)
+	while (!Character::GetInstance().IsDead() && !GameManager::GetInstance().IsClearGame())
 	{
 		EKey KeyInput = InputReceiver::ChatchInput();
+		bIsSceneInvalid = true;
 
 		// 이동처리
 		if (IsMoveInput(KeyInput))
@@ -71,6 +77,7 @@ void TileMapScene::PlayScene()
 		{
 			// 상호 작용 가능한 타일일 경우 상호작용을 실행한다.
 			ETile CurrentTile = TileMapInstance->GetCurrentTileType();
+			// Village1 Type
 			if (CurrentTile == ETile::Village1)
 			{
 				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
@@ -85,19 +92,31 @@ void TileMapScene::PlayScene()
 			}
 			else if (CurrentTile == ETile::DemonLordCastle)
 			{
-				
+				// Check Level
+				if (Player.GetLevel() >= 10)
+				{
+					// Do Boss Battle
+					std::unique_ptr<HandBattle> BossBattle = make_unique<HandBattle>();
+					BossBattle->StartBattle();
+				}
+				else
+				{
+					// Default Scene 출력을 방지하고 현재 출력으로 현재 프레임 종료
+					UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(BossBattleDeniedMessage, true);
+					bIsSceneInvalid = false;
+				}
 			}
 		}
 		// 유효하지 않은 입력일 경우 다음 입력을 기다린다.
 		else {
 			continue;
 		}
-
-		// 현재 화면에 변화가 있을 경우에만 그려져야 한다.
-		// i.e. move를 호출한다거나
-		// 아니면 캐릭터의 스탯이 변화한다거나
-		DrawField();
-		LogicHelper::SleepFor(MoveDelay);
+		
+		if (bIsSceneInvalid)
+		{
+			DrawField();
+			LogicHelper::SleepFor(MoveDelay);
+		}
 	} // While End Main Loop
 }
 
@@ -114,6 +133,7 @@ void TileMapScene::DrawField()
 		UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(Description, false);
 	}
 
+	// 현재 타일 이미지 출력
 	EArtList CurrentTileArt = TileMapInstance->GetCurrentTileArt();
 	const FASCIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(CurrentTileArt);
 	pair<int, int> TileArtOffset = TileMapInstance->GetCurrentTileArtOffset();
