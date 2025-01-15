@@ -4,6 +4,7 @@
 #include "ConstantContainer.h"
 #include "AssetHandler.h"
 #include "Village.h"
+#include "TileEvent.h"
 #include "Battle/AutoBattle.h"
 #include "Battle/HandBattle.h"
 
@@ -20,6 +21,7 @@ void TileMapScene::PlayScene()
 	// 출력에 필요한 택스트 
 	// 보스 배틀을 실행할 수 없을 때 출력되는 메시지, 추후 변경
 	std::wstring BossBattleDeniedMessage = L"마왕성의 문은 강한 자만을 허락합니다. 당신의 레벨로는 아직 이 문을 열 수 없습니다.";
+	bool HasEventTriggered = false; // 임시 변수, 추후에 리펙토링으로 TileMap에서 해결할 수 있도록 해결한다.
 
 	// Initialize
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
@@ -80,15 +82,26 @@ void TileMapScene::PlayScene()
 
 			// 상호 작용 가능한 타일일 경우 상호작용을 실행한다.
 			ETile CurrentTile = TileMapInstance->GetCurrentTileType();
+			// 특수 이벤트가 활성화되면 마을 진입이 불가능하다.
+			bool CanEnterVillage = !GameManager::GetInstance().IsSpecialEventActivated();
 			// Village1 Type
-			if (CurrentTile == ETile::Village1)
+			if (CurrentTile == ETile::Village1 && CanEnterVillage)
 			{
+				// 처음 진입 시에 마을 이벤트를 등장
+				if (!HasEventTriggered)
+				{
+					// Trigger Event
+					HasEventTriggered = true;
+					TileEvent TileEventInstance;
+					TileEventInstance.Run();
+				}
+
 				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
 				Village village(Player, UIManagerInstance, CurrentVillageArt);
 				village.SetHasShop(false);
 				village.Run();
 			}
-			else if (CurrentTile == ETile::Village2)
+			else if (CurrentTile == ETile::Village2 && CanEnterVillage)
 			{
 				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
 				Village village(Player, UIManagerInstance, CurrentVillageArt);

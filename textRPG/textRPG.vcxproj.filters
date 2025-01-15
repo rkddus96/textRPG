@@ -120,6 +120,10 @@
     <ClCompile Include="Source\Game\Village.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Battle\FinalBossBattle.cpp" />
+    <ClCompile Include="Source\Game\TileEvent.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h">
@@ -231,6 +235,10 @@
       <Filter>Source\Game\Creatures</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Village.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Battle\FinalBossBattle.h" />
+    <ClInclude Include="Source\Game\TileEvent.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
