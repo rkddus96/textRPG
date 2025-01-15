@@ -16,6 +16,12 @@ std::string HealthPotion::GetExplanation() const
 	return Explanation;
 }
 
+const FASCIIArtContainer& HealthPotion::GetArtContainer() const
+{
+	return ArtContainer;
+}
+
+
 void HealthPotion::Use(Character& character)
 {
 	Status Stats = character.GetStatus();

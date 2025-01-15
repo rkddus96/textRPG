@@ -97,6 +97,7 @@ public:
 
 	// 인벤토리 출력
 	void DisplayInventory();
+	void DisplayInventory(int index);
 
 	void Notify();
 

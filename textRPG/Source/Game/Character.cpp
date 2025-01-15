@@ -315,41 +315,6 @@ void Character::LevelUp()
 	
 }
 
-// DisplayInventory 함수
-void Character::DisplayInventory()
-{
-	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
-
-
-	std::string ItemNameLog;
-	std::string ItemPriceLog;
-	std::string	ItemExplanationLog;
-
-	std::wstring ItemNameLogW;
-	std::wstring ItemPriceLogW;
-	std::wstring ItemExplanationLogW;
-
-
-
-
-	for (int i = 0; i < Inventory.size(); i++)
-	{
-		ItemNameLog = std::to_string(i + 1) + ". Name: " + Inventory[i]->GetName();
-		ItemPriceLog = "  Price: " + std::to_string(Inventory[i]->GetPrice());
-		ItemExplanationLog = "  Explanation: " + Inventory[i]->GetExplanation();
-
-		ItemNameLogW = LogicHelper::StringToWString(ItemNameLog);
-		ItemPriceLogW = LogicHelper::StringToWString(ItemPriceLog);
-		ItemExplanationLogW = LogicHelper::StringToWString(ItemExplanationLog);
-
-
-		UI->AddMessageToBasicCanvasEventInfoUI(ItemNameLogW);
-		UI->AddMessageToBasicCanvasEventInfoUI(ItemPriceLogW);
-		UI->AddMessageToBasicCanvasEventInfoUI(ItemExplanationLogW);
-	}
-}
-
-
 void Character::Notify()
 {
 	SetExp(GetExp());
@@ -365,3 +330,35 @@ void Character::Notify()
 }
 
 
+// Character.cpp -> display 함수
+void Character::DisplayInventory(int index)
+{
+	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
+
+
+	std::string ItemNameLog;
+	std::string ItemPriceLog;
+	std::string	ItemExplanationLog;
+
+	std::wstring ItemNameLogW;
+	std::wstring ItemPriceLogW;
+	std::wstring ItemExplanationLogW;
+
+	ItemNameLog = std::to_string(index + 1) + ". Name: " + Inventory[index]->GetName() + "  Price: " + std::to_string(Inventory[index]->GetPrice()/2) + "  Effect: " + Inventory[index]->GetExplanation() + "   [ 1. 이전],[ 2. 구매/판매 ],[ 3. 다음  ], [ 0. 처음으로 ]";
+	//	ItemPriceLog = 
+	//	ItemExplanationLog = ;
+
+	ItemNameLogW = LogicHelper::StringToWString(ItemNameLog);
+	ItemPriceLogW = LogicHelper::StringToWString(ItemPriceLog);
+	ItemExplanationLogW = LogicHelper::StringToWString(ItemExplanationLog);
+
+	// 이미지 삽입
+	UI->ChangeBasicCanvasArtImage(Inventory[index]->GetArtContainer());
+	// 로그 출력
+	UI->AddMessageToBasicCanvasEventInfoUI(ItemNameLogW);
+	//	UI->AddMessageToBasicCanvasEventInfoUI(ItemPriceLogW);
+	//	UI->AddMessageToBasicCanvasEventInfoUI(ItemExplanationLogW);
+
+
+
+}

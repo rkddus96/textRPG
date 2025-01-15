@@ -15,6 +15,12 @@ std::string Equipment::GetExplanation() const
 	return Explanation;
 }
 
+const FASCIIArtContainer& Equipment::GetArtContainer() const
+{
+	return ArtContainer;
+}
+
+
 void Equipment::Use(Character& character)
 {
 	Status Stats = character.GetStatus();

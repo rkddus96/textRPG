@@ -2,6 +2,7 @@
 #include "IItem.h"
 #include "Character.h"
 
+
 class Shop
 {
 private:
@@ -10,8 +11,8 @@ private:
 public:
 	Shop();
 	// 유저가 Buy
-	void BuyItem(Character& character, int index);
-	void SellItem(Character& character, int index);
+	void BuyItem(Character& character, int& index);
+	void SellItem(Character& character, int& index);
 
 	// 상점 가기를 누르면 실행
 	void ManageShop(Character& character);
@@ -21,7 +22,7 @@ public:
 
 
 
-	// Test
-	void Display();
+	
+	void Display(int index);
 };
 

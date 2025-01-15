@@ -10,7 +10,7 @@ private:
 	std::vector<int> AffectPoints;  // 올릴 포인트
 	int Price; // 가격
 	std::string Explanation; // 설명
-	
+	const FASCIIArtContainer& ArtContainer; // 아이템의 이미지
 
 public:
 	
@@ -26,8 +26,9 @@ public:
 	
 	Equipment(std::string name,
 			  std::vector<EStat> statTypes,
-			  std::vector<int> affectPoints, int price)
-			  : Name{ name }, StatTypes { statTypes }, AffectPoints{ affectPoints }, Price{ price }
+			  std::vector<int> affectPoints, int price,
+			  const FASCIIArtContainer& artContainer)
+			  : Name{ name }, StatTypes { statTypes }, AffectPoints{ affectPoints }, Price{ price }, ArtContainer{artContainer}
 	{
 		Explanation = "";
 		for (int i = 0; i < StatTypes.size(); i++)
@@ -45,6 +46,8 @@ public:
 	int GetPrice() const override;
 
 	std::string GetExplanation() const override;
+
+	virtual const FASCIIArtContainer& GetArtContainer() const override;
 
 	void Use(Character& character) override;
 
