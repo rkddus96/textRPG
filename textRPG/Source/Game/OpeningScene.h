@@ -11,4 +11,8 @@ public:
 	virtual void PlayScene() final;
 
 	virtual ~OpeningScene() final;
+
+private:
+
+	void PlayOpeningPrologue();
 };

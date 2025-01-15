@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <Windows.h>
 #include "../Creatures/Monster.h"
+#include "../IItem.h"
 
 // 매크로 제거
 #undef min
@@ -75,7 +76,7 @@ void UIManager::MakeBasicUI()
 	std::shared_ptr<RenderingLayer> MiniMapContentsLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::MinimapContents);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::MinimapContents] = MiniMapContentsLayer->GetLayerId();
 
-	MiniMapContentsLayer->ClearLayerFor(L' ');
+	//MiniMapContentsLayer->ClearLayerFor(L' ');
 
 	std::shared_ptr<RenderingLayer> ArtLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::Art, UI::USELESS_CHAR);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::Art] = ArtLayer->GetLayerId();
@@ -85,7 +86,7 @@ void UIManager::MakeBasicUI()
 
 	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EBasicCanvasLayer::BackgroundBorder);
 	BasicCanvasLayerIdMap[EBasicCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
-
+	BackgroundBorderLayer->ClearLayerFor(L' ');
 	//BackgroundBorderLayer->DrawRectanlge(1, 0, 218, 57);
 	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
 	BackgroundBorderLayer->CombineUiLines();
@@ -130,7 +131,14 @@ void UIManager::MakeBasicUI()
 
 void UIManager::MakeOpningSceneUI()
 {
-	std::shared_ptr<RenderingLayer> BackgroundArtLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::BackgroundArt);
+	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::BackgroundBorder);
+	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
+
+	BackgroundBorderLayer->ClearLayerFor(L' ');
+	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
+	BackgroundBorderLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingLayer> BackgroundArtLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::BackgroundArt, L' ');
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::BackgroundArt] = BackgroundArtLayer->GetLayerId();
 
 	BackgroundArtLayer->ClearLayerFor(L' ');
@@ -139,11 +147,7 @@ void UIManager::MakeOpningSceneUI()
 	std::shared_ptr<RenderingLayer> TitleLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::Title, UI::USELESS_CHAR);
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::Title] = TitleLayer->GetLayerId();
 
-	std::shared_ptr<RenderingLayer> BackgroundBorderLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::BackgroundBorder);
-	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::BackgroundBorder] = BackgroundBorderLayer->GetLayerId();
-	
-	BackgroundBorderLayer->DrawRectanlge(UI::BACKGRUOND_BORDER_FIRST_POSITION_X, UI::BACKGROUND_BORDER_FIRST_POSITION_Y, UI::BACKGROUND_BORDER_WIDTH, UI::BACKGROUND_BORDER_HEIGHT);
-	BackgroundBorderLayer->CombineUiLines();
+	TitleLayer->ClearLayerFor(UI::USELESS_CHAR);
 
 	std::shared_ptr<RenderingLayer> PressEnterKeyToStartLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::PressEnterKeyToStart, UI::USELESS_CHAR);
 	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PressEnterKeyToStart] = PressEnterKeyToStartLayer->GetLayerId();
@@ -152,11 +156,26 @@ void UIManager::MakeOpningSceneUI()
 	PressEnterKeyToStartLayer->DrawString(UI::PRESS_ENTER_KEY_TO_START_UI_POSITION_X, UI::PRESS_ENTER_KEY_TO_START_UI_POSITION_Y, L"Press Enter Key To Start Game");
 	PressEnterKeyToStartLayer->CombineUiLines();
 
+	std::shared_ptr<RenderingLayer> PrologBackgroundLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::PrologBackground, UI::USELESS_CHAR);
+	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PrologBackground] = PrologBackgroundLayer->GetLayerId();
+
+	PrologBackgroundLayer->ClearLayerFor(UI::USELESS_CHAR);
+	PrologBackgroundLayer->CombineUiLines();
+
+	std::shared_ptr<RenderingLayer> PrologueTextLayer = std::make_shared<RenderingLayer>((int)EOpeningCanvasLayer::PrologueText, UI::USELESS_CHAR);
+	OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PrologueText] = PrologueTextLayer->GetLayerId();
+
+	PrologueTextLayer->ClearLayerFor(UI::USELESS_CHAR);
+	PrologueTextLayer->CombineUiLines();
+	
+
 	std::shared_ptr<RenderingCanvas> OpeningCanvas = std::make_shared<RenderingCanvas>();
 	OpeningCanvas->AddLayer(BackgroundArtLayer);
 	OpeningCanvas->AddLayer(TitleLayer);
 	OpeningCanvas->AddLayer(BackgroundBorderLayer);
 	OpeningCanvas->AddLayer(PressEnterKeyToStartLayer);
+	OpeningCanvas->AddLayer(PrologBackgroundLayer);
+	OpeningCanvas->AddLayer(PrologueTextLayer);
 
 	AddRenderingCanvas(ERenderingCanvas::Opening, OpeningCanvas);
 }
@@ -641,7 +660,88 @@ void UIManager::SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer 
 	}
 }
 
-void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI)
+void UIManager::SetOpeningCanvasPrologueBackgroundArt(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+{
+	int LayerId = OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PrologBackground];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetOpeningCanvasPrologueBackgroundArt : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	int CenterCoordX = UI::CENTER_OF_UI_X;
+	int CenterCoordY = UI::CENTER_OF_UI_Y;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+
+	int DrawCoordX = CenterCoordX - ArtHeight / 2;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2;
+
+	//InventoryLayer->ClearLayerFor(UI::USELESS_CHAR);
+
+	Layer->DrawSurface(DrawCoordX + OffsetX, DrawCoordY + OffsetY, ArtContainer.ArtLines);
+	Layer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Opening);
+	}
+}
+
+void UIManager::SetOpeningCanvasPrologueText(const FStoryTextContainer& StoryTextConatiner, int PositionX, int PositionY, bool bShouldUpdateUI)
+{
+	const std::vector<std::wstring>& StoryTextLines = StoryTextConatiner.StoryTextLines;
+	int StoryTextCount = (int)StoryTextLines.size();
+
+	if (StoryTextLines.size() <= 0)
+	{
+		std::cout << "UIManager, SetOpeningCanvasPrologueText : StoryTextConatiner.StoryTextLines.size() <= 0" << std::endl;
+		return;
+	}
+
+	int LayerId = OpeningCanvasLayerIdMap[EOpeningCanvasLayer::PrologueText];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetOpeningCanvasPrologueText : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	for (int i = 0; i < StoryTextCount; ++i)
+	{
+		Layer->DrawString(PositionX + i, PositionY, StoryTextLines[i]);
+	}
+
+	Layer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Opening);
+	}
+}
+
+void UIManager::DrawOpeningCanvasPrologue(const FStoryTextContainer& StoryTextConatiner, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+{
+	const FASCIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Test);
+	SetOpeningCanvasPrologueBackgroundArt(ArtContainer, false, OffsetX, OffsetY);
+
+	int CenterCoordX = UI::CENTER_OF_UI_X;
+	int CenterCoordY = UI::CENTER_OF_UI_Y;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+
+	int DrawCoordX = CenterCoordX - ArtHeight / 2 + 5;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2 + 10;
+
+	SetOpeningCanvasPrologueText(StoryTextConatiner, DrawCoordX + OffsetX, DrawCoordY + OffsetY, bShouldUpdateUI);
+}
+
+void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
 {
 	int LayerId = InventoryCanvasLayerIdMap[EInventoryCanvasLayer::Background];
 	std::shared_ptr<RenderingLayer> InventoryLayer = RenderingCanvasMap[ERenderingCanvas::Inventory]->GetRenderingLayer(LayerId);
@@ -652,18 +752,7 @@ void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtC
 		return;
 	}
 
-	int CenterCoordX = (UI::EVENT_INFO_UI_BORDER_FIRST_POSITION_X - UI::BACKGRUOND_BORDER_FIRST_POSITION_X) / 2;
-	int CenterCoordY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
-
-	int ArtWidth = ArtContainer.GetWidth();
-	int ArtHeight = ArtContainer.GetHeight();
-
-	int DrawCoordX = CenterCoordX - ArtHeight / 2;
-	int DrawCoordY = CenterCoordY - ArtWidth / 2;
-
-	//InventoryLayer->ClearLayerFor(UI::USELESS_CHAR);
-
-	InventoryLayer->DrawSurface(UI::INVENTORY_BACKGROUND_FIRST_POSITION_X, UI::INVENTORY_BACKGROUND_FIRST_POSITION_Y, ArtContainer.ArtLines);
+	InventoryLayer->DrawSurface(UI::INVENTORY_BACKGROUND_FIRST_POSITION_X + OffsetX, UI::INVENTORY_BACKGROUND_FIRST_POSITION_Y + OffsetY, ArtContainer.ArtLines);
 	InventoryLayer->CombineUiLines();
 
 	if (bShouldUpdateUI)
@@ -672,7 +761,7 @@ void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtC
 	}
 }
 
-void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Item>>& InventoryInfo, bool bShouldUpdateUI)
+void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<IItem>>& InventoryInfo, int PositionX, int PositionY, bool bShouldUpdateUI)
 {
 	int LayerId = InventoryCanvasLayerIdMap[EInventoryCanvasLayer::ItemList];
 	std::shared_ptr<RenderingLayer> InventoryLayer = RenderingCanvasMap[ERenderingCanvas::Inventory]->GetRenderingLayer(LayerId);
@@ -690,10 +779,21 @@ void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Ite
 	int ItemCount = std::min(MaxDisplayableItemCount, (int)InventoryInfo.size());
 	InventoryLayer->ClearLayerFor(UI::USELESS_CHAR);
 
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < ItemCount; ++i)
 	{
-		ItemInfoText = std::to_wstring(i + 1) + L". 대충 아이템 텍스트";
-		InventoryLayer->DrawString(10 + i, 10, ItemInfoText);
+		std::wstring WItemName = LogicHelper::StringToWString(InventoryInfo[i]->GetName());
+		std::wstring WItemDescription = LogicHelper::StringToWString(InventoryInfo[i]->GetExplanation());
+
+		ItemInfoText = std::to_wstring(i + 1) + L". " + WItemName + L" : " + WItemDescription;
+		InventoryLayer->DrawString(PositionX + i, PositionY, ItemInfoText);
+	}
+
+	int RemainSpaceCount = MaxDisplayableItemCount - ItemCount;
+
+	for (int i = 0; i < RemainSpaceCount; ++i)
+	{
+		std::wstring EmptySpaceText = std::to_wstring(i + 1) + L".                             ";
+		InventoryLayer->DrawString(PositionX + i, PositionY, EmptySpaceText);
 	}
 
 	InventoryLayer->CombineUiLines();
@@ -702,6 +802,23 @@ void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<Ite
 	{
 		PrintUI(ERenderingCanvas::Inventory);
 	}
+}
+
+void UIManager::DrawInventory(const std::vector<std::shared_ptr<IItem>>& InventoryInfo, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+{
+	const FASCIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Test);
+	
+	int CenterCoordX = UI::CENTER_OF_UI_X;
+	int CenterCoordY = UI::CENTER_OF_UI_Y;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+
+	int DrawCoordX = CenterCoordX - ArtHeight / 2 + 10;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2 + 5;
+
+	SetInventoryCanvasItemList(InventoryInfo, DrawCoordX + OffsetX, DrawCoordY + OffsetY, false);
+	SetInventoryCanvasBackgroundImage(ArtContainer, bShouldUpdateUI, OffsetX, OffsetY);
 }
 
 void UIManager::SetConsoleColor(EUIColor UIColor)

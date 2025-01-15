@@ -58,4 +58,7 @@ namespace UI
 
 	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_X;
 	extern const int INVENTORY_BACKGROUND_FIRST_POSITION_Y;
+
+	extern const int CENTER_OF_UI_X;
+	extern const int CENTER_OF_UI_Y;
 }

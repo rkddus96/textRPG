@@ -165,7 +165,7 @@ private:
     std::list<std::shared_ptr<TimerHandler>> ActivatedTimerHandlers;
     std::queue <std::shared_ptr<TimerHandler>> DeactivatedTimerHandlers;
 
-    float PreviousTickTime;
+    double PreviousTickTime;
 
     std::thread TimerThread;
 
