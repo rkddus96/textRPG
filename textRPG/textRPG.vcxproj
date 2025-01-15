@@ -23,6 +23,7 @@
     <ClCompile Include="Source\Game\AudioPlayer.cpp" />
     <ClCompile Include="Source\Game\Battle\ABattle.cpp" />
     <ClCompile Include="Source\Game\Battle\AutoBattle.cpp" />
+    <ClCompile Include="Source\Game\Battle\FinalBossBattle.cpp" />
     <ClCompile Include="Source\Game\Battle\HandBattle.cpp" />
     <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Source\Game\AudioPlayer.h" />
     <ClInclude Include="Source\Game\Battle\ABattle.h" />
     <ClInclude Include="Source\Game\Battle\AutoBattle.h" />
+    <ClInclude Include="Source\Game\Battle\FinalBossBattle.h" />
     <ClInclude Include="Source\Game\Battle\HandBattle.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />

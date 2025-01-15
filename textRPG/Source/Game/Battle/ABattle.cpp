@@ -2,37 +2,22 @@
 #include <cmath>
 #include <windows.h>
 #include "ABattle.h"
-#include "../Creatures/Monster.h"
-#include "../Creatures/MonstserFactoryManager.h"
-#include "../Character.h"
-#include "../Managers/GameManager.h"
-#include "../LogicHelper.h"
-#include "../InputReceiver.h"
-#include "../ConstantContainer.h"
 
 ABattle::ABattle()
 {
-	// 전투 BGM 재생
-	BGMName = AudioPlayer::PlayLoop(AudioPath::BATTLE_BGM, 0.2f);
-
-	// 1.보정계수, 빗나감, 치명타, 일반공격 수치 계산
+	// 보정계수, 빗나감, 치명타, 일반공격 수치 계산
 	SetMonsterCoEfficientValue();
 	SetMissProb();
 	SetCriProb();
 	SetNormalProb();
 
-	// 2. 캐릭터 변수 초기화
+	// 캐릭터 변수 초기화
 	this->Player = &Character::GetInstance();
 
-	// 3. 랜덤 몬스터 생성
-	Enemy = (new MonstserFactoryManager())->CreateRandomMonster(Player->GetLevel());
-
-	Sleep(3000);
-
-	// 4. UI 변수 초기화
+	// UI 변수 초기화
 	UI = GameManager::GetInstance().GetUIManager();
 
-	// 5. 변수 초기값 지정
+	// 변수 초기값 지정
 	bGameFinished = false;
 	PotionEventStartingHp = 50;
 }
@@ -134,15 +119,8 @@ void ABattle::PotionAction()
 	Player->UsePotion();
 
 	// 로그 선언
-	string PotionLog = PlayerName + "이 회복 물약을 사용했습니다.";
 	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
-	wstring PotionLogToW = LogicHelper::StringToWString(PotionLog);
 	wstring CurHpLogToW = LogicHelper::StringToWString(CurHpLog);
-
-	// 로그 출력
-	Sleep(1000);
-	AudioPlayer::Play(AudioPath::POTION);
-	UI->AddMessageToBasicCanvasEventInfoUI(PotionLogToW);
 
 	Sleep(1000);
 	UI->AddMessageToBasicCanvasEventInfoUI(CurHpLogToW);
@@ -274,73 +252,6 @@ void ABattle::SetNormalProb()
 	--------------------------------------------------------------*/
 	PlayerNormalProb = 100 - (PlayerCriProb + PlayerMissProb);
 	MonsterNormalProb = 100 - (MonsterCriProb + MonsterMissProb);
-}
-
-// 전투 승리시 수행하는 로직
-void ABattle::GameWin()
-{
-	UI->ClearMessageToBasicCanvasEventInfoUI(false);
-	AudioPlayer::Stop(BGMName);
-
-	// 플레이어 경험치 증가
-	int Exp = Enemy->GetExp();
-	int Gold = Enemy->GetMoney();
-
-	// 재화 획득
-	Player->RaiseExp(Exp);
-	Player->RaiseGold(Gold);
-	
-
-	// 로그 선언
-	string InfoLog = "전투를 승리했습니다 !";
-	string ExpLog = "경험치를 " + to_string(Exp) + "만큼 획득했습니다 !";
-	string GoldLog = "골드를 " + to_string(Gold) + "만큼 획득했습니다 !";
-	wstring InfoLogToW = LogicHelper::StringToWString(InfoLog);
-	wstring ExpLogToW = LogicHelper::StringToWString(ExpLog);
-	wstring GoldLogToW = LogicHelper::StringToWString(GoldLog);
-
-	// 로그 출력
-	Sleep(1000);
-	AudioPlayer::Play(AudioPath::WIN, 0.5f);
-	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
-
-	// 플레이어 레벨업
-	Sleep(1000);
-	UI->AddMessageToBasicCanvasEventInfoUI(ExpLogToW);
-	if (Player->GetExp() + Exp >= Player->GetMaxExp())
-		Player->LevelUp();
-
-	// 플레이어 골드 획득
-	Sleep(1000);
-	UI->AddMessageToBasicCanvasEventInfoUI(GoldLogToW);
-
-	Sleep(1000);
-	AudioPlayer::Play(AudioPath::RESULT);
-	// 전투 종료
-	bGameFinished = true;
-}
-
-// 전투 패배시 수행하는 로직
-void ABattle::GameLose()
-{
-	UI->ClearMessageToBasicCanvasEventInfoUI(false);
-	AudioPlayer::Stop(BGMName);
-
-	// 로그 선언
-	string InfoLog = "전투를 패배했습니다 !";
-	wstring InfoLogToW = LogicHelper::StringToWString(InfoLog);
-
-	// 연출용도로 잠시 대기
-	Sleep(1000);
-	AudioPlayer::Play(AudioPath::LOSE);
-	// 로그 출력
-	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
-
-
-	Sleep(1000);
-
-	// 전투 종료
-	bGameFinished = true;
 }
 
 // 공격 확률을 바탕으로 계산
