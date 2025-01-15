@@ -25,7 +25,7 @@ int Status::GetStat(EStat statType) const
 
 void Status::SetStat(EStat statType, int value)
 {
-	stats[statType] = value;
+	stats[statType] = std::max(value, 0);
 
 	// 스탯 변경 시 콜백 호출
 	if (OnStatChanged)
