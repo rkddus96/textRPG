@@ -51,6 +51,7 @@
     <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
     <ClCompile Include="Source\Game\textRPG.cpp" />
+    <ClCompile Include="Source\Game\TileEvent.cpp" />
     <ClCompile Include="Source\Game\TileMap.cpp" />
     <ClCompile Include="Source\Game\TileMapScene.cpp" />
     <ClCompile Include="Source\Game\Village.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Source\Game\RenderingCanvas.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
     <ClInclude Include="Source\Game\Shop.h" />
+    <ClInclude Include="Source\Game\TileEvent.h" />
     <ClInclude Include="Source\Game\TileMap.h" />
     <ClInclude Include="Source\Game\Status.h" />
     <ClInclude Include="Source\Game\Thief.h" />
