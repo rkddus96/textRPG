@@ -84,6 +84,7 @@ public:
 	void SetExp(int exp);
 	void SetLevel(int level);
 	void SetGold(int gold);
+	void SetJob(std::shared_ptr<IJob> jobs);
 
 	// Raise 함수 : 기존에 매개변수로 받은 것 추가
 	void RaiseGold(int gold);
