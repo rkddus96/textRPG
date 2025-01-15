@@ -2,7 +2,7 @@
 
 
 Slime::Slime(int level)
-    : Monster("슬라임", 10, 8, 3, 20, 100, level)
+    : Monster("Slime", 10, 8, 3, 20, 100, level)
 {
    
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Slime);
