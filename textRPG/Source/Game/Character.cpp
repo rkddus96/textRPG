@@ -45,11 +45,19 @@ void Character::SetExp(int exp)
 
 void Character::RaiseExp(int exp)
 {
-	Exp += exp;
-	if (OnCharacterChanged)
+	if (Level >= 10)
 	{
-		OnCharacterChanged(ECharacterEvent::Exp, Exp);
+		Exp = std::min(MaxExp, Exp + exp);
 	}
+	else
+	{
+		Exp += exp;
+		if (OnCharacterChanged)
+		{
+			OnCharacterChanged(ECharacterEvent::Exp, Exp);
+		}
+	}
+	
 }
 
 void Character::SetLevel(int level)
