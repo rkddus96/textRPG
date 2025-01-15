@@ -848,15 +848,13 @@ void UIManager::SetInventoryCanvasItemList(const std::vector<std::shared_ptr<IIt
 		std::wstring WItemDescription = LogicHelper::StringToWString(InventoryInfo[i]->GetExplanation());
 
 		ItemInfoText = std::to_wstring(i + 1) + L". " + WItemName + L" : " + WItemDescription;
-		InventoryLayer->DrawString(PositionX + i, PositionY, ItemInfoText);
+		InventoryLayer->DrawString(PositionX + i * 2, PositionY, ItemInfoText);
 	}
 
-	int RemainSpaceCount = MaxDisplayableItemCount - ItemCount;
-
-	for (int i = 0; i < RemainSpaceCount; ++i)
+	for (int i = ItemCount; i < MaxDisplayableItemCount; ++i)
 	{
-		std::wstring EmptySpaceText = std::to_wstring(i + 1) + L".                             ";
-		InventoryLayer->DrawString(PositionX + i, PositionY, EmptySpaceText);
+		std::wstring EmptySpaceText = std::to_wstring(i + 1) + L".                                              ";
+		InventoryLayer->DrawString(PositionX + i * 2, PositionY, EmptySpaceText);
 	}
 
 	InventoryLayer->CombineUiLines();
@@ -877,16 +875,26 @@ void UIManager::DrawInventory(const std::vector<std::shared_ptr<IItem>>& Invento
 	int ArtWidth = ArtContainer.GetWidth();
 	int ArtHeight = ArtContainer.GetHeight();
 
-	int DrawCoordX = CenterCoordX - ArtHeight / 2 + 10;
-	int DrawCoordY = CenterCoordY - ArtWidth / 2 + 5;
+	int DrawCoordX = CenterCoordX - ArtHeight / 2 + 9;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2 + 15;
 
 	SetInventoryCanvasItemList(InventoryInfo, DrawCoordX + OffsetX, DrawCoordY + OffsetY, false);
-	SetInventoryCanvasBackgroundImage(ArtContainer, bShouldUpdateUI, OffsetX, OffsetY);
+	SetInventoryCanvasBackgroundImage(ArtContainer, bShouldUpdateUI, OffsetX, OffsetY + 10);
 }
 
 void UIManager::OpenInventory()
 {
 	// 구현 예정
+
+	DrawInventory(Character::GetInstance().GetInventory());
+
+	EKey Key = EKey::UnAvailable;
+
+	while (Key != EKey::i)
+	{
+		Key = InputReceiver::ChatchInput();
+	}
+
 }
 
 void UIManager::SetEndingCanvasLayerHide(bool bShouldHide, EEndingCanvasLayer LayerType, bool bShouldUpdateUI)
