@@ -51,6 +51,7 @@
     <ClCompile Include="Source\Game\textRPG.cpp" />
     <ClCompile Include="Source\Game\TileMap.cpp" />
     <ClCompile Include="Source\Game\TileMapScene.cpp" />
+    <ClCompile Include="Source\Game\Village.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Source\Game\Status.h" />
     <ClInclude Include="Source\Game\Thief.h" />
     <ClInclude Include="Source\Game\TileMapScene.h" />
+    <ClInclude Include="Source\Game\Village.h" />
     <ClInclude Include="Source\Game\Warrior.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

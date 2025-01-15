@@ -4,6 +4,7 @@
 #include "AssetHandler.h"
 #include "LogicHelper.h"
 #include "ConstantContainer.h"
+#include "Village.h"
 
 TileMapScene::TileMapScene()
 {
@@ -15,9 +16,11 @@ TileMapScene::~TileMapScene()
 
 void TileMapScene::PlayScene()
 {
+	// Initialize
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	UIManagerInstance->BindAllDelegate();
-	Character::GetInstance().Notify();
+	auto& Player = Character::GetInstance();
+	Player.Notify();
 
 	// 초기 상태 초기화 후 첫 화면 그리기
 	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
@@ -30,6 +33,7 @@ void TileMapScene::PlayScene()
 	{
 		EKey KeyInput = InputReceiver::ChatchInput();
 
+		// 이동처리
 		if (IsMoveInput(KeyInput))
 		{
 			std::pair<int, int> CurrentPosition = TileMapInstance->GetCurrentPosition();
@@ -62,6 +66,27 @@ void TileMapScene::PlayScene()
 		{
 			// Inventory 열기 설정
 		}
+		else if (IsInteractionInput(KeyInput))
+		{
+			// 상호 작용 가능한 타일일 경우 상호작용을 실행한다.
+			ETile CurrentTile = TileMapInstance->GetCurrentTileType();
+			if (CurrentTile == ETile::Village1)
+			{
+				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
+				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.Run();
+			}
+			else if (CurrentTile == ETile::Village2)
+			{
+				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
+				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.Run();
+			}
+			else if (CurrentTile == ETile::DemonLordCastle)
+			{
+				
+			}
+		}
 		// 유효하지 않은 입력일 경우 다음 입력을 기다린다.
 		else {
 			continue;
@@ -71,9 +96,8 @@ void TileMapScene::PlayScene()
 		// i.e. move를 호출한다거나
 		// 아니면 캐릭터의 스탯이 변화한다거나
 		DrawField();
-	}
-
-	// 게임 클리어 / 게임 오버 시에 따라 다른 텍스트를 출력
+		LogicHelper::SleepFor(MoveDelay);
+	} // While End Main Loop
 }
 
 void TileMapScene::DrawField()
@@ -81,8 +105,13 @@ void TileMapScene::DrawField()
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
 
+	// 현재 타일 입장 택스트 출력
 	std::wstring TileDescription = TileMapInstance->GetCurrentTileDescription();
-	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(TileDescription, false);
+	std::vector<std::wstring> TileDescLines = SplitByNewLine(TileDescription);
+	for (std::wstring Description : TileDescLines)
+	{
+		UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(Description, false);
+	}
 
 	EArtList CurrentTileArt = TileMapInstance->GetCurrentTileArt();
 	const FASCIIArtContainer& FieldArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(CurrentTileArt);
@@ -100,6 +129,11 @@ bool TileMapScene::IsMoveInput(EKey KeyInput) const
 bool TileMapScene::IsInventoryInput(EKey KeyInput) const
 {
 	return KeyInput == EKey::I || KeyInput == EKey::i;
+}
+
+bool TileMapScene::IsInteractionInput(EKey KeyInput) const
+{
+	return KeyInput == EKey::Z || KeyInput == EKey::z;
 }
 
 std::pair<int, int> TileMapScene::CalculateNextPosition(std::pair<int, int> CurrentPosition, EKey KeyInput)
@@ -122,4 +156,20 @@ std::pair<int, int> TileMapScene::CalculateNextPosition(std::pair<int, int> Curr
 			break;
 	}
 	return CurrentPosition;
+}
+
+std::vector<std::wstring> TileMapScene::SplitByNewLine(const std::wstring& Str)
+{
+	std::vector<std::wstring> Result;
+	size_t Start = 0, End;
+
+	while ((End = Str.find(L'\n', Start)) != std::wstring::npos)
+	{
+		Result.push_back(Str.substr(Start, End - Start));
+		Start = End + 1;
+	}
+
+	Result.push_back(Str.substr(Start));
+
+	return Result;
 }

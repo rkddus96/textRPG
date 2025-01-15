@@ -57,7 +57,7 @@ public:
 	std::pair<int, int> GetCurrentTileArtOffset() const;
 
 	/// <summary>
-	/// 현재 타일의 설명 텍스트를 반환한다.
+	/// 현재 타일의 설명 텍스트를 반환한다. 개행 문자 \n이 포함되어 있으며 실질적으로 출력하기 위해서는 Split이 필요하다.
 	/// </summary>
 	/// <returns></returns>
 	std::wstring GetCurrentTileDescription() const;
@@ -116,6 +116,9 @@ private:
 	/// </summary>
 	std::vector<std::vector<EArtList>> TileArtGrid;
 
+	/// <summary>
+	/// Tile Art를 출력할 Offset, 현재 가운데 정렬을 하기 위해서는 임의의 오프셋을 잡을 필요가 있다.
+	/// </summary>
 	std::unordered_map<EArtList, std::pair<int, int>> TileOffsetMap;	
 
 	/// <summary>
