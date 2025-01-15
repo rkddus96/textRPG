@@ -34,8 +34,10 @@ Shop::Shop()
 	ItemsForSale.emplace_back(std::make_shared<Equipment>("Loki's Charm", std::vector<EStat>{ EStat::Luck }, std::vector<int>{ 18 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Necklace)));
 
 	// 극단적인 아이템
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Blood Axe", std::vector<EStat>{ EStat::Power, EStat::Defense }, std::vector<int>{ 36, -12 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Axe3)));
+//	ItemsForSale.emplace_back(std::make_shared<Equipment>("Blood Axe", std::vector<EStat>{ EStat::Power, EStat::Defense }, std::vector<int>{ 36, -12 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Clock)));
 }
+
+
 
 void Shop::BuyItem(Character& character, int& index)
 {
@@ -363,11 +365,14 @@ void Shop::ManageShop(Character& character)
 				break;
 
 			case EKey::Key_3: // 나가기
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
 				UI->AddMessageToBasicCanvasEventInfoUI(GetOutShopLogW);
 				return;
 
 			default:
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
 				UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+				Sleep(500);
 				break;
 		}
 	}
