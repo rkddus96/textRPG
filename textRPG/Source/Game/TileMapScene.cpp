@@ -4,6 +4,7 @@
 #include "AssetHandler.h"
 #include "LogicHelper.h"
 #include "ConstantContainer.h"
+#include "Village.h"
 
 TileMapScene::TileMapScene()
 {
@@ -18,7 +19,8 @@ void TileMapScene::PlayScene()
 	// Initialize
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	UIManagerInstance->BindAllDelegate();
-	Character::GetInstance().Notify();
+	auto& Player = Character::GetInstance();
+	Player.Notify();
 
 	// 초기 상태 초기화 후 첫 화면 그리기
 	auto& TileMapInstance = GameManager::GetInstance().GetTileMap();
@@ -31,6 +33,7 @@ void TileMapScene::PlayScene()
 	{
 		EKey KeyInput = InputReceiver::ChatchInput();
 
+		// 이동처리
 		if (IsMoveInput(KeyInput))
 		{
 			std::pair<int, int> CurrentPosition = TileMapInstance->GetCurrentPosition();
@@ -62,6 +65,25 @@ void TileMapScene::PlayScene()
 		else if (IsInventoryInput(KeyInput))
 		{
 			// Inventory 열기 설정
+		}
+		else if (IsInteractionInput(KeyInput))
+		{
+			// 상호 작용 가능한 타일일 경우 상호작용을 실행한다.
+			ETile CurrentTile = TileMapInstance->GetCurrentTileType();
+			if (CurrentTile == ETile::Village1)
+			{
+				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
+				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.Run();
+			}
+			else if (CurrentTile == ETile::Village2)
+			{
+				
+			}
+			else if (CurrentTile == ETile::DemonLordCastle)
+			{
+				
+			}
 		}
 		// 유효하지 않은 입력일 경우 다음 입력을 기다린다.
 		else {
@@ -105,6 +127,11 @@ bool TileMapScene::IsMoveInput(EKey KeyInput) const
 bool TileMapScene::IsInventoryInput(EKey KeyInput) const
 {
 	return KeyInput == EKey::I || KeyInput == EKey::i;
+}
+
+bool TileMapScene::IsInteractionInput(EKey KeyInput) const
+{
+	return KeyInput == EKey::Z || KeyInput == EKey::z;
 }
 
 std::pair<int, int> TileMapScene::CalculateNextPosition(std::pair<int, int> CurrentPosition, EKey KeyInput)

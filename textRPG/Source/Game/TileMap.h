@@ -57,7 +57,7 @@ public:
 	std::pair<int, int> GetCurrentTileArtOffset() const;
 
 	/// <summary>
-	/// 현재 타일의 설명 텍스트를 반환한다.
+	/// 현재 타일의 설명 텍스트를 반환한다. 개행 문자 \n이 포함되어 있으며 실질적으로 출력하기 위해서는 Split이 필요하다.
 	/// </summary>
 	/// <returns></returns>
 	std::wstring GetCurrentTileDescription() const;

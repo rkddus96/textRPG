@@ -27,6 +27,7 @@ protected:
 
 	bool IsMoveInput(EKey KeyInput) const;
 	bool IsInventoryInput(EKey KeyInput) const;
+	bool IsInteractionInput(EKey KeyInput) const;
 
 	std::pair<int, int> CalculateNextPosition(std::pair<int, int> CurrentPosition, EKey KeyInput);
 	std::vector<std::wstring> SplitByNewLine(const std::wstring& Str);

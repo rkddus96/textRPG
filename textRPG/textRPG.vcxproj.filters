@@ -114,6 +114,9 @@
     <ClCompile Include="Source\Game\Shop.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Village.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\AssetHandler.h">
@@ -219,6 +222,9 @@
       <Filter>Source\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\IItem.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Village.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
