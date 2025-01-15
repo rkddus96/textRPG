@@ -11,6 +11,11 @@ AutoBattle::AutoBattle()
 
 	// 랜덤 몬스터 생성
 	Enemy = (new MonstserFactoryManager())->CreateRandomMonster(Player->GetLevel());
+
+	// 몬스터 UI 출력
+	UI->SetBasicCanvasLayerHide(false, EBasicCanvasLayer::MonsterInfo);
+	UI->SetBasicCanvasMonsterInfoUI(Enemy->GetName(), Enemy->GetCurHp());
+
 	Sleep(3000);
 }
 

@@ -12,6 +12,10 @@ HandBattle::HandBattle()
 	// 보스 몬스터 생성
 	Enemy = (new MonstserFactoryManager())->CreateMonster(EMonsterType::King);
 
+	// 몬스터 UI 출력
+	UI->SetBasicCanvasLayerHide(false, EBasicCanvasLayer::MonsterInfo);
+	UI->SetBasicCanvasMonsterInfoUI(Enemy->GetName(), Enemy->GetCurHp());
+
 	Sleep(3000);
 }
 
@@ -100,6 +104,8 @@ void HandBattle::GameWin()
 	// 전투 종료
 	bGameFinished = true;
 
+	PrintNormalEndingLog();
+
 	// 최종 전투 시작
 	unique_ptr<FinalBossBattle> finalBoss = make_unique<FinalBossBattle>();
 	finalBoss->StartBattle();
@@ -126,4 +132,31 @@ void HandBattle::GameLose()
 
 	// 전투 종료
 	bGameFinished = true;
+}
+
+void HandBattle::PrintNormalEndingLog()
+{
+	Sleep(1000);
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
+
+	// 로그 선언
+	string endingLog1 = "정말 이게 끝일까 ?";
+	string endingLog2 = "왕국이 다시 찾아오지 않을까 ?";
+	string endingLog3 = "아니면 더 큰 위험이 도사리고 있는 건 아닐까 ?";
+
+	wstring endingLog1ToW = LogicHelper::StringToWString(endingLog1);
+	wstring endingLog2ToW = LogicHelper::StringToWString(endingLog2);
+	wstring endingLog3ToW = LogicHelper::StringToWString(endingLog3);
+
+	// 연출용도로 1초 간격으로 로그 출력
+	Sleep(2000);
+	UI->AddMessageToBasicCanvasEventInfoUI(endingLog1ToW);
+
+	Sleep(2000);
+	UI->AddMessageToBasicCanvasEventInfoUI(endingLog2ToW);
+
+	Sleep(2000);
+	UI->AddMessageToBasicCanvasEventInfoUI(endingLog3ToW);
+
+	Sleep(2000);
 }
