@@ -21,6 +21,12 @@ ABattle::ABattle()
 	bGameFinished = false;
 	PotionEventStartingHp = 50;
 }
+
+ABattle::~ABattle()
+{
+	UI->SetBasicCanvasLayerHide(false, EBasicCanvasLayer::MonsterInfo);
+}
+
 // 몬스터의 공격
 void ABattle::MonsterAttackAction()
 {
@@ -185,6 +191,7 @@ void ABattle::PlayerAttackAction()
 	}
 
 	// 로그 초기화
+	UI->SetBasicCanvasMonsterInfoUI(Enemy->GetName(), Enemy->GetCurHp());
 	CurHpLog = EnemyName + "의 피격 후 체력 : " + to_string(Enemy->GetCurHp());
 	DamageLogToW = LogicHelper::StringToWString(DamageLog);
 	CurHpLogToW = LogicHelper::StringToWString(CurHpLog);

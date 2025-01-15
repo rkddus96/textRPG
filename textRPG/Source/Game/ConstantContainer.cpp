@@ -14,6 +14,9 @@ namespace AudioPath
 	const std::string BATTLE_BGM = "BattleBGM.wav";
 	const std::string BOSS_BGM = "Boss.wav";
 	const std::string FINALBOSS_BGM = "FinalBoss.wav";
+	const std::string SELECT = "Select.wav";
+	const std::string BOOK = "Book.wav";
+	const std::string MAIN_BGM = "Main.wav";
 
 }
 

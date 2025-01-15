@@ -29,6 +29,7 @@ void OpeningScene::PlayScene()
         KeyInput = InputReceiver::ChatchInput();
     }
 
+    AudioPlayer::Play(AudioPath::MAIN_BGM, 0.4f);
     const FASCIIArtContainer& TitleArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Title);
     UIManagerInstance->SetOpeningCanvasTitleArt(10, 10, TitleArtContainer.ArtLines, false);
 
@@ -41,6 +42,7 @@ void OpeningScene::PlayScene()
         KeyInput = InputReceiver::ChatchInput();
     }
 
+    AudioPlayer::StopAll();
     PlayOpeningPrologue();
     
     return;
@@ -52,6 +54,8 @@ OpeningScene::~OpeningScene()
 
 void OpeningScene::PlayOpeningPrologue()
 {
+    AudioPlayer::Play(AudioPath::RESULT, 0.4f);
+
     auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 
     UIManagerInstance->SetOpeningCanvasLayerHide(true, EOpeningCanvasLayer::Title, false);
@@ -66,6 +70,9 @@ void OpeningScene::PlayOpeningPrologue()
     StoryText.AddTextLine(L"대충 스토리..........");
     StoryText.AddTextLine(L"대충 스토리..........");
     StoryText.AddTextLine(L"대충 스토리..........");
+
+    AudioPlayer::Play(AudioPath::BOOK);
+
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
 
     EKey KeyInput = EKey::UnAvailable;
@@ -85,6 +92,8 @@ void OpeningScene::PlayOpeningPrologue()
     StoryText.AddTextLine(L"대충 스토리..........");
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
 
+    AudioPlayer::Play(AudioPath::BOOK);
+
     KeyInput = EKey::UnAvailable;
     while (KeyInput != EKey::Enter)
     {
@@ -102,6 +111,8 @@ void OpeningScene::PlayOpeningPrologue()
     StoryText.AddTextLine(L"대충 스토리..........");
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
 
+    AudioPlayer::Play(AudioPath::BOOK);
+
     KeyInput = EKey::UnAvailable;
     while (KeyInput != EKey::Enter)
     {
@@ -118,6 +129,8 @@ void OpeningScene::PlayOpeningPrologue()
     StoryText.AddTextLine(L"대충 스토리....44......");
     StoryText.AddTextLine(L"대충 스토리..........");
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
+
+    AudioPlayer::Play(AudioPath::BOOK);
 
     KeyInput = EKey::UnAvailable;
     while (KeyInput != EKey::Enter)

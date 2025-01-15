@@ -12,6 +12,10 @@ private:
 
 	// 게임 패배
 	void GameLose();
+
+	// 엔딩 로그 출력
+	void PrintRealEndingLog();
+
 public:
 	// 최종보스 생성자
 	FinalBossBattle();

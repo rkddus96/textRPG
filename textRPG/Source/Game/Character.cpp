@@ -9,7 +9,7 @@
 #include "IItem.h"
 #include "InputReceiver.h"
 #include "ConstantContainer.h"
-
+#include "AudioPlayer.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0)
@@ -228,6 +228,8 @@ void Character::InitCharacter()
 		}
 	}
 
+	AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 	
 	std::vector<std::wstring> WLogList = { WarriorExplainLogW, MageExplainLogW, ThiefExplainLogW };
 	std::vector<std::string> LogList = { WarriorExplainLog, MageExplainLog, ThiefExplainLog };
@@ -256,6 +258,8 @@ void Character::InitCharacter()
 		switch (JobChoice)
 		{
 		case EKey::Key_1:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			if (JobIndex > 0)
 			{
 				JobIndex--;
@@ -278,8 +282,11 @@ void Character::InitCharacter()
 			break;
 
 		case EKey::Key_2:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			if (!JobList.empty() && JobIndex >= 0 && JobIndex < JobList.size())
 			{
+
 				Jobs = JobList[JobIndex];
 				UI->AddMessageToBasicCanvasEventInfoUI(L"직업 선택을 완료했습니다.");
 			//	std::cout << "직업 선택을 완료했습니다.";
@@ -294,8 +301,11 @@ void Character::InitCharacter()
 			break;
 
 		case EKey::Key_3:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			if (JobIndex < JobList.size() - 1)
 			{
+
 				JobIndex++;
 				//초기화 후 다음 직업 설명
 				UI->ClearMessageToBasicCanvasEventInfoUI(false);
@@ -313,6 +323,8 @@ void Character::InitCharacter()
 			break;
 
 		default:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 시도해주세요.");
 			Sleep(500);
@@ -393,6 +405,8 @@ void Character::RandomizeStats()
 		switch (Choice)
 		{
 		case EKey::Key_1:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			// Stats에 저장, Damage 계산
 			Stats.SetStat(EStat::MaxHp, maxHp);
 			Stats.SetStat(EStat::CurHp, maxHp);
@@ -406,12 +420,16 @@ void Character::RandomizeStats()
 			break;
 
 		case EKey::Key_2:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"스탯을 재설정합니다.");
 		//	std::cout << "스탯을 재설정합니다." << std::endl;
 			break;
 
 		default:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 입력해주세요.");
 		//	std::cout << "잘못된 입력입니다. 다시 입력해주세요." << std::endl;
