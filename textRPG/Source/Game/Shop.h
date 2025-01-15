@@ -18,7 +18,7 @@ public:
 	void ManageShop(Character& character);
 	
 	
-	std::function<void(const std::vector<std::shared_ptr<IItem>>&)> OnItemChanged;
+	std::function<void(const std::vector<std::shared_ptr<IItem>>&)> OnItemsOfSaleChanged;
 
 
 
