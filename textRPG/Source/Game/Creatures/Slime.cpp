@@ -7,7 +7,7 @@ Slime::Slime(int level)
    
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Slime);
 
-    int hpModifier = 10;
+    int hpModifier = 17;
     int powerModifier = 3;
     int defenseModifier = 3;
     int expModifier = 40;
