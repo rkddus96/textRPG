@@ -15,6 +15,7 @@ TileMapScene::~TileMapScene()
 
 void TileMapScene::PlayScene()
 {
+	// Initialize
 	auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 	UIManagerInstance->BindAllDelegate();
 
@@ -70,9 +71,8 @@ void TileMapScene::PlayScene()
 		// i.e. move를 호출한다거나
 		// 아니면 캐릭터의 스탯이 변화한다거나
 		DrawField();
-	}
-
-	// 게임 클리어 / 게임 오버 시에 따라 다른 텍스트를 출력
+		LogicHelper::SleepFor(MoveDelay);
+	} // While End Main Loop
 }
 
 void TileMapScene::DrawField()
