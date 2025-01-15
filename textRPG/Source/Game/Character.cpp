@@ -43,6 +43,15 @@ void Character::SetExp(int exp)
 	}
 }
 
+void Character::SetMaxExp(int max_exp)
+{
+	MaxExp = max_exp;
+	if (OnCharacterChanged)
+	{
+		OnCharacterChanged(ECharacterEvent::MaxExp, max_exp);
+	}
+}
+
 void Character::RaiseExp(int exp)
 {
 	if (Level >= 10)
