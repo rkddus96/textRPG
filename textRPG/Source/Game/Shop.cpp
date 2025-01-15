@@ -75,7 +75,9 @@ void Shop::BuyItem(Character& character, int& index)
 			{
 				// 아이템 목록에서 상품 제거
 				ItemsForSale.erase(ItemsForSale.begin() + index);
-
+				
+				// 아이템 효과 적용
+				Inventory[index]->Use(character);
 				// ItemIndex가 벡터의 새로운 크기를 초과하지 않도록 조정
 				if (index >= ItemsForSale.size())
 				{

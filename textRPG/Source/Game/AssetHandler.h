@@ -24,6 +24,7 @@ enum class EArtList
 	Heroine,
 	King,
 	Landscape,
+	Mage,
 	MainCharacter,
 	Merchant,
 	MerchantTwo,
@@ -43,10 +44,12 @@ enum class EArtList
 	Sword2,
 	Test,
 	Test2,
+	Thief,
 	Title,
 	Village1,
 	Village2,
 	Wand,
+	Warrior,
 	Waterfall,
 	Witch
 
