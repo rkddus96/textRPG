@@ -9,14 +9,15 @@
 #include "Shop.h"
 
 Village::Village(Character& Player, std::shared_ptr<UIManager> ui, EArtList VillageArt)
-	:Player(Player), UIManagerInstance(ui), DefualtArt(VillageArt)
+	:Player(Player), UIManagerInstance(ui), DefualtArt(VillageArt), DefaultMessage(L"마을의 중심에 도착했습니다. 무엇을 하시겠습니까?")
 {
-	DefaultMessage = L"마을의 중심에 도착했습니다. 무엇을 하시겠습니까?";
-	BuildOptions();
 }
 
 void Village::Run()
 {
+	// 정보에 따라 현재 선택지 정보 초기환
+	BuildOptions();
+
 	DrawDefaultScene();
 
 	while (!bEndVillage)
@@ -95,7 +96,6 @@ void Village::VisitChurch()
 			// Calculate Helath Logic
 			int FinalHealth = MaxHealth;
 			PlayerStatus.SetStat(EStat::CurHp, FinalHealth);
-
 			UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchHealMessage, true);
 		}
 		// 골드 부족, 거절 메시지 출력
@@ -109,9 +109,7 @@ void Village::VisitChurch()
 		// 거절 메시지
 		UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchRejectMessage, true);
 	}
-	// 이 부분은 추가적으로 언급이 필요
-	// Sleep 혹은 Press Any Key
-	//InputReceiver::ChatchInput();
+
 	LogicHelper::SleepFor(1000);
 }
 
@@ -129,23 +127,36 @@ void Village::Exit()
 
 void Village::BuildOptions()
 {
-	// 리플렉션 기능이 있는 것은 아니여서 따로 어떻게 바인딩을 할 수 있을지 잘 모르겠다.
-	// 일단은 직접 코드로 맵핑한다.
+	std::vector<std::wstring> OptionMessages;
+
+	int KeyIndex = static_cast<int>(EKey::Key_1);
+	if (bHasShop)
+	{
+		OptionMessages.push_back(L"상점");
+		EKey MappingKey = static_cast<EKey>(KeyIndex++);
+		KeyMappingMap[MappingKey] = std::bind(&Village::VisitStore, this);
+	}
+	if (bHasChurch)
+	{
+		OptionMessages.push_back(L"교회");
+		EKey MappingKey = static_cast<EKey>(KeyIndex++);
+		KeyMappingMap[MappingKey] = std::bind(&Village::VisitChurch, this);
+	}
+	// 현재 사용하지는 않음
 	if (bCanTriggerEvent)
 	{
-		DefulatSelectoinMessage = FormatSelectionMessage({L"상점", L"교회", L"대화하기", L"나가기"});
-		KeyMappingMap[EKey::Key_1] = std::bind(&Village::VisitStore, this);
-		KeyMappingMap[EKey::Key_2] = std::bind(&Village::VisitChurch, this);
-		KeyMappingMap[EKey::Key_3] = std::bind(&Village::VisitEvent, this);
-		KeyMappingMap[EKey::Key_4] = std::bind(&Village::Exit, this);
+		OptionMessages.push_back(L"대화하기");
+		EKey MappingKey = static_cast<EKey>(KeyIndex++);
+		KeyMappingMap[MappingKey] = std::bind(&Village::VisitEvent, this);
 	}
-	else
+	// 종료는 항상 존재
 	{
-		DefulatSelectoinMessage = FormatSelectionMessage({ L"상점", L"교회", L"나가기" });
-		KeyMappingMap[EKey::Key_1] = std::bind(&Village::VisitStore, this);
-		KeyMappingMap[EKey::Key_2] = std::bind(&Village::VisitChurch, this);
-		KeyMappingMap[EKey::Key_3] = std::bind(&Village::Exit, this);
+		OptionMessages.push_back(L"나가기");
+		EKey MappingKey = static_cast<EKey>(KeyIndex++);
+		KeyMappingMap[MappingKey] = std::bind(&Village::Exit, this);
 	}
+
+	DefulatSelectoinMessage = FormatSelectionMessage(OptionMessages);
 }
 
 std::wstring Village::FormatSelectionMessage(const std::vector<std::wstring>& OptionTexts) const

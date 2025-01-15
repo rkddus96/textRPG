@@ -72,9 +72,12 @@ void TileMapScene::PlayScene()
 		else if (IsInventoryInput(KeyInput))
 		{
 			// Inventory 열기 설정
+			UIManagerInstance->OpenInventory();
 		}
 		else if (IsInteractionInput(KeyInput))
 		{
+			// Refactor: 추후에 타일 Class가 존재한다면 Tile Class의 정보를 바탕으로 생성
+
 			// 상호 작용 가능한 타일일 경우 상호작용을 실행한다.
 			ETile CurrentTile = TileMapInstance->GetCurrentTileType();
 			// Village1 Type
@@ -82,12 +85,14 @@ void TileMapScene::PlayScene()
 			{
 				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
 				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.SetHasShop(false);
 				village.Run();
 			}
 			else if (CurrentTile == ETile::Village2)
 			{
 				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
 				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.SetHasShop(true);
 				village.Run();
 			}
 			else if (CurrentTile == ETile::DemonLordCastle)
