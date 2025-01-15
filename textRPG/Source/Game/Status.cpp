@@ -30,7 +30,7 @@ void Status::SetStat(EStat statType, int value)
 	// 스탯 변경 시 콜백 호출
 	if (OnStatChanged)
 	{
-		OnStatChanged(statType, value);
+		OnStatChanged(statType, stats[statType]);
 	}
 }
 
