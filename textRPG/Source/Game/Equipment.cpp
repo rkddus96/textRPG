@@ -23,7 +23,7 @@ const FASCIIArtContainer& Equipment::GetArtContainer() const
 
 void Equipment::Use(Character& character)
 {
-	Status Stats = character.GetStatus();
+	Status& Stats = character.GetStatus();
 
 	for (int i = 0; i < StatTypes.size(); i++)
 	{
@@ -34,7 +34,7 @@ void Equipment::Use(Character& character)
 
 void Equipment::UnUse(Character& character)
 {
-	Status Stats = character.GetStatus();
+	Status& Stats = character.GetStatus();
 
 	for (int i = 0; i < StatTypes.size(); i++)
 	{
