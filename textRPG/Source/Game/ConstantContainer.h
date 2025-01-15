@@ -31,6 +31,11 @@ namespace Console
 	extern const int CONSOLE_HEIGHT;
 }
 
+namespace Battle
+{
+	extern const float CRITICAL;
+}
+
 namespace UI
 {
 	// 두 칸 문자의 공간을 표시하거나 공백을 위한 문자

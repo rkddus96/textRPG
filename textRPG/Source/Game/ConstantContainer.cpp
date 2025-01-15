@@ -20,6 +20,11 @@ namespace AudioPath
 
 }
 
+namespace Battle
+{
+	const float CRITICAL = 1.2f;
+}
+
 namespace Console
 {
 	const int CONSOLE_WIDTH = 150;
