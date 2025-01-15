@@ -1,7 +1,10 @@
+#define NOMINMAX // wihdow 헤더의 max min disable
+
 #include <iostream>
 #include <algorithm>
 #include <random>
 #include <memory>
+#include <Windows.h>
 #include "Character.h"
 #include "IItem.h"
 #include "InputReceiver.h"
@@ -258,7 +261,9 @@ void Character::InitCharacter()
 			else
 			{
 			//	std::cout << "더 이상 뒤로 갈 수 없습니다.";
-				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 뒤로 갈 수 없습니다.");
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
+				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 이전으로 갈 수 없습니다.");
+				Sleep(500);
 			}
 			break;
 
@@ -272,7 +277,9 @@ void Character::InitCharacter()
 			} // 유효성 확인
 			else
 			{
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
 				UI->AddMessageToBasicCanvasEventInfoUI(L"유효하지 않은 선택입니다.");
+				Sleep(500);
 			}
 			break;
 
@@ -288,13 +295,17 @@ void Character::InitCharacter()
 			}
 			else
 			{
-				UI->AddMessageToBasicCanvasEventInfoUI(L"마지막 직업입니다.");
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
+				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 다음으로 갈 수 없습니다.");
+				Sleep(500);
 			//	std::cout << "마지막 직업입니다.";
 			}
 			break;
 
 		default:
+			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 시도해주세요.");
+			Sleep(500);
 		//	std::cout << "잘못된 입력입니다. 다시 시도해주세요." << std::endl;
 		}
 
