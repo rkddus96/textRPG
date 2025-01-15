@@ -7,7 +7,7 @@ Witch::Witch(int level)
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Witch);
 
     int hpModifier = 15;
-    int powerModifier = 5;
+    int powerModifier = 6;
     int defenseModifier = 2;
     int expModifier = 50;
     int moneyModifier = 150;
