@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Game\Creatures\Orc.cpp" />
     <ClCompile Include="Source\Game\Creatures\Slime.cpp" />
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
+    <ClCompile Include="Source\Game\EndingScene.cpp" />
     <ClCompile Include="Source\Game\Equipment.cpp" />
     <ClCompile Include="Source\Game\HealthPotion.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
@@ -72,6 +73,7 @@
     <ClInclude Include="Source\Game\Creatures\Orc.h" />
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
+    <ClInclude Include="Source\Game\EndingScene.h" />
     <ClInclude Include="Source\Game\Equipment.h" />
     <ClInclude Include="Source\Game\HealthPotion.h" />
     <ClInclude Include="Source\Game\IItem.h" />
