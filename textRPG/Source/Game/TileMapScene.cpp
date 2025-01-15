@@ -72,6 +72,7 @@ void TileMapScene::PlayScene()
 		else if (IsInventoryInput(KeyInput))
 		{
 			// Inventory 열기 설정
+			UIManagerInstance->OpenInventory();
 		}
 		else if (IsInteractionInput(KeyInput))
 		{
