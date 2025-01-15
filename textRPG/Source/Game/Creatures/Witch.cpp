@@ -1,7 +1,7 @@
 #include "Witch.h"
 
 Witch::Witch(int level)
-    : Monster("Witch", 20, 15, 2, 10, 100, level)
+    : Monster("마녀", 20, 15, 2, 10, 100, level)
 {
     //초기화
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Witch);

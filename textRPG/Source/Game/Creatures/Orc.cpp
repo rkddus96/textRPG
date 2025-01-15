@@ -1,7 +1,7 @@
 #include "Orc.h"
 
 Orc::Orc(int level)
-    : Monster("Orc", 30, 5, 3, 20, 100, level)
+    : Monster("오크", 30, 5, 3, 20, 100, level)
 {
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Orc);
 
