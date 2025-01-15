@@ -29,7 +29,7 @@ Shop::Shop()
 	
 	// 고급 아이템
 	ItemsForSale.emplace_back(std::make_shared<Equipment>("Ragnarok's Edge", std::vector<EStat>{ EStat::Power }, std::vector<int>{ 18 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Sword2)));
-	ItemsForSale.emplace_back(std::make_shared<Equipment>("Yggdrasil's Branch", std::vector<EStat>{ EStat::Defense }, std::vector<int>{ 12 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Wand)));
+	ItemsForSale.emplace_back(std::make_shared<Equipment>("Yggdrasil's Branch", std::vector<EStat>{ EStat::Defense }, std::vector<int>{ 15 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Wand)));
 	ItemsForSale.emplace_back(std::make_shared<Equipment>("Loki's Charm", std::vector<EStat>{ EStat::Luck }, std::vector<int>{ 18 }, 6000, GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Necklace)));
 
 	// 극단적인 아이템
@@ -45,7 +45,6 @@ void Shop::BuyItem(Character& character, int& index)
 	std::wstring CannotBuyLogOneW;
 	std::wstring CannotBuyLogTwoW;
 
-	
 	CannotBuyLogOne = "돈이 부족합니다.";
 	CannotBuyLogTwo = "더 이상 아이템을 구매할 수 없습니다.";
 	
@@ -71,10 +70,6 @@ void Shop::BuyItem(Character& character, int& index)
 			Inventory.push_back(ItemsForSale[index]);
 			character.SetGold(Gold - Price);
 
-
-
-
-
 			// 포션이 아닐 경우
 			if (index != 0)
 			{
@@ -87,8 +82,6 @@ void Shop::BuyItem(Character& character, int& index)
 					index = max(0, static_cast<int>(ItemsForSale.size()) - 1);
 				}
 			}
-
-
 		}
 	}
 	// 인벤토리가 가득 찬 경우
@@ -141,7 +134,6 @@ void Shop::ManageShop(Character& character)
 	//UI 변수 초기화
 	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
 	
-	
 	// 로그 선언
 	std::string WelcomeLog;
 	std::string FirstChoiceOptionsLog;
@@ -167,9 +159,7 @@ void Shop::ManageShop(Character& character)
 
 	PurchaseLog = "어떤 물품을 원하시나요? 원하는 번호를 입력해주세요.    0: 뒤로 가기";
 		
-
 	SellLog = "어떤 물품을 파실건가요? 파실 물품의 번호를 입력해주세요.    0: 뒤로 가기";
-		
 
 	BackToFirstChoiceLog = "첫 번째 선택으로 돌아갑니다.";
 
@@ -178,7 +168,6 @@ void Shop::ManageShop(Character& character)
 	WrongChoiceLog = "잘못된 선택입니다. 다시 입력해주세요.";
 
 	RemainGoldLog = "남은 골드: " + std::to_string(Gold);
-
 
 	
 	WelcomeLogW = LogicHelper::StringToWString(WelcomeLog);
@@ -189,8 +178,6 @@ void Shop::ManageShop(Character& character)
 	GetOutShopLogW = LogicHelper::StringToWString(GetOutShopLog);
 	WrongChoiceLogW = LogicHelper::StringToWString(WrongChoiceLog);
 	RemainGoldLogW = LogicHelper::StringToWString(RemainGoldLog);
-
-	
 
 	// 로그 출력
 	UI->AddMessageToBasicCanvasEventInfoUI(WelcomeLogW);
@@ -284,8 +271,6 @@ void Shop::ManageShop(Character& character)
 					{
 						break;
 					}
-
-
 				}
 				break;
 
@@ -403,8 +388,4 @@ void Shop::Display(int index)
 	UI->AddMessageToBasicCanvasEventInfoUI(ItemNameLogW);
 	//	UI->AddMessageToBasicCanvasEventInfoUI(ItemPriceLogW);
 	//	UI->AddMessageToBasicCanvasEventInfoUI(ItemExplanationLogW);
-
-
-
-
 }
