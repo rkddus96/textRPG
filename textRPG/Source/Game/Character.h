@@ -6,6 +6,15 @@
 
 #include "Status.h"
 #include "IJob.h"
+#include "Managers/UIManager.h"
+#include "LogicHelper.h"
+#include "Managers/GameManager.h"
+#include "InputReceiver.h"
+#include "ConstantContainer.h"
+#include "Warrior.h"
+#include "Mage.h"
+#include "Thief.h"
+
 
 class IItem;// Item 구현 시 추가
 
@@ -22,7 +31,10 @@ enum class ECharacterEvent
 
 
 class Character
-{
+{	
+protected:
+	std::shared_ptr<UIManager> 	UI = GameManager::GetInstance().GetUIManager();
+
 private:
 	
 	std::string Name;
@@ -35,7 +47,9 @@ private:
 	std::shared_ptr<IJob> Jobs;
 	std::vector<std::shared_ptr<IItem>> Inventory; 
 
-	
+	// 직업을 저장할 vector
+	std::vector<std::shared_ptr<IJob>> JobList;
+
 
 	Character();
 	
@@ -96,7 +110,7 @@ public:
 	void UsePotion();
 
 	// 인벤토리 출력
-	void DisplayInventory();
+	
 	void DisplayInventory(int index);
 
 	void Notify();

@@ -1,10 +1,10 @@
 #include "Devil.h"
 
-
 Devil::Devil()
     : Monster("Devil", 700, 90, 30, 0, 0, 99)
 {
     MaxHp = BaseHp;
+    CurHp = MaxHp;
     Power = BasePower;
     Defense = BaseDefense;
     

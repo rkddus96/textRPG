@@ -2,7 +2,7 @@
 
 
 Goblin::Goblin(int level)
-    : Monster("Goblin", 20, 10, 1, 20, 100, level)
+    : Monster("고블린", 20, 10, 1, 20, 100, level)
 {
     //초기화
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Goblin);
