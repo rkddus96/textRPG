@@ -3,16 +3,20 @@
 #include <random>
 #include <memory>
 #include "Character.h"
-#include "Warrior.h"
-#include "Mage.h"
-#include "Thief.h"
 #include "IItem.h"
-#include "Managers/UIManager.h"
-#include "LogicHelper.h"
-#include "Managers/GameManager.h"
+#include "InputReceiver.h"
+#include "ConstantContainer.h"
+
+
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0)
 {
+	JobList = {
+			std::make_shared<Warrior>(),
+			std::make_shared<Mage>(),
+			std::make_shared<Thief>()
+	};
+	
 	InitCharacter();
 	RandomizeStats();
 
@@ -99,10 +103,7 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 
 // 아이템 사용
 void Character::UsePotion()
-{
-	//UI 초기화
-	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
-	
+{	
 	std::string CannotUsePotionLog;
 	std::wstring CannotUsePotionLogW;
 	CannotUsePotionLog = "인벤토리 내부에 포션이 없습니다.";
@@ -143,14 +144,69 @@ int Character::TakeDamage(int rawdamage)
 // 캐릭터 생성 함수
 void Character::InitCharacter()
 {
+	
+	// string, wstring Log 선언
+	std::string CharacterNameLog;
+	std::string CharacterNameErrorLog;
+	std::string ChooseJobLog;
+	std::string WarriorExplainLog;
+	std::string MageExplainLog;
+	std::string ThiefExplainLog;
+	std::string InputErrorLog;
+	std::wstring CharacterNameLogW;
+	std::wstring CharacterNameErrorLogW;
+	std::wstring ChooseJobLogW;
+	std::wstring WarriorExplainLogW;
+	std::wstring MageExplainLogW;
+	std::wstring ThiefExplainLogW;
+	std::wstring InputErrorLogW;
+
+
+	// string Log 초기화
+	CharacterNameLog = "생성할 캐릭터의 이름을 입력해주세요: ";
+	CharacterNameErrorLog = "이름을 입력하지 않았습니다. 다시 입력해주세요";
+	ChooseJobLog = "직업을 선택해주세요.  ";
+	WarriorExplainLog = "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
+	MageExplainLog = "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 돕는 마법의 대가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
+	ThiefExplainLog = "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
+	InputErrorLog = "잘못된 입력입니다. 다시 시도해주세요.";
+
+	// wstring으로 변환
+	CharacterNameLogW = LogicHelper::StringToWString(CharacterNameLog);
+	CharacterNameErrorLogW = LogicHelper::StringToWString(CharacterNameErrorLog);
+	ChooseJobLogW = LogicHelper::StringToWString(ChooseJobLog);
+	WarriorExplainLogW = LogicHelper::StringToWString(WarriorExplainLog);
+	MageExplainLogW = LogicHelper::StringToWString(MageExplainLog);
+	ThiefExplainLogW = LogicHelper::StringToWString(ThiefExplainLog);
+	InputErrorLogW = LogicHelper::StringToWString(InputErrorLog);
+
+	
+	//std::reference_wrapper 사용
+	using ASCIIArtRef = std::reference_wrapper<const FASCIIArtContainer>;
+
+	// 이미지 초기화
+	const FASCIIArtContainer& WarriorContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Warrior);
+	const FASCIIArtContainer& MageContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Mage);
+	const FASCIIArtContainer& ThiefContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Thief);
+
+	// 이미지 리스트
+	std::vector<ASCIIArtRef> JobContainerList = { WarriorContainer, MageContainer, ThiefContainer };
+
+
 	//1. 이름 설정
 	while (true)
 	{
+
+		// 로그 출력
+//		UI->AddMessageToBasicCanvasEventInfoUI(CharacterNameLogW);
 		std::cout << "생성할 캐릭터의 이름을 입력해주세요: ";
+		
 		std::getline(std::cin, Name);
+		
 
 		if (Name.empty())
 		{
+	//		UI->AddMessageToBasicCanvasEventInfoUI(CharacterNameErrorLogW);
 			std::cout << "이름을 입력하지 않았습니다. 다시 입력해주세요" << std::endl;
 		}
 		else
@@ -159,44 +215,101 @@ void Character::InitCharacter()
 		}
 	}
 
+	
+	std::vector<std::wstring> WLogList = { WarriorExplainLogW, MageExplainLogW, ThiefExplainLogW };
+	std::vector<std::string> LogList = { WarriorExplainLog, MageExplainLog, ThiefExplainLog };
+	int JobIndex = 0;
+	bool bSelectJob = false;
+
+	// 직업 설명 시작
+	UI->AddMessageToBasicCanvasEventInfoUI(ChooseJobLogW);
+	UI->ChangeBasicCanvasArtImage(JobContainerList[JobIndex]);
+	UI->AddMessageToBasicCanvasEventInfoUI(WarriorExplainLogW);
+
 	//2. 직업 선택
 	while (true)
 	{
-		std::cout << "직업을 선택해주세요." << std::endl;
-		std::cout << "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다." << std::endl;
-		std::cout << "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 돕는 마법의 대가입니다." << std::endl;
-		std::cout << "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다. " << std::endl;
-		int JobChoice = 0;
-		std::cin >> JobChoice;
+		
+	//	UI->AddMessageToBasicCanvasEventInfoUI(ThiefExplainLogW);
 
+	//	std::cout << "직업을 선택해주세요." << std::endl;
+	//	std::cout << "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다." << std::endl;
+	//	std::cout << "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 돕는 마법의 대가입니다." << std::endl;
+	//	std::cout << "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다. " << std::endl;
+		
+		EKey JobChoice = InputReceiver::ChatchInput();
+	//	int JobChoice = 0;
+	//	std::cin >> JobChoice;
 		switch (JobChoice)
 		{
-		case 1:
-			Jobs = std::make_shared<Warrior>();
-			break;
-		
-		case 2:
-			Jobs = std::make_shared<Mage>();
+		case EKey::Key_1:
+			if (JobIndex > 0)
+			{
+				JobIndex--;
+				// 초기화 후 다음 직업 설명
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
+				//이미지 출력
+				UI->ChangeBasicCanvasArtImage(JobContainerList[JobIndex]);
+				UI->AddMessageToBasicCanvasEventInfoUI(WLogList[JobIndex]);
+
+
+			//	std::cout << LogList[JobIndex];
+			}
+			else
+			{
+			//	std::cout << "더 이상 뒤로 갈 수 없습니다.";
+				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 뒤로 갈 수 없습니다.");
+			}
 			break;
 
-		case 3:
-			Jobs = std::make_shared<Thief>();
+		case EKey::Key_2:
+			if (!JobList.empty() && JobIndex >= 0 && JobIndex < JobList.size())
+			{
+				Jobs = JobList[JobIndex];
+				UI->AddMessageToBasicCanvasEventInfoUI(L"직업 선택을 완료했습니다.");
+			//	std::cout << "직업 선택을 완료했습니다.";
+				bSelectJob = true;
+			} // 유효성 확인
+			else
+			{
+				UI->AddMessageToBasicCanvasEventInfoUI(L"유효하지 않은 선택입니다.");
+			}
 			break;
-		
+
+		case EKey::Key_3:
+			if (JobIndex < JobList.size() - 1)
+			{
+				JobIndex++;
+				//초기화 후 다음 직업 설명
+				UI->ClearMessageToBasicCanvasEventInfoUI(false);
+				UI->ChangeBasicCanvasArtImage(JobContainerList[JobIndex]);
+				UI->AddMessageToBasicCanvasEventInfoUI(WLogList[JobIndex]);
+			//	std::cout << LogList[JobIndex];
+			}
+			else
+			{
+				UI->AddMessageToBasicCanvasEventInfoUI(L"마지막 직업입니다.");
+			//	std::cout << "마지막 직업입니다.";
+			}
+			break;
+
 		default:
-			std::cout << "잘못된 입력입니다. 다시 시도해주세요." << std::endl;
+			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 시도해주세요.");
+		//	std::cout << "잘못된 입력입니다. 다시 시도해주세요." << std::endl;
 		}
 
 		if (OnCharacterChanged)
 		{
-			OnCharacterChanged(ECharacterEvent::Job, JobChoice);
+			OnCharacterChanged(ECharacterEvent::Job, JobIndex);
 		}
 
-		if (JobChoice == 1 || JobChoice == 2 || JobChoice == 3)
+		if (bSelectJob)
 		{
 			break;
 		}
+
 	}
+	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 }
 
 // 스탯 설정 함수
@@ -214,10 +327,12 @@ void Character::RandomizeStats()
 
 	std::cout << "이  름 : " << Name << std::endl;
 	std::cout << "레  벨 : " << Level << std::endl;
-	std::wcout <<"직  업 : " << Jobs->GetJobName() << std::endl;
+	std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
+
+	
 
 	int Choice = 0;
-	while (Choice != 1)
+	while (true)
 	{
 		// 랜덤 스탯을 할당한다.
 		int maxHp = distHp(gen);
@@ -225,32 +340,43 @@ void Character::RandomizeStats()
 		int defense = distDefense(gen);
 		int luck = distLuck(gen);
 
-		// 스탯 표시
-		std::cout << " 능력치를 설정해주세요!" << std::endl;
-		std::cout << "-------------------------------------------------" << std::endl;
-		std::cout << "                  PLAYER STATUS                  " << std::endl;
-		std::cout << "-------------------------------------------------" << std::endl;
-		std::cout << "체  력 : " << maxHp << "/" << maxHp << std::endl;
-		std::cout << "공격력 : " << power << std::endl;
-		std::cout << "방어력 : " << defense << std::endl;
-		std::cout << "행  운 : " << luck << std::endl;
-		std::cout << "-------------------------------------------------" << std::endl;
-		std::cout << "능력치를 확정하시겠습니까?" << std::endl;
-		std::cout << "1. 결정" << std::endl;
-		std::cout << "2. 재설정" << std::endl;
-		std::cin >> Choice;
 
-		// cin 에러 예외 처리
-		if (std::cin.fail())
-		{
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			Choice = 0;
-		}
+		std::string StatLog;
+		std::wstring StatLogW;
+		StatLog = "체력 : " + std::to_string(maxHp) + " / " + std::to_string(maxHp) + ", 공격력 : " + std::to_string(power) + ", 방어력 : " + std::to_string(defense) + ", : 행운 : " + std::to_string(luck) + "   [1. 결정], [2. 재설정]";
+		StatLogW = LogicHelper::StringToWString(StatLog);
+
+		UI->ClearMessageToBasicCanvasEventInfoUI(false);
+		UI->AddMessageToBasicCanvasEventInfoUI(StatLogW);
+		
+
+		//// 스탯 표시
+		//std::cout << " 능력치를 설정해주세요!" << std::endl;
+		//std::cout << "-------------------------------------------------" << std::endl;
+		//std::cout << "                  PLAYER STATUS                  " << std::endl;
+		//std::cout << "-------------------------------------------------" << std::endl;
+		//std::cout << "체  력 : " << maxHp << "/" << maxHp << std::endl;
+		//std::cout << "공격력 : " << power << std::endl;
+		//std::cout << "방어력 : " << defense << std::endl;
+		//std::cout << "행  운 : " << luck << std::endl;
+		//std::cout << "-------------------------------------------------" << std::endl;
+		//std::cout << "능력치를 확정하시겠습니까?" << std::endl;
+		//std::cout << "1. 결정" << std::endl;
+		//std::cout << "2. 재설정" << std::endl;
+	//	std::cin >> Choice;
+		EKey Choice = InputReceiver::ChatchInput();
+
+		//// cin 에러 예외 처리
+		//if (std::cin.fail())
+		//{
+		//	std::cin.clear();
+		//	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		//	Choice = 0;
+		//}
 
 		switch (Choice)
 		{
-		case 1:
+		case EKey::Key_1:
 			// Stats에 저장, Damage 계산
 			Stats.SetStat(EStat::MaxHp, maxHp);
 			Stats.SetStat(EStat::CurHp, maxHp);
@@ -258,22 +384,34 @@ void Character::RandomizeStats()
 			Stats.SetStat(EStat::Defense, defense);
 			Stats.SetStat(EStat::Luck, luck);
 
-			std::cout << "능력치가 확정되었습니다." << std::endl;
+			UI->ClearMessageToBasicCanvasEventInfoUI(false);
+			UI->AddMessageToBasicCanvasEventInfoUI(L"능력치가 확정되었습니다.");
+		//	std::cout << "능력치가 확정되었습니다." << std::endl;
 			break;
 
-		case 2:
-			std::cout << "스탯을 재설정합니다." << std::endl;
+		case EKey::Key_2:
+			UI->ClearMessageToBasicCanvasEventInfoUI(false);
+			UI->AddMessageToBasicCanvasEventInfoUI(L"스탯을 재설정합니다.");
+		//	std::cout << "스탯을 재설정합니다." << std::endl;
 			break;
 
 		default:
-			std::cout << "잘못된 입력입니다. 다시 입력해주세요." << std::endl;
+			UI->ClearMessageToBasicCanvasEventInfoUI(false);
+			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 입력해주세요.");
+		//	std::cout << "잘못된 입력입니다. 다시 입력해주세요." << std::endl;
 			break;
 		}
+		if (Choice == EKey::Key_1)
+		{
+			break;
+		}
+	
 	}
 	// Damage 계산
 	int powerWeight = Jobs->GetPowerWeight();
 	int defenseWeight = Jobs->GetDefenseWeight();
 	int luckWeight = Jobs->GetLuckWeight();
+
 }
 
 // 레벨업 함수
@@ -333,8 +471,6 @@ void Character::Notify()
 // Character.cpp -> display 함수
 void Character::DisplayInventory(int index)
 {
-	std::shared_ptr<UIManager> UI = GameManager::GetInstance().GetUIManager();
-
 
 	std::string ItemNameLog;
 	std::string ItemPriceLog;
