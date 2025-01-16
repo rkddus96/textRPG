@@ -421,7 +421,7 @@ void UIManager::ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI)
 		return;
 	}
 
-	int MaxLevelTextLength = 6;
+	int MaxLevelTextLength = 7;
 
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxLevelTextLength);
@@ -458,7 +458,7 @@ void UIManager::ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI)
 		return;
 	}
 
-	int MaxExpTextLength = 6;
+	int MaxExpTextLength = 7;
 	
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxExpTextLength);
@@ -496,7 +496,7 @@ void UIManager::ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI)
 		return;
 	}
 	
-	int MaxExpTextLength = 6;
+	int MaxExpTextLength = 7;
 
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxExpTextLength);
@@ -535,7 +535,7 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 		return;
 	}
 
-	int MaxMoneyTextLength = 6;
+	int MaxMoneyTextLength = 7;
 
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxMoneyTextLength);

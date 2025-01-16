@@ -492,9 +492,10 @@ void Character::LevelUp()
 	{
 		SetLevel(Level + 1);
 
+	//	Exp = Exp - MaxExp;
+		SetExp(Exp - MaxExp);
 		// 100이 넘어갔을 경우 초과치를 다음 경험치에 추가합니다.
-		Exp = Exp - MaxExp;
-		MaxExp += 50;
+		SetMaxExp(MaxExp + 50);
 
 		
 	}
