@@ -83,9 +83,9 @@ void OpeningScene::PlayOpeningPrologue()
 
     StoryText.StoryTextLines.resize(0);
 
-    StoryText.AddTextLine(L"두 사람은 언젠가 작은 집을 지어 함께 살아가길 꿈꾸며                            ");
-    StoryText.AddTextLine(L"행복한 나날을 보내고 있었다.                                  ");
-    StoryText.AddTextLine(L"                                                                              ");
+    StoryText.AddTextLine(L"두 사람은 언젠가 작은 집을 지어 함께 살아가길 꿈꾸며");
+    StoryText.AddTextLine(L"행복한 나날을 보내고 있었다.");
+    StoryText.AddTextLine(L" ");
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
 
     AudioPlayer::Play(AudioPath::BOOK);
@@ -98,9 +98,9 @@ void OpeningScene::PlayOpeningPrologue()
 
     StoryText.StoryTextLines.resize(0);
 
-    StoryText.AddTextLine(L"하지만 어느 날, 왕국의 병사들이 마을을 급습해 모든 여성을 끌고 갔다.           ");
-    StoryText.AddTextLine(L"병사들은 이유를 묻는 마을 주민들에게               ");
-    StoryText.AddTextLine(L"\"왕실의 명령이다\"라는 말만 남기고 사라졌다.           ");
+    StoryText.AddTextLine(L"하지만 어느 날, 왕국의 병사들이 마을을 급습해 모든 여성을 끌고 갔다.");
+    StoryText.AddTextLine(L"병사들은 이유를 묻는 마을 주민들에게");
+    StoryText.AddTextLine(L"\"왕실의 명령이다\"라는 말만 남기고 사라졌다.");
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
 
     AudioPlayer::Play(AudioPath::BOOK);
@@ -113,9 +113,9 @@ void OpeningScene::PlayOpeningPrologue()
 
     StoryText.StoryTextLines.resize(0);
 
-    StoryText.AddTextLine(L"엘라가 끌려가는 모습을 지켜본 플레이어는 깊은 절망과 분노를 느끼며, ");
-    StoryText.AddTextLine(L"그녀를 되찾기 위해 모험을 떠나기로 결심한다.                          ");
-    StoryText.AddTextLine(L"                                                   ");
+    StoryText.AddTextLine(L"엘라가 끌려가는 모습을 지켜본 플레이어는 깊은 절망과 분노를 느끼며,");
+    StoryText.AddTextLine(L"그녀를 되찾기 위해 모험을 떠나기로 결심한다.");
+    StoryText.AddTextLine(L" ");
     UIManagerInstance->DrawOpeningCanvasPrologue(StoryText);
 
     AudioPlayer::Play(AudioPath::BOOK);

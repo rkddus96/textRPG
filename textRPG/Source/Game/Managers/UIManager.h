@@ -56,7 +56,7 @@ enum class EEndingCanvasLayer
 	BackgroundArt,
 	GameOver,
 	ThankYouForPlaying,
-	EpilogBackground,
+	EpilogueBackground,
 	EpilogueText,
 };
 
@@ -154,6 +154,10 @@ public:
 	void OpenInventory();
 
 	void SetEndingCanvasLayerHide(bool bShouldHide, EEndingCanvasLayer LayerType, bool bShouldUpdateUI = true);
+	void SetEndingCanvasEpilogueBackground(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+	void SetEndingCanvasEpilogueText(const FStoryTextContainer& StoryTextConatiner, int PositionX, int PositionY, bool bShouldUpdateUI = true);
+	void DrawEndingCanvasPrologue(const FStoryTextContainer& StoryTextConatiner, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+
 	void ShowGameOverScene();
 
 
@@ -193,6 +197,13 @@ private:
 	std::deque<std::wstring> EventInfoUIContentsMsgs;
 
 	std::vector<std::vector<wchar_t>> MinimapUIContents;
+
+	int CurrentHpUIInfo = 0;
+	int MaxHpUIInfo = 0;
+
+	int CurrentExpUIInfo = 0;
+	int MaxExpUIInfo = 0;
+
 
 	friend class GameManager;
 };
