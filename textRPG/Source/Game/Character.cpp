@@ -121,7 +121,7 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 	// 장비 아이템이면 바로 효과 적용
 	if (item->IsConsumable() == false)
 	{
-		item->Use(*this);
+		item->IsUsed(*this);
 	}
 	
 	if (OnItemChanged)
@@ -145,7 +145,7 @@ void Character::UsePotion()
 	{
 		if (Inventory[index]->IsConsumable())
 		{
-			Inventory[index]->Use(*this);
+			Inventory[index]->IsUsed(*this);
 			Inventory.erase(Inventory.begin() + index);
 			if (OnItemChanged)
 			{

@@ -49,7 +49,7 @@ public:
 
 	virtual const FASCIIArtContainer& GetArtContainer() const override;
 
-	void Use(Character& character) override;
+	bool IsUsed(Character& character) override;
 
 	void UnUse(Character& character) override;
 	

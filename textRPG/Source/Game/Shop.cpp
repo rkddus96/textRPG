@@ -78,7 +78,7 @@ void Shop::BuyItem(Character& character, int& index)
 			// 포션이 아닐 경우
 			if (index != 0)
 			{
-				ItemsForSale[index]->Use(character);
+				ItemsForSale[index]->IsUsed(character);
 				// 아이템 목록에서 상품 제거
 				ItemsForSale.erase(ItemsForSale.begin() + index);
 				if (index >= ItemsForSale.size())
