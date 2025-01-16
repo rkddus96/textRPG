@@ -553,7 +553,7 @@ void Character::DisplayInventory(int index)
 	std::wstring ItemPriceLogW;
 	std::wstring ItemExplanationLogW;
 
-	ItemNameLog = std::to_string(index + 1) + ". 이름: " + Inventory[index]->GetName() + "  가격: " + std::to_string(Inventory[index]->GetPrice()/2) + "  효과: " + Inventory[index]->GetExplanation() + "    [ <-   이전 페이지] [ ->   다음 페이지  ] [ z. 판매 ]  [ x. 뒤로 가기 ]";
+	ItemNameLog = std::to_string(index + 1) + ". 이름: " + Inventory[index]->GetName() + "  가격: " + std::to_string(Inventory[index]->GetPrice()/2) + "  효과: " + Inventory[index]->GetExplanation() + "    [ <-   이전 페이지] [ ->   다음 페이지  ] [ z. 판매하기 ]  [ x. 뒤로 가기 ]";
 	//	ItemPriceLog = 
 	//	ItemExplanationLog = ;
 
