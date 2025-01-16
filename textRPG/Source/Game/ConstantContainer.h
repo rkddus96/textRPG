@@ -22,7 +22,8 @@ namespace AudioPath
 	extern const std::string SELECT;			// 키보드 입력시
 	extern const std::string BOOK;				// 책장 넘길 때
 	extern const std::string MAIN_BGM;			// 메인화면 브금
-
+	extern const std::string OPENING_PEACEFUL;  // 오프닝 씬 평화로운 브금
+	extern const std::string OPENING_SERIOUS;   // 오프닝 씬 심각한 브금
 }
 
 namespace Console
