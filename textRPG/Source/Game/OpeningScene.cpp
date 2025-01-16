@@ -32,7 +32,7 @@ void OpeningScene::PlayScene()
 
     AudioPlayer::Play(AudioPath::MAIN_BGM, 0.4f);
     const FASCIIArtContainer& TitleArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Title);
-    UIManagerInstance->SetOpeningCanvasTitleArt(10, 10, TitleArtContainer.ArtLines, false);
+    UIManagerInstance->SetOpeningCanvasTitleArt(14, 8, TitleArtContainer, false);
 
     const FASCIIArtContainer& BacgroundArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Castle2);
     UIManagerInstance->SetOpeningCanvasBackgroundArt(2, 65, BacgroundArtContainer.ArtLines);
