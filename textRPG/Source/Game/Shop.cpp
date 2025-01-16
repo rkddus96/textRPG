@@ -78,7 +78,7 @@ void Shop::BuyItem(Character& character, int& index)
 			// 포션이 아닐 경우
 			if (index != 0)
 			{
-				ItemsForSale[index]->Use(character);
+				ItemsForSale[index]->IsUsed(character);
 				// 아이템 목록에서 상품 제거
 				ItemsForSale.erase(ItemsForSale.begin() + index);
 				if (index >= ItemsForSale.size())
@@ -165,11 +165,11 @@ void Shop::ManageShop(Character& character)
 
 	// 로그 초기화
 	WelcomeLog = "안녕하세요! 무엇을 도와드릴까요?";
-	FirstChoiceOptionsLog = "(1) 구매한다. (2) 판매한다.  (3) 나간다.";
+	FirstChoiceOptionsLog = "[ <-. 구매한다. ][ ->. 판매한다. ] [ x. 나가기   ]";
 
-	PurchaseLog = "어떤 물품을 원하시나요? 원하는 번호를 입력해주세요.    0: 뒤로 가기";
+	/*PurchaseLog = "어떤 물품을 원하시나요? 원하는 번호를 입력해주세요.    x: 뒤로 가기";
 		
-	SellLog = "어떤 물품을 파실건가요? 파실 물품의 번호를 입력해주세요.    0: 뒤로 가기";
+	SellLog = "어떤 물품을 파실건가요? 파실 물품의 번호를 입력해주세요.    x: 뒤로 가기";*/
 
 	BackToFirstChoiceLog = "첫 번째 선택으로 돌아갑니다.";
 
@@ -220,7 +220,7 @@ void Shop::ManageShop(Character& character)
 //		std::cin >> Choice;
 
 		switch (Choice) {
-		case EKey::Key_1: // 구매
+		case EKey::LeftArrow: // 구매
 				// 구매
 				while (true)
 				{
@@ -243,10 +243,10 @@ void Shop::ManageShop(Character& character)
 
 					switch (ItemChoice)
 					{
-					case EKey::Key_0: // 뒤로
+					case EKey::x: // 뒤로
 						break;
 
-					case EKey::Key_1: // 전 페이지
+					case EKey::LeftArrow: // 전 페이지
 						if (ItemIndex > 0)
 						{
 							ItemIndex--;
@@ -259,11 +259,11 @@ void Shop::ManageShop(Character& character)
 						}
 						break;
 
-					case EKey::Key_2: // 아이템 구매
+					case EKey::z: // 아이템 구매
 						BuyItem(character, ItemIndex);
 						break;
 
-					case EKey::Key_3: // 다음 페이지
+					case EKey::RightArrow: // 다음 페이지
 						if (ItemIndex < ItemsForSale.size() - 1)
 						{
 							ItemIndex++;
@@ -282,89 +282,106 @@ void Shop::ManageShop(Character& character)
 						break;
 					}
 
-					if (ItemChoice == EKey::Key_0)
+					if (ItemChoice == EKey::x)
 					{
 						break;
 					}
 				}
 				break;
 
-			case EKey::Key_2: // 판매
+			case EKey::RightArrow: // 판매
 
-				// 캐릭터의 인벤토리가 비어있을 경우 접근 X
-				while (!character.GetInventory().empty())
+				if (character.GetInventory().empty())
 				{
-				//	UI->AddMessageToBasicCanvasEventInfoUI(SellLogW);
-					Gold = character.GetGold();
-				//	character.DisplayInventory();
-				//	UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
-					//		UI->AddMessageToBasicCanvasEventInfoUI(SellLogW);
-
-					UI->ClearMessageToBasicCanvasEventInfoUI(false);
-					character.DisplayInventory(ItemIndex);
-				//		Gold = character.GetGold();
-				//		RemainGoldLog = "남은 골드: " + std::to_string(Gold);
-				//		RemainGoldLogW = LogicHelper::StringToWString(RemainGoldLog);
-				//		UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
-
-					EKey ItemChoice = InputReceiver::ChatchInput();
-
-				//	std::cin >> ItemChoice;
-					switch (ItemChoice)
+					UI->AddMessageToBasicCanvasEventInfoUI(L"인벤토리에 아이템이 없습니다.");
+					Sleep(500);
+					break;
+				}
+				else
+				{
+					// 캐릭터의 인벤토리가 비어있을 경우 접근 X
+					while (true)
 					{
-					case EKey::Key_0: // 뒤로
-						break;
-
-					case EKey::Key_1: // 전 페이지
-						if (ItemIndex > 0)
-						{
-							ItemIndex--;
-						}
-						else
-						{
-							UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
-						}
-						break;
-
-					case EKey::Key_2: // 아이템 판매
-						SellItem(character, ItemIndex);
-
 						if (character.GetInventory().empty())
 						{
-							ItemChoice = EKey::Key_0; // 모두 팔렸을 경우 전 페이지로 이동
+							UI->AddMessageToBasicCanvasEventInfoUI(L"인벤토리에 아이템이 없습니다.");
+							Sleep(500);
+							break;
 						}
+						//	UI->AddMessageToBasicCanvasEventInfoUI(SellLogW);
+						Gold = character.GetGold();
+						//	character.DisplayInventory();
+						//	UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
+							//		UI->AddMessageToBasicCanvasEventInfoUI(SellLogW);
 
-						break;
+						UI->ClearMessageToBasicCanvasEventInfoUI(false);
+						character.DisplayInventory(ItemIndex);
+						//		Gold = character.GetGold();
+						//		RemainGoldLog = "남은 골드: " + std::to_string(Gold);
+						//		RemainGoldLogW = LogicHelper::StringToWString(RemainGoldLog);
+						//		UI->AddMessageToBasicCanvasEventInfoUI(RemainGoldLogW);
 
-					case EKey::Key_3: // 다음 페이지
-						if (ItemIndex < character.GetInventory().size() - 1)
+						EKey ItemChoice = InputReceiver::ChatchInput();
+
+						//	std::cin >> ItemChoice;
+						switch (ItemChoice)
 						{
-							ItemIndex++;
-						}
-						else
-						{
+						case EKey::x: // 뒤로
+							break;
+
+						case EKey::LeftArrow: // 전 페이지
+							if (ItemIndex > 0)
+							{
+								ItemIndex--;
+							}
+							else
+							{
+								UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+							}
+							break;
+
+						case EKey::z: // 아이템 판매
+							SellItem(character, ItemIndex);
+
+							if (character.GetInventory().empty())
+							{
+								ItemChoice = EKey::Key_0; // 모두 팔렸을 경우 전 페이지로 이동
+							}
+
+							break;
+
+						case EKey::RightArrow: // 다음 페이지
+							if (ItemIndex < character.GetInventory().size() - 1)
+							{
+								ItemIndex++;
+							}
+							else
+							{
+								UI->ClearMessageToBasicCanvasEventInfoUI(false);
+								UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
+								Sleep(500);
+							}
+							break;
+
+						default: // 잘못된 선택
 							UI->ClearMessageToBasicCanvasEventInfoUI(false);
 							UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
 							Sleep(500);
+							break;
 						}
-						break;
 
-					default: // 잘못된 선택
-						UI->ClearMessageToBasicCanvasEventInfoUI(false);
-						UI->AddMessageToBasicCanvasEventInfoUI(WrongChoiceLogW);
-						Sleep(500);
-						break;
+
+						if (ItemChoice == EKey::x)
+						{
+							break;
+						}
 					}
-
-
-					if (ItemChoice == EKey::Key_0)
-					{
-						break;
-					}
+					break;
 				}
-				break;
+				
+				
 
-			case EKey::Key_3: // 나가기
+			case EKey::x: // 나가기
 				UI->ClearMessageToBasicCanvasEventInfoUI(false);
 				UI->AddMessageToBasicCanvasEventInfoUI(GetOutShopLogW);
 				return;
@@ -395,7 +412,7 @@ void Shop::Display(int index)
 	std::wstring ItemPriceLogW;
 	std::wstring ItemExplanationLogW;
 
-	ItemNameLog = std::to_string(index + 1) + ". Name: " + ItemsForSale[index]->GetName() + "  Price: " + std::to_string(ItemsForSale[index]->GetPrice()) + "  Effect: " + ItemsForSale[index]->GetExplanation() + "   [ 1. 이전],[ 2. 구매/판매 ],[ 3. 다음  ], [ 0. 처음으로 ]";
+	ItemNameLog = std::to_string(index + 1) + ". 이름: " + ItemsForSale[index]->GetName() + "  가격: " + std::to_string(ItemsForSale[index]->GetPrice()) + "  효과: " + ItemsForSale[index]->GetExplanation() + "   [ <-. 이전 페이지 ] [ -> 다음 페이지 ] [ z. 구매하기 ] [ x. 뒤로가기 ]";
 	//	ItemPriceLog = 
 	//	ItemExplanationLog = "  Explanation: " + ItemsForSale[index]->GetExplanation();
 

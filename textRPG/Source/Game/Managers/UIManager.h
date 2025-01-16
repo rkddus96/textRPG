@@ -56,7 +56,7 @@ enum class EEndingCanvasLayer
 	BackgroundArt,
 	GameOver,
 	ThankYouForPlaying,
-	EpilogBackground,
+	EpilogueBackground,
 	EpilogueText,
 };
 
@@ -131,6 +131,7 @@ public:
 	void ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
 
 	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
@@ -138,8 +139,10 @@ public:
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
 	// 몬스터 이름은 영어로 되어있어야 가운데 맞춤이 정상적으로 이루어짐.
 	void SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int MonsterHp, bool bShouldUpdateUI = true);
+	void EraseBasicCanvasMonsterInfoUI(bool bShouldUpdateUI = true);
 
-	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
+	//void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
+	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasBackgroundArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasLayerHide(bool bShouldHide, EOpeningCanvasLayer LayerType, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasPrologueBackgroundArt(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
@@ -153,6 +156,10 @@ public:
 	void OpenInventory();
 
 	void SetEndingCanvasLayerHide(bool bShouldHide, EEndingCanvasLayer LayerType, bool bShouldUpdateUI = true);
+	void SetEndingCanvasEpilogueBackground(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+	void SetEndingCanvasEpilogueText(const FStoryTextContainer& StoryTextConatiner, int PositionX, int PositionY, bool bShouldUpdateUI = true);
+	void DrawEndingCanvasPrologue(const FStoryTextContainer& StoryTextConatiner, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+
 	void ShowGameOverScene();
 
 
@@ -192,6 +199,13 @@ private:
 	std::deque<std::wstring> EventInfoUIContentsMsgs;
 
 	std::vector<std::vector<wchar_t>> MinimapUIContents;
+
+	int CurrentHpUIInfo = 0;
+	int MaxHpUIInfo = 0;
+
+	int CurrentExpUIInfo = 0;
+	int MaxExpUIInfo = 0;
+
 
 	friend class GameManager;
 };

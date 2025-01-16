@@ -48,7 +48,10 @@ void HandBattle::Battle()
 			PlayerAttackAction();
 			break;
 		case EKey::Key_2:
-			PotionAction();
+			if (!IsPotionAction())
+			{
+				PlayerAttackAction();
+			}
 			break;
 		default:
 			// 잘못된 입력입니다.

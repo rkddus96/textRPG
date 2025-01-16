@@ -22,6 +22,7 @@ enum class ECharacterEvent
 {
 	Level,
 	Exp,
+	MaxExp,
 	Inventory,
 	Stat,
 	Job,
@@ -82,6 +83,7 @@ public:
 
 	// Setter 함수
 	void SetExp(int exp);
+	void SetMaxExp(int max_exp);
 	void SetLevel(int level);
 	void SetGold(int gold);
 	void SetJob(std::shared_ptr<IJob> jobs);
@@ -108,7 +110,7 @@ public:
 	void AddItem(std::shared_ptr<IItem> item);
 
 	// 아이템 사용
-	void UsePotion();
+	bool UsePotion();
 
 	// 인벤토리 출력
 	
