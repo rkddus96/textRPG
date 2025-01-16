@@ -7,6 +7,7 @@
 #include "ConstantContainer.h"
 #include "Managers/TimerManager.h"
 #include "Character.h"
+#include "Windows.h"
 
 OpeningScene::OpeningScene()
 {
@@ -57,6 +58,9 @@ void OpeningScene::PlayOpeningPrologue()
     AudioPlayer::Play(AudioPath::RESULT, 0.4f);
 
     const std::wstring WCharacterName = LogicHelper::StringToWString(Character::GetInstance().GetName());
+
+    std::string BGMName = AudioPlayer::Play(AudioPath::OPENING_PEACEFUL, 0.4f);
+
     auto& UIManagerInstance = GameManager::GetInstance().GetUIManager();
 
     UIManagerInstance->SetOpeningCanvasLayerHide(true, EOpeningCanvasLayer::Title, false);
@@ -96,8 +100,11 @@ void OpeningScene::PlayOpeningPrologue()
         KeyInput = InputReceiver::ChatchInput();
     }
 
-    StoryText.StoryTextLines.resize(0);
+    AudioPlayer::Stop(BGMName);
+    BGMName = AudioPlayer::Play(AudioPath::OPENING_SERIOUS, 0.4f);
 
+    StoryText.StoryTextLines.resize(0);
+    
     StoryText.AddTextLine(L"하지만 어느 날, 왕국의 병사들이 마을을 급습해 모든 여성을 끌고 갔다.");
     StoryText.AddTextLine(L"병사들은 이유를 묻는 마을 주민들에게");
     StoryText.AddTextLine(L"\"왕실의 명령이다\"라는 말만 남기고 사라졌다.");
@@ -125,6 +132,8 @@ void OpeningScene::PlayOpeningPrologue()
     {
         KeyInput = InputReceiver::ChatchInput();
     }
+
+    AudioPlayer::Stop(BGMName);
 }
 
 

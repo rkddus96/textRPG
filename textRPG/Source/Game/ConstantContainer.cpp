@@ -17,7 +17,8 @@ namespace AudioPath
 	const std::string SELECT = "Select.wav";
 	const std::string BOOK = "Book.wav";
 	const std::string MAIN_BGM = "Main.wav";
-
+	const std::string OPENING_PEACEFUL = "Epic Medieval - Memories.wav";  // 오프닝 씬 평화로운 브금
+	const std::string OPENING_SERIOUS = "Epic Medieval - War.wav";   // 오프닝 씬 심각한 브금
 }
 
 namespace Battle
