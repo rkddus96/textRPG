@@ -412,7 +412,7 @@ void Shop::Display(int index)
 	std::wstring ItemPriceLogW;
 	std::wstring ItemExplanationLogW;
 
-	ItemNameLog = std::to_string(index + 1) + ". 이름: " + ItemsForSale[index]->GetName() + "  가격: " + std::to_string(ItemsForSale[index]->GetPrice()) + "  효과: " + ItemsForSale[index]->GetExplanation() + "   [ <-. 이전 페이지 ] [ z. 구매하기 ]  [ -> 다음 페이지 ] [ x. 뒤로가기 ]";
+	ItemNameLog = std::to_string(index + 1) + ". 이름: " + ItemsForSale[index]->GetName() + "  가격: " + std::to_string(ItemsForSale[index]->GetPrice()) + "  효과: " + ItemsForSale[index]->GetExplanation() + "   [ <-. 이전 페이지 ] [ -> 다음 페이지 ] [ z. 구매하기 ] [ x. 뒤로가기 ]";
 	//	ItemPriceLog = 
 	//	ItemExplanationLog = "  Explanation: " + ItemsForSale[index]->GetExplanation();
 
