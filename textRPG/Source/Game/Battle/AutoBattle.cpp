@@ -35,7 +35,12 @@ void AutoBattle::Battle()
 	while (!bGameFinished)
 	{
 		if (IsPotionEvent())
-			PotionAction();
+		{
+			if (!IsPotionAction())
+			{
+				PlayerAttackAction();
+			}
+		}
 		else
 			PlayerAttackAction();
 
@@ -53,20 +58,43 @@ void AutoBattle::GameWin()
 	int Exp = Enemy->GetExp();
 	int Gold = Enemy->GetMoney();
 
-	// 재화 획득
-	Player->RaiseExp(Exp);
-	Player->RaiseGold(Gold);
-
-
 	// 로그 선언
 	string InfoLog = "전투를 승리했습니다 !";
+	string ExpLog;
+	string GoldLog = "골드를 " + to_string(Gold) + "만큼 획득했습니다 !";
 	wstring InfoLogToW = LogicHelper::StringToWString(InfoLog);
+	wstring ExpLogToW;
+	wstring GoldLogToW = LogicHelper::StringToWString(GoldLog);
 
+
+	if (Player->GetLevel() >= 10)
+	{
+		ExpLog = "최대 레벨입니다 !";
+	}
+	else
+	{
+		Player->RaiseExp(Exp);
+		ExpLog = "경험치를 " + to_string(Exp) + "만큼 획득했습니다 !";
+	}
+
+	// 재화 획득
+	Player->RaiseGold(Gold);
 
 	// 로그 출력
 	Sleep(1000);
 	AudioPlayer::Play(AudioPath::WIN, 0.5f);
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
+
+	// 플레이어 레벨업
+	Sleep(1000);
+	ExpLogToW = LogicHelper::StringToWString(ExpLog);
+	UI->AddMessageToBasicCanvasEventInfoUI(ExpLogToW);
+	if (Player->GetExp() >= Player->GetMaxExp())
+		Player->LevelUp();
+
+	// 플레이어 골드 획득
+	Sleep(1000);
+	UI->AddMessageToBasicCanvasEventInfoUI(GoldLogToW);
 
 	Sleep(1000);
 	AudioPlayer::Play(AudioPath::RESULT);

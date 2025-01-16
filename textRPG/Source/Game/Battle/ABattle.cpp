@@ -110,11 +110,11 @@ void ABattle::MonsterAttackAction()
 }
 
 // 플레이어 포션 복용
-void ABattle::PotionAction()
+bool ABattle::IsPotionAction()
 {
 	// 전투 종료시 리턴
 	if (bGameFinished)
-		return;
+		return false;
 
 	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 
@@ -123,7 +123,8 @@ void ABattle::PotionAction()
 	string PlayerName = Player->GetName();
 
 	// 플레이어의 체력 회복
-	Player->UsePotion();
+	if(!Player->UsePotion())
+		return false;
 
 	// 로그 선언
 	string CurHpLog = PlayerName + "의 현재체력 : " + to_string(Player->GetStatus().GetStat(EStat::CurHp));
@@ -134,6 +135,8 @@ void ABattle::PotionAction()
 
 	// 연출용도로 잠시 대기
 	Sleep(1000);
+
+	return true;
 }
 
 // 플레이어의 공격

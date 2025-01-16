@@ -47,7 +47,10 @@ void FinalBossBattle::Battle()
 			PlayerAttackAction();
 			break;
 		case EKey::Key_2:
-			PotionAction();
+			if (!IsPotionAction())
+			{
+				PlayerAttackAction();
+			}
 			break;
 		default:
 			// 잘못된 입력입니다.
@@ -66,41 +69,17 @@ void FinalBossBattle::GameWin()
 	UI->ClearMessageToBasicCanvasEventInfoUI(false);
 	AudioPlayer::StopAll();
 
-	// 플레이어 경험치 증가
-	int Exp = Enemy->GetExp();
-	int Gold = Enemy->GetMoney();
-
-	// 재화 획득
-	Player->RaiseExp(Exp);
-	Player->RaiseGold(Gold);
-
-
 	// 로그 선언
 	string InfoLog = "전투를 승리했습니다 !";
-	string ExpLog = "경험치를 " + to_string(Exp) + "만큼 획득했습니다 !";
-	string GoldLog = "골드를 " + to_string(Gold) + "만큼 획득했습니다 !";
 	wstring InfoLogToW = LogicHelper::StringToWString(InfoLog);
-	wstring ExpLogToW = LogicHelper::StringToWString(ExpLog);
-	wstring GoldLogToW = LogicHelper::StringToWString(GoldLog);
 
 	// 로그 출력
 	Sleep(1000);
 	AudioPlayer::Play(AudioPath::WIN, 0.5f);
 	UI->AddMessageToBasicCanvasEventInfoUI(InfoLogToW);
 
-	// 플레이어 레벨업
-	Sleep(1000);
-	UI->AddMessageToBasicCanvasEventInfoUI(ExpLogToW);
-	if (Player->GetExp() + Exp >= Player->GetMaxExp())
-		Player->LevelUp();
-
-	// 플레이어 골드 획득
-	Sleep(1000);
-	UI->AddMessageToBasicCanvasEventInfoUI(GoldLogToW);
-
 	Sleep(1000);
 	AudioPlayer::Play(AudioPath::RESULT);
-
 
 	PrintRealEndingLog();
 	// 전투 종료
