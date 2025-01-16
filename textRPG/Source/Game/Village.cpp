@@ -48,6 +48,7 @@ void Village::DrawDefaultScene()
 	std::wstring EnterMessage = L"마을의 중심에 도착했습니다. 무엇을 하시겠습니까?";
 
 	// 기본 화면을 출력
+	UIManagerInstance->ClearMessageToBasicCanvasEventInfoUI();
 	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(EnterMessage, false);
 	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(DefulatSelectoinMessage, false);
 	const FASCIIArtContainer& DefaultArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(DefualtArt);
@@ -72,6 +73,7 @@ void Village::VisitChurch()
 	std::wstring ChurchGoldRejectMessage = L"신의 축복은 모든 이에게 열려있지만, 이곳의 유지에는 헌금이 필요합니다. 골드가 조금 부족한 것 같군요.";
 	std::wstring ChurchRejectMessage = L"당신의 선택을 존중합니다. 신의 은총이 함께 하기를 바랍니다. ";
 
+	UIManagerInstance->ClearMessageToBasicCanvasEventInfoUI(false);
 	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchEnterMessage,false);
 	UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchQuestionMessage, false);
 	UIManagerInstance->PrintUI(ERenderingCanvas::Basic);
@@ -96,17 +98,21 @@ void Village::VisitChurch()
 			// Calculate Helath Logic
 			int FinalHealth = MaxHealth;
 			PlayerStatus.SetStat(EStat::CurHp, FinalHealth);
+
+			UIManagerInstance->ClearMessageToBasicCanvasEventInfoUI(false);
 			UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchHealMessage, true);
 		}
 		// 골드 부족, 거절 메시지 출력
 		else
 		{
+			UIManagerInstance->ClearMessageToBasicCanvasEventInfoUI(false);
 			UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchGoldRejectMessage, true);
 		}
 	}
 	else
 	{
 		// 거절 메시지
+		UIManagerInstance->ClearMessageToBasicCanvasEventInfoUI(false);
 		UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(ChurchRejectMessage, true);
 	}
 
