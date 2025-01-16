@@ -715,7 +715,7 @@ void UIManager::SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int 
 	}
 }
 
-void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI)
+void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI)
 {
 	int TitleLayerId = OpeningCanvasLayerIdMap[EOpeningCanvasLayer::Title];
 	std::shared_ptr<RenderingLayer> TitleLayer = RenderingCanvasMap[ERenderingCanvas::Opening]->GetRenderingLayer(TitleLayerId);
@@ -727,7 +727,8 @@ void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std
 	}
 
 	TitleLayer->ClearLayerFor(UI::USELESS_CHAR);
-	TitleLayer->DrawSurface(PositionX, PositionY, Surface);
+
+	TitleLayer->DrawSurface(PositionX, PositionY, ArtContainer.ArtLines);
 
 	TitleLayer->CombineUiLines();
 
