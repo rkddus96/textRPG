@@ -190,13 +190,15 @@ void UIManager::MakeEndingSceneUI()
 	BackgroundLayer->ClearLayerFor(L' ');
 	BackgroundLayer->CombineUiLines();
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	std::shared_ptr<RenderingLayer> BackgrundArtLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::BackgroundArt, UI::USELESS_CHAR);
 	EndiningCanvasLayerIdMap[EEndingCanvasLayer::BackgroundArt] = BackgrundArtLayer->GetLayerId();
 
 	BackgrundArtLayer->ClearLayerFor(UI::USELESS_CHAR);
 	BackgrundArtLayer->CombineUiLines();
 
-
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	std::shared_ptr<RenderingLayer> GameOverLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::GameOver, UI::USELESS_CHAR);
 	EndiningCanvasLayerIdMap[EEndingCanvasLayer::GameOver] = GameOverLayer->GetLayerId();
@@ -216,7 +218,7 @@ void UIManager::MakeEndingSceneUI()
 	GameOverLayer->DrawSurface(PositionX, PositionY, GameOverArt.ArtLines);
 	GameOverLayer->CombineUiLines();
 
-
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	std::shared_ptr<RenderingLayer> ThankYouForPlayingLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::ThankYouForPlaying, UI::USELESS_CHAR);
 	EndiningCanvasLayerIdMap[EEndingCanvasLayer::ThankYouForPlaying] = ThankYouForPlayingLayer->GetLayerId();
@@ -224,17 +226,23 @@ void UIManager::MakeEndingSceneUI()
 	ThankYouForPlayingLayer->ClearLayerFor(UI::USELESS_CHAR);
 	ThankYouForPlayingLayer->CombineUiLines();
 
-	std::shared_ptr<RenderingLayer> EpilogBackgroundLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::EpilogBackground, UI::USELESS_CHAR);
-	EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogBackground] = EpilogBackgroundLayer->GetLayerId();
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	std::shared_ptr<RenderingLayer> EpilogBackgroundLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::EpilogueBackground, UI::USELESS_CHAR);
+	EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogueBackground] = EpilogBackgroundLayer->GetLayerId();
 
 	EpilogBackgroundLayer->ClearLayerFor(UI::USELESS_CHAR);
 	EpilogBackgroundLayer->CombineUiLines();
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	std::shared_ptr<RenderingLayer> EpilogueTextLayer = std::make_shared<RenderingLayer>((int)EEndingCanvasLayer::EpilogueText, UI::USELESS_CHAR);
 	EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogueText] = EpilogueTextLayer->GetLayerId();
 
 	EpilogueTextLayer->ClearLayerFor(UI::USELESS_CHAR);
 	EpilogueTextLayer->CombineUiLines();
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	std::shared_ptr<RenderingCanvas> EndingCanvas = std::make_shared<RenderingCanvas>();
 	EndingCanvas->AddLayer(BackgroundLayer);
@@ -394,7 +402,7 @@ void UIManager::ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI)
 
 	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X;
 
-	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, JobInfoString);
+	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y - 2, JobInfoString);
 	StatInfoLayer->CombineUiLines();
 	if (bShouldUpdateUI)
 	{
@@ -431,7 +439,7 @@ void UIManager::ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI)
 		StatInfoString.push_back(L' ');
 	}
 
-	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
+	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y - 2, StatInfoString);
 	StatInfoLayer->CombineUiLines();
 	if (bShouldUpdateUI)
 	{
@@ -458,17 +466,18 @@ void UIManager::ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI)
 	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 2;
 	StatInfoString = L"경험치 ";
 
-	std::wstring NumberString = std::to_wstring(Amount);
+	std::wstring NumberString = std::to_wstring(Amount) + L'/' + std::to_wstring(MaxExpUIInfo);
+
+	CurrentExpUIInfo = Amount;
 
 	StatInfoString += NumberString;
-
 	int SpaceCount = MaxExpTextLength - (int)NumberString.size();
 	for (int i = 0; i < SpaceCount; ++i)
 	{
 		StatInfoString.push_back(L' ');
 	}
 
-	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
+	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y - 2, StatInfoString);
 	StatInfoLayer->CombineUiLines();
 	if (bShouldUpdateUI)
 	{
@@ -492,10 +501,12 @@ void UIManager::ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI)
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxExpTextLength);
 
-	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 3;
-	StatInfoString = L"필  경 ";
+	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 2;
+	StatInfoString = L"경험치 ";
 
-	std::wstring NumberString = std::to_wstring(Amount);
+	std::wstring NumberString = std::to_wstring(CurrentExpUIInfo) + L'/' + std::to_wstring(Amount);
+
+	MaxExpUIInfo = Amount;
 
 	StatInfoString += NumberString;
 
@@ -505,7 +516,7 @@ void UIManager::ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI)
 		StatInfoString.push_back(L' ');
 	}
 
-	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
+	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y - 2, StatInfoString);
 	StatInfoLayer->CombineUiLines();
 	if (bShouldUpdateUI)
 	{
@@ -529,7 +540,7 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxMoneyTextLength);
 
-	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 9;
+	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X + 7;
 	StatInfoString = L"소지금 ";
 
 	std::wstring NumberString = std::to_wstring(Amount);
@@ -542,7 +553,7 @@ void UIManager::ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI)
 		StatInfoString.push_back(L' ');
 	}
 
-	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y, StatInfoString);
+	StatInfoLayer->DrawString(PositionX, UI::STAT_INFO_UI_FIRST_POSITION_Y - 2, StatInfoString);
 	StatInfoLayer->CombineUiLines();
 	if (bShouldUpdateUI)
 	{
@@ -561,42 +572,51 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 		return;
 	}
 
-	int MaxStatNumberTextLength = 6;
+	int MaxStatNumberTextLength = 7;
 
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxStatNumberTextLength);
 
 	int PositionX = UI::STAT_INFO_UI_FIRST_POSITION_X;
-	int PositionY = UI::STAT_INFO_UI_FIRST_POSITION_Y;
-
-	if (StatType == EStat::CurHp)
+	int PositionY = UI::STAT_INFO_UI_FIRST_POSITION_Y - 2;
+	
+	if (StatType == EStat::CurHp || StatType == EStat::MaxHp)
 	{
 		StatInfoString = L"체  력 ";
-		PositionX += 4;
+		PositionX += 3;
 	}
 	else if (StatType == EStat::Power)
 	{
 		StatInfoString = L"공격력 ";
-		PositionX += 6;
+		PositionX += 4;
 	}
 	else if (StatType == EStat::Defense)
 	{
 		StatInfoString = L"방어력 ";
-		PositionX += 7;
+		PositionX += 5;
 	}
 	else if (StatType == EStat::Luck)
 	{
 		StatInfoString = L"행  운 ";
-		PositionX += 8;
-	}
-	else if(StatType == EStat::MaxHp)
-	{
-		StatInfoString = L"최대체력 ";
-		PositionX += 5;
-		PositionY -= 2;
+		PositionX += 6;
 	}
 
-	std::wstring NumberString = std::to_wstring(Amount);
+	std::wstring NumberString = L"";
+
+	if (StatType == EStat::CurHp)
+	{
+		CurrentHpUIInfo = Amount;
+		NumberString = std::to_wstring(Amount) + L'/' + std::to_wstring(MaxHpUIInfo);
+	}
+	else if (StatType == EStat::MaxHp)
+	{
+		MaxHpUIInfo = Amount;
+		NumberString = std::to_wstring(CurrentHpUIInfo) + L'/' + std::to_wstring(Amount);
+	}
+	else
+	{
+		NumberString = std::to_wstring(Amount);
+	}
 
 	StatInfoString += NumberString;
 
@@ -605,7 +625,6 @@ void UIManager::ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bSh
 	{
 		StatInfoString.push_back(L' ');
 	}
-
 
 	StatInfoLayer->DrawString(PositionX, PositionY, StatInfoString);
 	StatInfoLayer->CombineUiLines();
@@ -810,9 +829,42 @@ void UIManager::SetOpeningCanvasPrologueText(const FStoryTextContainer& StoryTex
 		return;
 	}
 
+	const int ArtHeight = 20;
+	const int ArtWidth = 80;
+
+	const int NewPositionX = PositionX + UI::CENTER_OF_UI_X - StoryTextCount / 2;
+	const int NewPositionY = PositionY + UI::CENTER_OF_UI_Y - ArtWidth / 2;
+
 	for (int i = 0; i < StoryTextCount; ++i)
 	{
-		Layer->DrawString(PositionX + i, PositionY, StoryTextLines[i]);
+		std::wstring NewStoryText = L"";
+
+		int StoryTextSize = (int)StoryTextLines[i].size();
+		int HangeulCount = 0;
+
+		for (int j = 0; j < StoryTextSize; ++j)
+		{
+			if (LogicHelper::IsHangul(StoryTextLines[i][j]))
+			{
+				HangeulCount++;
+			}
+		}
+
+		int NeededEmptySpaceCount = ArtWidth - StoryTextSize - HangeulCount;
+		
+		for (int j = 0; j < NeededEmptySpaceCount / 2; ++j)
+		{
+			NewStoryText += L' ';
+		}
+
+		NewStoryText += StoryTextLines[i];
+
+		for (int j = 0; j < NeededEmptySpaceCount / 2; ++j)
+		{
+			NewStoryText += L' ';
+		}
+
+		Layer->DrawString(NewPositionX + i, NewPositionY, NewStoryText);
 	}
 
 	Layer->CombineUiLines();
@@ -827,17 +879,7 @@ void UIManager::DrawOpeningCanvasPrologue(const FStoryTextContainer& StoryTextCo
 {
 	const FASCIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Test);
 	SetOpeningCanvasPrologueBackgroundArt(ArtContainer, false, OffsetX, OffsetY);
-
-	int CenterCoordX = UI::CENTER_OF_UI_X;
-	int CenterCoordY = UI::CENTER_OF_UI_Y;
-
-	int ArtWidth = ArtContainer.GetWidth();
-	int ArtHeight = ArtContainer.GetHeight();
-
-	int DrawCoordX = CenterCoordX - ArtHeight / 2 + 5;
-	int DrawCoordY = CenterCoordY - ArtWidth / 2 + 10;
-
-	SetOpeningCanvasPrologueText(StoryTextConatiner, DrawCoordX + OffsetX, DrawCoordY + OffsetY, bShouldUpdateUI);
+	SetOpeningCanvasPrologueText(StoryTextConatiner, OffsetX, OffsetY, bShouldUpdateUI);
 }
 
 void UIManager::SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
@@ -952,6 +994,108 @@ void UIManager::SetEndingCanvasLayerHide(bool bShouldHide, EEndingCanvasLayer La
 	}
 }
 
+void UIManager::SetEndingCanvasEpilogueBackground(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+{
+	int LayerId = EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogueBackground];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Ending]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetEndingCanvasEpilogueBackground : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	int CenterCoordX = UI::CENTER_OF_UI_X;
+	int CenterCoordY = UI::CENTER_OF_UI_Y;
+
+	int ArtWidth = ArtContainer.GetWidth();
+	int ArtHeight = ArtContainer.GetHeight();
+
+	int DrawCoordX = CenterCoordX - ArtHeight / 2;
+	int DrawCoordY = CenterCoordY - ArtWidth / 2;
+
+	Layer->DrawSurface(DrawCoordX + OffsetX, DrawCoordY + OffsetY, ArtContainer.ArtLines);
+	Layer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Ending);
+	}
+}
+
+void UIManager::SetEndingCanvasEpilogueText(const FStoryTextContainer& StoryTextConatiner, int PositionX, int PositionY, bool bShouldUpdateUI)
+{
+	const std::vector<std::wstring>& StoryTextLines = StoryTextConatiner.StoryTextLines;
+	int StoryTextCount = (int)StoryTextLines.size();
+
+	if (StoryTextLines.size() <= 0)
+	{
+		std::cout << "UIManager, SetEndingCanvasEpilogueText : StoryTextConatiner.StoryTextLines.size() <= 0" << std::endl;
+		return;
+	}
+
+	int LayerId = EndiningCanvasLayerIdMap[EEndingCanvasLayer::EpilogueText];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Ending]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetEndingCanvasEpilogueText : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	const int ArtHeight = 20;
+	const int ArtWidth = 80;
+
+	const int NewPositionX = PositionX + UI::CENTER_OF_UI_X - StoryTextCount / 2;
+	const int NewPositionY = PositionY + UI::CENTER_OF_UI_Y - ArtWidth / 2;
+
+	for (int i = 0; i < StoryTextCount; ++i)
+	{
+		std::wstring NewStoryText = L"";
+
+		int StoryTextSize = (int)StoryTextLines[i].size();
+		int HangeulCount = 0;
+
+		for (int j = 0; j < StoryTextSize; ++j)
+		{
+			if (LogicHelper::IsHangul(StoryTextLines[i][j]))
+			{
+				HangeulCount++;
+			}
+		}
+
+		int NeededEmptySpaceCount = ArtWidth - StoryTextSize - HangeulCount;
+
+		for (int j = 0; j < NeededEmptySpaceCount / 2; ++j)
+		{
+			NewStoryText += L' ';
+		}
+
+		NewStoryText += StoryTextLines[i];
+
+		for (int j = 0; j < NeededEmptySpaceCount / 2; ++j)
+		{
+			NewStoryText += L' ';
+		}
+
+		Layer->DrawString(NewPositionX + i, NewPositionY, NewStoryText);
+	}
+
+	Layer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Ending);
+	}
+}
+
+void UIManager::DrawEndingCanvasPrologue(const FStoryTextContainer& StoryTextConatiner, bool bShouldUpdateUI, int OffsetX, int OffsetY)
+{
+	const FASCIIArtContainer& ArtContainer = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Test);
+	SetEndingCanvasEpilogueBackground(ArtContainer, false, OffsetX, OffsetY);
+	SetEndingCanvasEpilogueText(StoryTextConatiner, OffsetX, OffsetY, bShouldUpdateUI);
+}
+
 void UIManager::ShowGameOverScene()
 {
 	int LayerId = EndiningCanvasLayerIdMap[EEndingCanvasLayer::GameOver];
@@ -964,7 +1108,7 @@ void UIManager::ShowGameOverScene()
 	}
 
 	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::BackgroundArt, false);
-	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::EpilogBackground, false);
+	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::EpilogueBackground, false);
 	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::EpilogueText, false);
 	SetEndingCanvasLayerHide(true, EEndingCanvasLayer::ThankYouForPlaying, false);
 	SetEndingCanvasLayerHide(false, EEndingCanvasLayer::GameOver);
