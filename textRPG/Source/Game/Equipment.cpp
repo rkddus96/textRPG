@@ -21,7 +21,7 @@ const FASCIIArtContainer& Equipment::GetArtContainer() const
 }
 
 
-void Equipment::Use(Character& character)
+bool Equipment::IsUsed(Character& character)
 {
 	Status& Stats = character.GetStatus();
 
@@ -30,6 +30,7 @@ void Equipment::Use(Character& character)
 		int StatPoint = Stats.GetStat(StatTypes[i]);
 		Stats.SetStat(StatTypes[i], StatPoint + AffectPoints[i]);
 	}
+	return true;
 }
 
 void Equipment::UnUse(Character& character)

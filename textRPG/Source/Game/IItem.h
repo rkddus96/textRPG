@@ -20,7 +20,7 @@ public:
 
 	virtual const FASCIIArtContainer& GetArtContainer() const = 0;
 
-	virtual void Use(Character& character) = 0;
+	virtual bool IsUsed(Character& character) = 0;
 
 	virtual void UnUse(Character& character) = 0;
 
