@@ -6,6 +6,7 @@
 #include "AudioPlayer.h"
 #include "LogicHelper.h"
 #include "ConstantContainer.h"
+#include "Character.h"
 
 TileEvent::TileEvent()
 {
@@ -52,9 +53,12 @@ void TileEvent::PerformDialogue()
 		}
 
 		// 대사 이외의 처리
-		if (Sentence.TriggerEvent)
+		if (Sentence.TriggerEvent && !GameManager::GetInstance().IsSpecialEventActivated())
 		{
 			GameManager::GetInstance().SetSpecialEventActive(true);
+			Character& Player = Character::GetInstance();
+			Status& PlayerStatus = Player.GetStatus();
+			PlayerStatus.SetStat(EStat::CurHp, PostEventHealthAmount);
 		}
 
 		if (bShouldWait)
@@ -114,9 +118,9 @@ std::vector<FSentence> TileEvent::GenerateEventDialogue()
 		{ 4, 5,EArtList::Slime, L"성난 민중", L"그건 확인해봐야 알 일이지", AudioPath::NORMALATTACK, { {L"", 0}, {L"", 0}}, false },
 		{ 5, -1,EArtList::Devil, L"플레이어 이름(임시)", L"\'이런 큰일이야. 나는 어떻게 해야하지?\'", "", { {L"그녀를 돕는다", 6}, {L"그녀를 돕지 않는다.", 10}}, false},
 		// 그녀를 돕는다 선택지
-		{ 6, 7,EArtList::Devil, L"플레이어 이름(임시)", L"\'불의를 보고 넘어갈 수 없지\'", "", { {L"", 0}, {L"", 0}}, true },
+		{ 6, 7,EArtList::Devil, L"플레이어 이름(임시)", L"\'불의를 보고 넘어갈 수 없지\'", "", { {L"", 0}, {L"", 0}}, false },
 		{ 7, 8,EArtList::Devil, L"플레이어 이름(임시)", L"거기까지다.", AudioPath::NORMALATTACK, { {L"", 0}, {L"", 0}}, false },
-		{ 8, 9,EArtList::Devil, L"", L"당신의 위협에 성난 민중들은 물러갔다.", "", { {L"", 0}, {L"", 0}}, false },
+		{ 8, 9,EArtList::Devil, L"", L"당신의 위협에 성난 민중들은 물러갔다.", "", { {L"", 0}, {L"", 0}}, true },
 		{ 9, -1,EArtList::Orc, L"리산나", L"고맙습니다. 추가 작성", "", { {L"", 0}, {L"", 0}}, false }, // 종료
 		// 그녀를 돕지 않는다 선택지
 		{ 10, 11, EArtList::Devil, L"플레이어 이름(임시)", L"\'아쉽지만 마녀를 돕는 것은 안 되.\'", "", { {L"", 0}, {L"", 0}}, false },

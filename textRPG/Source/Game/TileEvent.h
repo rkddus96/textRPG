@@ -45,6 +45,8 @@ protected:
 	/// </summary>
 	int AutoTextDelay = 3000;
 
+	int PostEventHealthAmount = 1;
+
 	std::vector<FSentence> Sentences;
 	EArtList CurrentCenterArt = EArtList::Armor;
 
