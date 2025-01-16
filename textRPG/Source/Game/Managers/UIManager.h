@@ -52,6 +52,7 @@ enum class EOpeningCanvasLayer
 /// </summary>
 enum class EEndingCanvasLayer
 {
+	Background,
 	BackgroundArt,
 	GameOver,
 	ThankYouForPlaying,
@@ -130,6 +131,7 @@ public:
 	void ChangeBasicCanvasJobInfoUI(int JobChoice, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasLevelInfoUI(int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasExpInfoUI(int Amount, bool bShouldUpdateUI = true);
+	void ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI = true);
 	void ChangeBasicCanvasMoneyInfoUI(int Amount, bool bShouldUpdateUI = true);
 
 	void ChangeBasicCanvasStatInfoUI(EStat StatType, int Amount, bool bShouldUpdateUI = true);
@@ -148,6 +150,12 @@ public:
 	void SetInventoryCanvasBackgroundImage(const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
 	void SetInventoryCanvasItemList(const std::vector<std::shared_ptr<IItem>>& InventoryInfo, int PositionX, int PositionY, bool bShouldUpdateUI = true);
 	void DrawInventory(const std::vector<std::shared_ptr<IItem>>& InventoryInfo, bool bShouldUpdateUI = true, int OffsetX = 0, int OffsetY = 0);
+
+	void OpenInventory();
+
+	void SetEndingCanvasLayerHide(bool bShouldHide, EEndingCanvasLayer LayerType, bool bShouldUpdateUI = true);
+	void ShowGameOverScene();
+
 
 	void SetConsoleColor(EUIColor UIColor);
 

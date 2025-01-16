@@ -24,6 +24,16 @@ public:
 		this->bCanTriggerEvent = bCanTriggerEvent;
 	}
 
+	void SetHasShop(bool bHasShop)
+	{
+		this->bHasShop = bHasShop;
+	}
+
+	void SetHasChurch(bool bHasChurch)
+	{
+		this->bHasChurch = bHasChurch;
+	}
+
 	void SetArtOffset(int XOffset, int YOffset)
 	{
 		ArtOffset = {XOffset, YOffset};
@@ -51,13 +61,39 @@ protected:
 	void Exit();
 
 private:
+	/// <summary>
+	/// 교회 존재 유무
+	/// </summary>
+	bool bHasChurch = true;
+	/// <summary>
+	/// Shop 존재 유무
+	/// </summary>
+	bool bHasShop = false;
+	/// <summary>
+	/// Event Trigger 발생 가능 여부
+	/// </summary>
+	bool bCanTriggerEvent = false;
+
+	// 교회 관련 코드
 	int DefaultHealCharge = 50;
+
+	/// <summary>
+	/// Village 루프 종료 조건
+	/// </summary>
 	bool bEndVillage = false;
 
+	/// <summary>
+	/// 기본 아트 이미지, 처음 들어오거나 다른 메뉴 끝나면 출력
+	/// </summary>
 	EArtList DefualtArt;
+	/// <summary>
+	/// 기본 아트 이미지 오프셋, 처음 들어오거나 다른 메뉴 끝나면 출력
+	/// </summary>
 	std::pair<int, int> ArtOffset;
+	/// <summary>
+	/// 기본 메시지, 처음 들어오거나 다른 메뉴 끝나면 출력
+	/// </summary>
 	std::wstring DefaultMessage;
-	bool bCanTriggerEvent = false;
 
 	void BuildOptions();
 	std::wstring FormatSelectionMessage(const std::vector<std::wstring>& OptionTexts) const;

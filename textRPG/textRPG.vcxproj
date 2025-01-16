@@ -23,6 +23,7 @@
     <ClCompile Include="Source\Game\AudioPlayer.cpp" />
     <ClCompile Include="Source\Game\Battle\ABattle.cpp" />
     <ClCompile Include="Source\Game\Battle\AutoBattle.cpp" />
+    <ClCompile Include="Source\Game\Battle\FinalBossBattle.cpp" />
     <ClCompile Include="Source\Game\Battle\HandBattle.cpp" />
     <ClCompile Include="Source\Game\Character.cpp" />
     <ClCompile Include="Source\Game\ConstantContainer.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Source\Game\Creatures\Orc.cpp" />
     <ClCompile Include="Source\Game\Creatures\Slime.cpp" />
     <ClCompile Include="Source\Game\Creatures\Witch.cpp" />
+    <ClCompile Include="Source\Game\EndingScene.cpp" />
     <ClCompile Include="Source\Game\Equipment.cpp" />
     <ClCompile Include="Source\Game\HealthPotion.cpp" />
     <ClCompile Include="Source\Game\InputReceiver.cpp" />
@@ -49,6 +51,7 @@
     <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Game\Status.cpp" />
     <ClCompile Include="Source\Game\textRPG.cpp" />
+    <ClCompile Include="Source\Game\TileEvent.cpp" />
     <ClCompile Include="Source\Game\TileMap.cpp" />
     <ClCompile Include="Source\Game\TileMapScene.cpp" />
     <ClCompile Include="Source\Game\Village.cpp" />
@@ -58,6 +61,7 @@
     <ClInclude Include="Source\Game\AudioPlayer.h" />
     <ClInclude Include="Source\Game\Battle\ABattle.h" />
     <ClInclude Include="Source\Game\Battle\AutoBattle.h" />
+    <ClInclude Include="Source\Game\Battle\FinalBossBattle.h" />
     <ClInclude Include="Source\Game\Battle\HandBattle.h" />
     <ClInclude Include="Source\Game\Character.h" />
     <ClInclude Include="Source\Game\ConstantContainer.h" />
@@ -70,6 +74,7 @@
     <ClInclude Include="Source\Game\Creatures\Orc.h" />
     <ClInclude Include="Source\Game\Creatures\Slime.h" />
     <ClInclude Include="Source\Game\Creatures\Witch.h" />
+    <ClInclude Include="Source\Game\EndingScene.h" />
     <ClInclude Include="Source\Game\Equipment.h" />
     <ClInclude Include="Source\Game\HealthPotion.h" />
     <ClInclude Include="Source\Game\IItem.h" />
@@ -85,6 +90,7 @@
     <ClInclude Include="Source\Game\RenderingCanvas.h" />
     <ClInclude Include="Source\Game\RenderingLayer.h" />
     <ClInclude Include="Source\Game\Shop.h" />
+    <ClInclude Include="Source\Game\TileEvent.h" />
     <ClInclude Include="Source\Game\TileMap.h" />
     <ClInclude Include="Source\Game\Status.h" />
     <ClInclude Include="Source\Game\Thief.h" />

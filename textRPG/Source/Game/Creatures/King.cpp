@@ -1,7 +1,7 @@
 #include "King.h"
 
 King::King()
-    : Monster("King", 444, 70, 20, 0, 0, 99)
+    : Monster("King", 444, 100, 20, 0, 0, 99)
 {
     MaxHp = BaseHp;
     CurHp = MaxHp;

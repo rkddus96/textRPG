@@ -9,7 +9,7 @@
 #include "IItem.h"
 #include "InputReceiver.h"
 #include "ConstantContainer.h"
-
+#include "AudioPlayer.h"
 
 
 Character::Character() : Level{ 1 }, MaxExp{ 100 }, Exp(0)
@@ -121,7 +121,7 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 	// 장비 아이템이면 바로 효과 적용
 	if (item->IsConsumable() == false)
 	{
-		item->IsUsed(*this);
+		item->Use(*this);
 	}
 	
 	if (OnItemChanged)
@@ -145,7 +145,7 @@ void Character::UsePotion()
 	{
 		if (Inventory[index]->IsConsumable())
 		{
-			Inventory[index]->IsUsed(*this);
+			Inventory[index]->Use(*this);
 			Inventory.erase(Inventory.begin() + index);
 			if (OnItemChanged)
 			{
@@ -196,9 +196,9 @@ void Character::InitCharacter()
 	CharacterNameLog = "생성할 캐릭터의 이름을 입력해주세요: ";
 	CharacterNameErrorLog = "이름을 입력하지 않았습니다. 다시 입력해주세요";
 	ChooseJobLog = "직업을 선택해주세요.  ";
-	WarriorExplainLog = "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다.  [ <-. 이전],[ z. 선택 ],[ ->. 다음  ] ";
-	MageExplainLog = "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 마법의 대가입니다.  [ <-. 이전],[ z. 선택 ],[ ->. 다음  ] ";
-	ThiefExplainLog = "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다.  [ <-. 이전],[ z. 선택 ],[ ->. 다음  ] ";
+	WarriorExplainLog = "1. Warrior: Power를 주요 능력으로 하며, 맨 앞에서 전투를 수행하는 용맹한 전사입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
+	MageExplainLog = "2. Mage: Defense를 주요 능력으로 하며, 적의 공격을 무력화시켜 몸을 지키는 마법의 대가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
+	ThiefExplainLog = "3. Thief: Luck을 주요 능력으로 하며, 운과 기술을 이용해 전장에서 살아남는 치명적인 전략가입니다.  [ 1. 이전],[ 2. 선택 ],[ 3. 다음  ]";
 	InputErrorLog = "잘못된 입력입니다. 다시 시도해주세요.";
 
 	// wstring으로 변환
@@ -245,6 +245,8 @@ void Character::InitCharacter()
 		}
 	}
 
+	AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 	
 	std::vector<std::wstring> WLogList = { WarriorExplainLogW, MageExplainLogW, ThiefExplainLogW };
 	std::vector<std::string> LogList = { WarriorExplainLog, MageExplainLog, ThiefExplainLog };
@@ -272,13 +274,9 @@ void Character::InitCharacter()
 	//	std::cin >> JobChoice;
 		switch (JobChoice)
 		{
-<<<<<<< Updated upstream
 		case EKey::Key_1:
-=======
-		case EKey::LeftArrow:
 			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
 
->>>>>>> Stashed changes
 			if (JobIndex > 0)
 			{
 				JobIndex--;
@@ -295,20 +293,17 @@ void Character::InitCharacter()
 			{
 			//	std::cout << "더 이상 뒤로 갈 수 없습니다.";
 				UI->ClearMessageToBasicCanvasEventInfoUI(false);
-				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 이전으로 갈 수 없습니다.   [ <-. 이전],[ z. 선택 ],[ ->. 다음  ] ");
+				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 이전으로 갈 수 없습니다.");
 				Sleep(500);
 			}
 			break;
 
-<<<<<<< Updated upstream
 		case EKey::Key_2:
-=======
-		case EKey::z:
 			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
 
->>>>>>> Stashed changes
 			if (!JobList.empty() && JobIndex >= 0 && JobIndex < JobList.size())
 			{
+
 				Jobs = JobList[JobIndex];
 				UI->AddMessageToBasicCanvasEventInfoUI(L"직업 선택을 완료했습니다.");
 			//	std::cout << "직업 선택을 완료했습니다.";
@@ -322,15 +317,12 @@ void Character::InitCharacter()
 			}
 			break;
 
-<<<<<<< Updated upstream
 		case EKey::Key_3:
-=======
-		case EKey::RightArrow:
 			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
 
->>>>>>> Stashed changes
 			if (JobIndex < JobList.size() - 1)
 			{
+
 				JobIndex++;
 				//초기화 후 다음 직업 설명
 				UI->ClearMessageToBasicCanvasEventInfoUI(false);
@@ -341,15 +333,17 @@ void Character::InitCharacter()
 			else
 			{
 				UI->ClearMessageToBasicCanvasEventInfoUI(false);
-				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 다음으로 갈 수 없습니다.   [ <-. 이전],[ z. 선택 ],[ ->. 다음  ]  ");
+				UI->AddMessageToBasicCanvasEventInfoUI(L"더 이상 다음으로 갈 수 없습니다.");
 				Sleep(500);
 			//	std::cout << "마지막 직업입니다.";
 			}
 			break;
 
 		default:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
-			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 시도해주세요.   [ <-. 이전],[ z. 선택 ],[ ->. 다음  ]  ");
+			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 시도해주세요.");
 			Sleep(500);
 		//	std::cout << "잘못된 입력입니다. 다시 시도해주세요." << std::endl;
 		}
@@ -380,32 +374,21 @@ void Character::RandomizeStats()
 	std::cout << "레  벨 : " << Level << std::endl;
 	std::wcout << "직  업 : " << Jobs->GetJobName() << std::endl;
 
-	bool bIsFirstSet = false;
-	int maxHp;
-	int power;
-	int defense;
-	int luck;
+	
 
-
+	int Choice = 0;
 	while (true)
 	{
-		
-		
-		if (!bIsFirstSet)
-		{
-			// 최초 랜덤 스탯을 할당한다.
-			maxHp = distHp(gen);
-			power = distPower(gen);
-			defense = distDefense(gen);
-			luck = distLuck(gen);
-			bIsFirstSet = true;
-		}
-		
+		// 랜덤 스탯을 할당한다.
+		int maxHp = distHp(gen);
+		int power = distPower(gen);
+		int defense = distDefense(gen);
+		int luck = distLuck(gen);
 
 
 		std::string StatLog;
 		std::wstring StatLogW;
-		StatLog = "체력 : " + std::to_string(maxHp) + " / " + std::to_string(maxHp) + ", 공격력 : " + std::to_string(power) + ", 방어력 : " + std::to_string(defense) + ", : 행운 : " + std::to_string(luck) + "   [z. 결정], [x. 재설정]";
+		StatLog = "체력 : " + std::to_string(maxHp) + " / " + std::to_string(maxHp) + ", 공격력 : " + std::to_string(power) + ", 방어력 : " + std::to_string(defense) + ", : 행운 : " + std::to_string(luck) + "   [1. 결정], [2. 재설정]";
 		StatLogW = LogicHelper::StringToWString(StatLog);
 
 		UI->ClearMessageToBasicCanvasEventInfoUI(false);
@@ -426,7 +409,7 @@ void Character::RandomizeStats()
 		//std::cout << "1. 결정" << std::endl;
 		//std::cout << "2. 재설정" << std::endl;
 	//	std::cin >> Choice;
-		
+		EKey Choice = InputReceiver::ChatchInput();
 
 		//// cin 에러 예외 처리
 		//if (std::cin.fail())
@@ -436,17 +419,11 @@ void Character::RandomizeStats()
 		//	Choice = 0;
 		//}
 
-		EKey StatChoice = InputReceiver::ChatchInput();
-
-		switch (StatChoice)
+		switch (Choice)
 		{
-<<<<<<< Updated upstream
 		case EKey::Key_1:
-=======
-		case EKey::z:
 			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
 
->>>>>>> Stashed changes
 			// Stats에 저장, Damage 계산
 			Stats.SetStat(EStat::MaxHp, maxHp);
 			Stats.SetStat(EStat::CurHp, maxHp);
@@ -459,33 +436,23 @@ void Character::RandomizeStats()
 		//	std::cout << "능력치가 확정되었습니다." << std::endl;
 			break;
 
-<<<<<<< Updated upstream
 		case EKey::Key_2:
-=======
-		case EKey::x:
 			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
 
->>>>>>> Stashed changes
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"스탯을 재설정합니다.");
 		//	std::cout << "스탯을 재설정합니다." << std::endl;
-			// 랜덤 스탯을 할당한다.
-			maxHp = distHp(gen);
-			power = distPower(gen);
-			defense = distDefense(gen);
-			luck = distLuck(gen);
-
-
 			break;
 
 		default:
+			AudioPlayer::Play(AudioPath::SELECT, 0.5f);
+
 			UI->ClearMessageToBasicCanvasEventInfoUI(false);
 			UI->AddMessageToBasicCanvasEventInfoUI(L"잘못된 입력입니다. 다시 입력해주세요.");
-			Sleep(500);
 		//	std::cout << "잘못된 입력입니다. 다시 입력해주세요." << std::endl;
 			break;
 		}
-		if (StatChoice == EKey::z)
+		if (Choice == EKey::Key_1)
 		{
 			break;
 		}
@@ -550,6 +517,7 @@ void Character::Notify()
 	Stats.SetStat(EStat::Luck, Stats.GetStat(EStat::Luck));
 	Stats.SetStat(EStat::MaxHp, Stats.GetStat(EStat::MaxHp));
 	SetJob(GetJob());
+	SetMaxExp(GetMaxExp());
 }
 
 
@@ -565,7 +533,7 @@ void Character::DisplayInventory(int index)
 	std::wstring ItemPriceLogW;
 	std::wstring ItemExplanationLogW;
 
-	ItemNameLog = std::to_string(index + 1) + ". 이름: " + Inventory[index]->GetName() + "  가격: " + std::to_string(Inventory[index]->GetPrice()/2) + "  효과: " + Inventory[index]->GetExplanation() + "   [ <-   이전 페이지] [ ->   다음 페이지  ] [ z. 판매 ]  [ x. 뒤로 가기 ]";
+	ItemNameLog = std::to_string(index + 1) + ". 이름: " + Inventory[index]->GetName() + "  가격: " + std::to_string(Inventory[index]->GetPrice()/2) + "  효과: " + Inventory[index]->GetExplanation() + "   [ 1. 이전],[ 2. 구매/판매 ],[ 3. 다음  ], [ 0. 처음으로 ]";
 	//	ItemPriceLog = 
 	//	ItemExplanationLog = ;
 

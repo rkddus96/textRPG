@@ -8,7 +8,7 @@ Goblin::Goblin(int level)
     MonsterImage = GameManager::GetInstance().GetAssetHandler()->GetASCIIArtContainer(EArtList::Goblin);
 
     int hpModifier = 12;
-    int powerModifier = 4;
+    int powerModifier = 6;
     int defenseModifier = 1;
     int expModifier = 30;
     int moneyModifier = 100;

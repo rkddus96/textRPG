@@ -3,11 +3,12 @@
 #include <Windows.h>
 #include "../AudioPlayer.h"
 #include "../Creatures/Monster.h"
-#include "../Creatures/MonsterFactory.h"
+#include "../Creatures/MonstserFactoryManager.h"
 #include "../Character.h"
 #include "../Managers/GameManager.h"
 #include "../LogicHelper.h"
 #include "../InputReceiver.h"
+#include "../ConstantContainer.h"
 
 using namespace std;
 
@@ -44,8 +45,14 @@ protected:
 	// (플레이어 체력) <= (포션을 먹는 기준 체력) True
 	bool IsPotionEvent();
 
+	// 전투 승리시 수행하는 로직
+	virtual void GameWin() = 0;
+
+	// 전투 패배시 수행하는 로직
+	virtual void GameLose() = 0;
+
 	// 소멸자
-	virtual ~ABattle() = default;
+	~ABattle();
 
 private:
 
@@ -56,9 +63,6 @@ private:
 		Miss,
 		Normal
 	};
-
-	// 전투 진행 BGM 이름
-	string BGMName;
 
 	// 몬스터 난이도에 따른 보정계수 계산 함수
 	void SetMonsterCoEfficientValue();
@@ -71,12 +75,6 @@ private:
 
 	// 플레이어, 몬스터 일반공격 확률 계산 함수
 	void SetNormalProb();
-
-	// 전투 승리시 수행하는 로직
-	void GameWin();
-
-	// 전투 패배시 수행하는 로직
-	void GameLose();
 
 	// 공격 확률을 바탕으로 계산
 	EAttackType CalculateAttackProb(float Critical, float Miss, float Normal);

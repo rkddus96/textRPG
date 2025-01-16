@@ -17,12 +17,23 @@ namespace AudioPath
 	extern const std::string RESULT;			// 전투 보상 수령시
 	extern const std::string POTION;			// 포션 사용시
 	extern const std::string BATTLE_BGM;		// 전투 상태일 때의 브금
+	extern const std::string BOSS_BGM;			// 보스 전투시
+	extern const std::string FINALBOSS_BGM;		// 최종보스 전투시
+	extern const std::string SELECT;			// 키보드 입력시
+	extern const std::string BOOK;				// 책장 넘길 때
+	extern const std::string MAIN_BGM;			// 메인화면 브금
+
 }
 
 namespace Console
 {
 	extern const int CONSOLE_WIDTH;
 	extern const int CONSOLE_HEIGHT;
+}
+
+namespace Battle
+{
+	extern const float CRITICAL;
 }
 
 namespace UI
