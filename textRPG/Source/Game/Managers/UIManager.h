@@ -139,6 +139,7 @@ public:
 	void SetBasicCanvasLayerHide(bool bShouldHide, EBasicCanvasLayer LayerType, bool bShouldUpdateUI = true);
 	// 몬스터 이름은 영어로 되어있어야 가운데 맞춤이 정상적으로 이루어짐.
 	void SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int MonsterHp, bool bShouldUpdateUI = true);
+	void EraseBasicCanvasMonsterInfoUI(bool bShouldUpdateUI = true);
 
 	//void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const std::vector<std::wstring>& Surface, bool bShouldUpdateUI = true);
 	void SetOpeningCanvasTitleArt(int PositionX, int PositionY, const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI = true);
