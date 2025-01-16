@@ -75,7 +75,7 @@ private:
 	bool bCanTriggerEvent = false;
 
 	// 교회 관련 코드
-	int DefaultHealCharge = 50;
+	int DefaultHealCharge = 150;
 
 	/// <summary>
 	/// Village 루프 종료 조건

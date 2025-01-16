@@ -133,25 +133,25 @@ void TileMap::GenerateTestMap()
 	// To-Do : 초기화 과정에서 Tile Type과 Art Type을 한 번에 설정할 수 있도록 하는 기능 구현
 	TileGrid[0][0] = ETile::Village1;
 	TileArtGrid[0][0] = EArtList::Village1;
-	TileDescriptionGrid[0][0] = L"당신의 여정이 시작되는 작은 마을입니다.\n주변을 둘러보거나 마을 사람들과 대화하려면 Z키를 눌러 상호작용하세요.";
+	TileDescriptionGrid[0][0] = L"에르발트는 솔반드리아 왕국에서 멀리 떨어진 평화로운 곳입니다.\n주변을 둘러보거나 마을 사람들과 대화하려면 Z키를 눌러 상호작용하세요.";
 
 	TileGrid[Height - 1][0] = ETile::Village2;
 	TileArtGrid[Height - 1][0] = EArtList::Village2;
-	TileDescriptionGrid[Height - 1][0] = L"번화한 도시에 도착했습니다. 마왕의 소식으로 불안한 기운도 있지만 아직 활기찬 분위기가 남아있습니다.\n주변을 둘러보거나 마을 사람들과 대화하려면 Z키를 눌러 상호작용하세요.";
+	TileDescriptionGrid[Height - 1][0] = L"카르몬은 이제 무너진 건물과 자라난 잡초 속에 숨겨진 상처들만이 남아 있습니다.\n주변을 둘러보거나 마을 사람들과 대화하려면 Z키를 눌러 상호작용하세요.";
 
 	// 마왕성 관련 설정
 	// 마왕성 왼쪽
 	TileArtGrid[Height - 2][Width - 1] = EArtList::CastleSmall;
-	TileDescriptionGrid[Height - 2][Width - 1] = L"어둠 속에서 우뚝 서 있는 거대한 마왕성이 불빛을 발하며, 가까워질수록 강렬한 압박감이 느껴진다. ";
+	TileDescriptionGrid[Height - 2][Width - 1] = L"멀리서 솔반드리아 성의 거대한 탑이 보입니다. 그 위용은 마치 세상의 끝까지 닿을 듯한 느낌을 주며, 한 걸음 한 걸음이 더욱 무겁게 다가옵니다.";
 
 	// 마왕성 위쪽
 	TileArtGrid[Height - 1][Width - 2] = EArtList::CastleSmall;
-	TileDescriptionGrid[Height - 1][Width - 2] = L"어둠 속에서 우뚝 서 있는 거대한 마왕성이 불빛을 발하며, 가까워질수록 강렬한 압박감이 느껴진다. ";
+	TileDescriptionGrid[Height - 1][Width - 2] = L"멀리서 솔반드리아 성의 거대한 탑이 보입니다. 그 위용은 마치 세상의 끝까지 닿을 듯한 느낌을 주며, 한 걸음 한 걸음이 더욱 무겁게 다가옵니다.";
 
 	TileArtGrid[Height - 2][Width - 2] = EArtList::CastleSmall;
-	TileDescriptionGrid[Height - 2][Width - 2] = L"어둠 속에서 우뚝 서 있는 거대한 마왕성이 불빛을 발하며, 가까워질수록 강렬한 압박감이 느껴진다. ";
+	TileDescriptionGrid[Height - 2][Width - 2] = L"멀리서 솔반드리아 성의 거대한 탑이 보입니다. 그 위용은 마치 세상의 끝까지 닿을 듯한 느낌을 주며, 한 걸음 한 걸음이 더욱 무겁게 다가옵니다.";
 
 	TileGrid[Height - 1][Width - 1] = ETile::DemonLordCastle;
 	TileArtGrid[Height - 1][Width - 1] = EArtList::Castle2;
-	TileDescriptionGrid[Height - 1][Width - 1] = L"칠흑 같은 하늘 아래, 성은 거대한 그림자처럼 서 있습니다. 더는 물러설 곳도, 선택할 다른 길도 없습니다.\nZ 키를 눌러 전투를 시작하세요.";
+	TileDescriptionGrid[Height - 1][Width - 1] = L"높이 솟은 탑과 차가운 돌벽이 솔반드리아 성을 감싸고 있습니다. 이곳에서 모든 진실이 드러날 것입니다.\nZ 키를 눌러 전투를 시작하세요.";
 }

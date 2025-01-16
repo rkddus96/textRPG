@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <unordered_map>
 #include "AssetHandler.h"
 
 struct FChoice
@@ -45,13 +46,22 @@ protected:
 	/// </summary>
 	int AutoTextDelay = 3000;
 
+	int PostEventHealthAmount = 1;
+
 	std::vector<FSentence> Sentences;
+	// Key : PlaceHolder, Value : 치환될 택스트
+	std::unordered_map<std::wstring, std::wstring> PlaceHolders;
 	EArtList CurrentCenterArt = EArtList::Armor;
 
 	void PerformDialogue();
 	void DrawSentence(const FSentence& Sentence);
+	std::wstring FormatTextWithPlaceholder(const std::wstring& Text, const std::unordered_map<std::wstring, std::wstring>& PlaceHolders);
 
 	std::vector<FSentence> GenerateEventDialogue();
+	/// <summary>
+	/// 현재는 TileEvent에서 생성하고 사용한다. 추후에 다른 기능으로 확장할 것
+	/// </summary>
+	std::unordered_map<std::wstring, std::wstring> GeneratePlaceHolders();
 
 	std::shared_ptr<class UIManager> UIManagerInstance;
 
