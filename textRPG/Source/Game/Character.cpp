@@ -132,7 +132,7 @@ void Character::AddItem(std::shared_ptr<IItem> item)
 }
 
 // 아이템 사용
-void Character::UsePotion()
+bool Character::UsePotion()
 {	
 	std::string CannotUsePotionLog;
 	std::wstring CannotUsePotionLogW;
@@ -151,10 +151,12 @@ void Character::UsePotion()
 			{
 				OnItemChanged(Inventory);
 			}
-			break;
+			return true;
+			
 		}
 	}
 	UI->AddMessageToBasicCanvasEventInfoUI(CannotUsePotionLogW);
+	return false;
 	
 }
 

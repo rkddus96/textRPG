@@ -110,7 +110,7 @@ public:
 	void AddItem(std::shared_ptr<IItem> item);
 
 	// 아이템 사용
-	void UsePotion();
+	bool UsePotion();
 
 	// 인벤토리 출력
 	
