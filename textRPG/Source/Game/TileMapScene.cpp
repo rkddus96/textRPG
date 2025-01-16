@@ -21,6 +21,7 @@ void TileMapScene::PlayScene()
 	// 출력에 필요한 택스트 
 	// 보스 배틀을 실행할 수 없을 때 출력되는 메시지, 추후 변경
 	std::wstring BossBattleDeniedMessage = L"마왕성의 문은 강한 자만을 허락합니다. 당신의 레벨로는 아직 이 문을 열 수 없습니다.";
+	std::wstring VillageEnterDeniedMessage = L"마녀를 도왔기 때문에 당신은 마을에 방문할 수 없습니다.";
 	bool HasEventTriggered = false; // 임시 변수, 추후에 리펙토링으로 TileMap에서 해결할 수 있도록 해결한다.
 
 	// Initialize
@@ -83,11 +84,20 @@ void TileMapScene::PlayScene()
 			// 상호 작용 가능한 타일일 경우 상호작용을 실행한다.
 			ETile CurrentTile = TileMapInstance->GetCurrentTileType();
 			// 특수 이벤트가 활성화되면 마을 진입이 불가능하다.
-			bool CanEnterVillage = !GameManager::GetInstance().IsSpecialEventActivated();
 			// Village1 Type
-			if (CurrentTile == ETile::Village1 && CanEnterVillage)
+			if (CurrentTile == ETile::Village1)
 			{
-				// 처음 진입 시에 마을 이벤트를 등장
+				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
+				Village village(Player, UIManagerInstance, CurrentVillageArt);
+				village.SetHasShop(false);
+				village.Run();
+			}
+			else if (CurrentTile == ETile::Village2)
+			{
+				// @Refactor
+				// 전역 플래그가 없으니까 일단은 TileMapScene에서 관리
+				// 진입 관련 처리는 Village가 나을 수 있으나 현재는 TileMapScene에서 관리
+				// 처음 진입 시에 마을 이벤트를 발생
 				if (!HasEventTriggered)
 				{
 					// Trigger Event
@@ -96,17 +106,20 @@ void TileMapScene::PlayScene()
 					TileEventInstance.Run();
 				}
 
-				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
-				Village village(Player, UIManagerInstance, CurrentVillageArt);
-				village.SetHasShop(false);
-				village.Run();
-			}
-			else if (CurrentTile == ETile::Village2 && CanEnterVillage)
-			{
-				EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
-				Village village(Player, UIManagerInstance, CurrentVillageArt);
-				village.SetHasShop(true);
-				village.Run();
+				bool CanEnterVillage = !GameManager::GetInstance().IsSpecialEventActivated();
+				if (CanEnterVillage)
+				{
+					EArtList CurrentVillageArt = TileMapInstance->GetCurrentTileArt();
+					Village village(Player, UIManagerInstance, CurrentVillageArt);
+					village.SetHasShop(true);
+					village.Run();
+				}
+				else
+				{
+					// Default Scene 출력을 방지하고 현재 출력으로 현재 프레임 종료
+					UIManagerInstance->AddMessageToBasicCanvasEventInfoUI(VillageEnterDeniedMessage, true);
+					bIsSceneInvalid = false;
+				}
 			}
 			else if (CurrentTile == ETile::DemonLordCastle)
 			{
