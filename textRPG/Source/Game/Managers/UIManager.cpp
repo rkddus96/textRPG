@@ -496,7 +496,7 @@ void UIManager::ChangeBasicCanvasMaxExpInfoUI(int Amount, bool bShouldUpdateUI)
 		return;
 	}
 	
-	int MaxExpTextLength = 6;
+	int MaxExpTextLength = 7;
 
 	std::wstring StatInfoString;
 	StatInfoString.reserve(MaxExpTextLength);

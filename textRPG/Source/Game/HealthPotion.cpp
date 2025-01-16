@@ -24,7 +24,7 @@ const FASCIIArtContainer& HealthPotion::GetArtContainer() const
 
 bool HealthPotion::IsUsed(Character& character)
 {
-	Status Stats = character.GetStatus();
+	Status& Stats = character.GetStatus();
 	
 	//Character HP
 	int Hp = Stats.GetStat(EStat::CurHp);
