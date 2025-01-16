@@ -37,7 +37,7 @@ void TileMapScene::PlayScene()
 
 	DrawField();
 
-	// While : Character is Alive
+	// While : Character is Alive 혹은 게임 클리어
 	while (!Character::GetInstance().IsDead() && !GameManager::GetInstance().IsClearGame())
 	{
 		EKey KeyInput = InputReceiver::ChatchInput();

@@ -29,6 +29,7 @@ void TileEvent::Run()
 void TileEvent::PerformDialogue()
 {
 	int CurrentSentenceIndex = 0;
+	// 대화 출력 후에 대기 여부. 선택지 입력 후에는 대기할 필요가 없으므로 그 떄 사용한다.
 	bool bShouldWait = true;
 	while (CurrentSentenceIndex < Sentences.size() && CurrentSentenceIndex >= 0)
 	{
