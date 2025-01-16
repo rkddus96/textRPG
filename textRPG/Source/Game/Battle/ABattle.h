@@ -37,7 +37,7 @@ protected:
 	void MonsterAttackAction();
 
 	// 플레이어 포션 복용
-	void PotionAction();
+	bool IsPotionAction();
 
 	// 플레이어의 공격
 	void PlayerAttackAction();
