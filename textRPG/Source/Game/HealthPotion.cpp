@@ -22,7 +22,7 @@ const FASCIIArtContainer& HealthPotion::GetArtContainer() const
 }
 
 
-void HealthPotion::Use(Character& character)
+bool HealthPotion::IsUsed(Character& character)
 {
 	Status Stats = character.GetStatus();
 	
@@ -31,6 +31,8 @@ void HealthPotion::Use(Character& character)
 	int MaxHp = Stats.GetStat(EStat::MaxHp);
 	Hp = std::min(Hp + MaxHp/2, MaxHp);
 	Stats.SetStat(EStat::CurHp, Hp);
+
+	return true;
 }
 
 void HealthPotion::UnUse(Character& character)
