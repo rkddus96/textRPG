@@ -715,6 +715,34 @@ void UIManager::SetBasicCanvasMonsterInfoUI(const std::string& MonsterName, int 
 	}
 }
 
+void UIManager::EraseBasicCanvasMonsterInfoUI(bool bShouldUpdateUI)
+{
+	int LayerId = BasicCanvasLayerIdMap[EBasicCanvasLayer::MonsterInfo];
+	std::shared_ptr<RenderingLayer> Layer = RenderingCanvasMap[ERenderingCanvas::Basic]->GetRenderingLayer(LayerId);
+
+	if (Layer == nullptr)
+	{
+		std::cout << "UIManager, SetBasicCanvasMonsterInfoUI : Fail to get Layer" << std::endl;
+		return;
+	}
+
+	std::wstring NameWString = L"                        ";
+	std::wstring HpWString = L"                   ";
+
+	int PositionX = UI::BACKGRUOND_BORDER_FIRST_POSITION_X + 2;
+	int PositionY = UI::BACKGROUND_BORDER_FIRST_POSITION_Y + UI::BACKGROUND_BORDER_WIDTH / 2;
+
+	Layer->DrawString(PositionX, PositionY - (int)NameWString.size() / 2, NameWString);
+	Layer->DrawString(PositionX + 1, PositionY - (int)HpWString.size() / 2, HpWString);
+
+	Layer->CombineUiLines();
+
+	if (bShouldUpdateUI)
+	{
+		PrintUI(ERenderingCanvas::Basic);
+	}
+}
+
 void UIManager::SetOpeningCanvasTitleArt(int PositionX, int PositionY, const FASCIIArtContainer& ArtContainer, bool bShouldUpdateUI)
 {
 	int TitleLayerId = OpeningCanvasLayerIdMap[EOpeningCanvasLayer::Title];
